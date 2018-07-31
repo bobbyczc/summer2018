@@ -273,22 +273,25 @@
                         <a href="/index.html">实时舆情</a>
                     </li>
                     <li>
-                        <a href="#">舆情分析</a>
+                        <a href="/analysis.html">舆情分析</a>
+                    </li>
+                    <li>
+                        <a href="/custom.html">我的舆情</a>
                     </li>
                     <li class="dropdown" style="float:right;">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <a href="#" id="user" class="dropdown-toggle" data-toggle="dropdown">
                             用户
                         </a>
                         <ul class="dropdown-menu dropdown-menu-right">
                             <li class="dropdown-item">
-                                <a href="./user.html">账户信息</a>
+                                <a href="/user.html">账户信息</a>
                             </li>
                             <li class="dropdown-item">
                                 <a href="#">设置</a>
                             </li>
                             <li class="divider"></li>
                             <li class="dropdown-item">
-                                <a href="#">登出</a>
+                                <a href="#" onclick="logout()">登出</a>
                             </li>
                         </ul>
                     </li>
@@ -304,10 +307,10 @@
                 <nav class="sidebar">
                     <ul class="nav">
                         <li class="active">
-                            <a href="#" data-content="total">
+                            <a href="#" data-content="推荐">
                                 <span class="glyphicon glyphicon-signal"></span>
 
-                                <p style="display:inline;margin:10px 0 0">全部舆情</p>
+                                <p style="display:inline;margin:10px 0 0">推荐舆情</p>
                             </a>
                         </li>
                         <li>
@@ -320,19 +323,19 @@
                             </a>
                             <ul id="collapseList" class="nav panel-collapse collapse">
                                 <li>
-                                    <a data-content="CJ" href="#">
+                                    <a data-content="财经" href="#">
                                         <span class="glyphicon glyphicon-indent-left"></span>
                                         <p style="display: inline;margin:10px 0 0">财经</p>
                                     </a>
                                 </li>
                                 <li>
-                                    <a data-content="JK" href="#">
+                                    <a data-content="健康" href="#">
                                         <span class="glyphicon glyphicon-indent-left"></span>
                                         <p style="display: inline;margin:10px 0 0">健康</p>
                                     </a>
                                 </li>
                                 <li>
-                                    <a data-content="JS" href="#">
+                                    <a data-content="军事" href="#">
                                         <span class="glyphicon glyphicon-indent-left"></span>
                                         <p style="display: inline;margin:10px 0 0">军事</p>
                                     </a>
@@ -340,19 +343,7 @@
                             </ul>
                         </li>
                         <li>
-                            <a data-content="custom" href="#">
-                                <span class="glyphicon glyphicon-map-marker"></span>
-                                <p style="display: inline;margin:10px 0 0">自定义舆情</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a data-content="collection" href="#">
-                                <span class="glyphicon glyphicon-bookmark"></span>
-                                <p style="display: inline;margin:10px 0 0">我的收藏</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a data-content="warning" href="#">
+                            <a data-content="舆情预警" href="#">
                                 <span class="glyphicon glyphicon-warning-sign"></span>
                                 <p style="display: inline;margin:10px 0 0">舆情预警</p>
                             </a>
@@ -371,11 +362,15 @@
 
     <script type="text/javascript">
         //标识iframe类型
-        var contentType = "total";
+        var contentType = "推荐";
 
         $(document).ready(function () {
 
             someCustom();
+
+            var userid=localStorage.getItem("userid");
+            var username=localStorage.getItem("username");
+            $("#user").html(username);
 
             $(".hamburger").click(function () {
                 //iframe内容自适应
@@ -412,6 +407,13 @@
 
             });
         });
+
+        function logout(){
+            localStorage.removeItem("userid");
+            localStorage.removeItem("username");
+
+            window.location.href="/login.html";
+        }
 
         //自定义样式
         function someCustom() {

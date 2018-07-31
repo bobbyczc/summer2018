@@ -1,198 +1,674 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>analysisDetail</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8" />
+<link rel="icon" type="image/png" href="img/favicon.ico">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/style.css" type="text/css">
+<title>Hipster as F*** Cards by Creative Tim</title>
 
+<meta
+	content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'
+	name='viewport' />
+<meta name="viewport" content="width=device-width" />
+
+<link href="css/bootstrap.min.css" rel="stylesheet" />
+<link href="css/hipster_cards.css" rel="stylesheet" />
+
+<link rel="stylesheet" href="css/style.css" type="text/css">
+<style>
+body {
+	background: rgb(238, 239, 241)
+}
+
+/*隐藏滚动条*/
+html {
+	-ms-overflow-style: none;
+	overflow: -moz-scrollbars-none;
+}
+
+html::-webkit-scrollbar {
+	width: 0px
+}
+
+.card {
+	margin-bottom: 20px;
+}
+
+.container {
+	padding-top: 20px;
+}
+
+.content {
+	border-bottom: 1px solid rgb(231, 231, 231);
+}
+
+h5 {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	word-break: keep-all;
+}
+
+.action {
+	display: inline;
+	float: right;
+}
+
+.panel-header {
+	border: 1px solid transparent;
+	border-radius: 1px;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+	border-color: #dedede;
+}
+</style>
 </head>
 
-<style>
-    body {
-        background: rgb(240, 240, 240);
-    }
-
-    img {
-        width: 100%;
-    }
-
-    .content-div {
-        margin: 10px;
-        background: rgb(250, 250, 250);
-    }
-
-    .header {
-        background: rgb(255, 255, 255);
-        padding: 10px 10px 10px;
-        border-width: 80%;
-        border-bottom: 1px solid grey;
-    }
-
-    .content {
-        width: 100%;
-        padding: 1%;
-    }
-</style>
-
 <body>
-    <div class="content">
-        <!--热度分析-->
-        <div class="heat">
-            <!--热度指数趋势块-->
-            <div class="heatTrend  content-div">
-                <div class="header">
-                    <div style="display: inline-block;">
-                        热度指数趋势
+
+	<div class="wrapper">
+		<div class="container">
+
+			<div class="totalHeader"
+				style="width:100%;background:rgb(250,250,250);margin-bottom:20px">
+				<h3>习近平</h3>
+			</div>
+			<!--热度指数趋势模块-->
+			<div class="heat">
+				<div class="panel" id="heatTrend">
+					<div class="panel-header" style="background:rgb(250,250,250)">
+
+						<h3 id="header"
+							style="padding-left:30px;font-size:20px;display: inline-block">热度指数趋势</h3>
+
+						<div id='wrapper' style="display: inline-block;">
+							<form>
+								<select id="time1" class='custom-date' name='select'">
+									<option value='7'>7 天</option>
+									<option value='30'>30 天</option>
+									<option selected='selected' value='90'>90 天</option>
+									<option value='180'>180 天</option>
+									<option value='365'>365 天</option>
+									<option value='custom'>自定义</option>
+								</select>
+							</form>
+						</div>
+						<div
+							style="display: inline-block;float:right;padding-top:20px;padding-right:20px">
+							<a data-toggle="collapse" href="#collapseList1"
+								style="color:black;"> <span
+								class="glyphicon glyphicon-chevron-down"></span>
+							</a>
+						</div>
+					</div>
+					<div id="collapseList1"
+						class="panel-collapse collapse panel-body in">
+
+						<div class="heatPic">
+							<div class="chart-box" id="heatValue"
+								style="width: 60%;height:400px;"></div>
+							<div class="side-info"></div>
+						</div>
+					</div>
+				</div>
+
+				<div class="panel" id="heatContent">
+					<div class="panel-header" style="background:rgb(250,250,250)">
+						<h3 id="header"
+							style="padding-left:30px;font-size:20px;display: inline-block">热点舆情</h3>
+
+						<div id='wrapper' style="display: inline-block;">
+							<form>
+								<select id="time2" class='custom-date' name='select'>
+									<option value='7'>7 天</option>
+									<option value='30'>30 天</option>
+									<option selected='selected' value='90'>90 天</option>
+									<option value='180'>180 天</option>
+									<option value='365'>365 天</option>
+									<option value='custom'>自定义</option>
+								</select>
+							</form>
+						</div>
+						<div
+							style="display: inline-block;float:right;padding-top:20px;padding-right:20px">
+							<a data-toggle="collapse" href="#collapseList2"
+								style="color:black;"> <span
+								class="glyphicon glyphicon-chevron-down"></span>
+							</a>
+						</div>
+					</div>
+					<div id="collapseList2"
+						class="panel-collapse collapse panel-body in"></div>
+				</div>
+			</div>
+
+			<!--来源分布模块-->
+			<div class="source">
+				<div class="panel" id="mediaSource">
+					<div class="panel-header" style="background:rgb(250,250,250)">
+						<h3 id="header"
+							style="padding-left:30px;font-size:20px;display: inline-block">媒体分布</h3>
+
+						<div
+							style="display: inline-block;float:right;padding-top:20px;padding-right:20px">
+							<a data-toggle="collapse" href="#collapseList3"
+								style="color:black;"> <span
+								class="glyphicon glyphicon-chevron-down"></span>
+							</a>
+						</div>
+					</div>
+					<div id="collapseList3"
+						class="panel-collapse collapse panel-body in">
+						<div class="masonry-container">
+							<div class="heatPic">
+								<div class="chart-box" id="sourcePie"
+									style="width: 60%;height:400px;"></div>
+								<div class="side-info"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--关键词分析模块-->
+			<div class="keywords" style="width:100%;display: inline-block">
+				<div class="panel" id="wordcloud"
+					style="width:48%;display:inline-block;float:left;">
+					<div class="panel-header" style="background:rgb(250,250,250)">
+						<h3 id="header"
+							style="padding-left:30px;font-size:20px;display: inline-block">关键词云</h3>
+
+						<div
+							style="display: inline-block;float:right;padding-top:20px;padding-right:20px">
+							<a data-toggle="collapse" href="#collapseList5"
+								style="color:black;"> <span
+								class="glyphicon glyphicon-chevron-down"></span>
+							</a>
+						</div>
+					</div>
+					<div id="collapseList5"
+						class="panel-collapse collapse panel-body in">
+						<div class="heatPic">
+							<div class="chart-box" id="wordCloud"
+									style="width: 100%;height:400px;"></div>
+						</div>
+					</div>
+				</div>
+				<div class="panel" id="relation"
+					style="width:48%;display:inline-block;float:right;">
+					<div class="panel-header" style="background:rgb(250,250,250)">
+						<h3 id="header"
+							style="padding-left:30px;font-size:20px;display: inline-block">关联词分析</h3>
+
+						<div
+							style="display: inline-block;float:right;padding-top:20px;padding-right:20px">
+							<a data-toggle="collapse" href="#collapseList6"
+								style="color:black;"> <span
+								class="glyphicon glyphicon-chevron-down"></span>
+							</a>
+						</div>
+					</div>
+					<div id="collapseList6"
+						class="panel-collapse collapse panel-body in">
+						<div class="heatPic">
+							<img src="img/5.jpg" style="width: 100%" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- end wrapper -->
+</body>
+
+<script src="js/jquery.js " type="text/javascript "></script>
+<script src="js/bootstrap.min.js " type="text/javascript "></script>
+<script src="js/hipster-cards.js "></script>
+<script src="js/index.js"></script>
+<script src="js/echarts.min.js"></script>
+<script src="js/echarts-wordcloud.min.js"></script>
+<!--  Just for demo	 -->
+<script src="js/jquery.tmpl.min.js"></script>
+
+<!-- div模块模板 -->
+<script id="div_demo" type="text/x-jquery-tmpl">
+    <div id="${id}" class="card-box col-md-3 col-sm-6">
+            <div class="card">
+                <div class="content">
+                    <h5 class="title">
+                        <a href="#" title="${title}">${title}.replace(/[\r\n]/g,"")).</a>
+                    </h5>
+                    <p class="description">${content}.substring(0,100)</p>
+
+                    <p class="description">${date}</p>
+                </div>
+
+                <div class="footer" style="padding-top:10px">
+                    <p class="description" style="display: inline">#${source}</p>
+                    <div class="action">
+                        <button type="button" button-type="book" class="btn btn-primary btn-xs" onclick="changeIconType(this)">
+                            <span class="glyphicon glyphicon-star-empty"></span> 收藏
+                        </button>
+                        <button type="button" button-type="like" class="btn btn-primary btn-xs" onclick="changeIconType(this)">
+                            <span class="glyphicon glyphicon-heart-empty"></span> 关注
+                        </button>
                     </div>
-                    <div id='wrapper' style="display: inline-block;">
-                        <form>
-                            <select id="time1" class='custom-date' name='select'>
-                                <option value='7'>7 天</option>
-                                <option value='30'>30 天</option>
-                                <option selected='selected' value='90'>90 天</option>
-                                <option value='180'>180 天</option>
-                                <option value='365'>365 天</option>
-                                <option value='custom'>自定义</option>
-                            </select>
-                        </form>
-                    </div>
-                </div>
-                <div class="heatPic">
-                    <img src="1.jpg" />
-                </div>
-            </div>
-
-            <!--热点舆情详情块-->
-            <div class="content-div">
-                <div class="header">
-                    <div style="display: inline-block;">
-                        热点舆情
-                    </div>
-                    <div id='wrapper' style="display: inline-block;">
-                        <form>
-                            <select id="time2" class='custom-date' name='select'>
-                                <option value='7'>7 天</option>
-                                <option value='30'>30 天</option>
-                                <option selected='selected' value='90'>90 天</option>
-                                <option value='180'>180 天</option>
-                                <option value='365'>365 天</option>
-                                <option value='custom'>自定义</option>
-                            </select>
-                        </form>
-                    </div>
-                </div>
-                <div>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>标题</th>
-                                <th>热度指数</th>
-                                <th>全网搜索量</th>
-                                <th>更多操作</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>111</td>
-                                <td>123</td>
-                                <td>321</td>
-                                <td>
-                                    <button>
-                                        详细
-                                    </button>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>111</td>
-                                <td>123</td>
-                                <td>321</td>
-                                <td>
-                                    <button>
-                                        详细
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-        </div>
-
-        <!--来源分布-->
-        <div class="source">
-            <!--媒体分布图-->
-            <div class="content-div">
-                <div class="header">
-                    <div style="display: inline-block;">
-                        媒体分布
-
-                    </div>
-                </div>
-                <div>
 
                 </div>
-            </div>
-
-            <!--地域分布图-->
-            <div class="content-div">
-                <div class="header">
-                    <div style="display: inline-block;">
-                        地域分布
-                    </div>
-                </div>
-                <div>
-
-                </div>
-            </div>
-        </div>
-
-        <!--关键词分析-->
-        <div class="keyword">
-            <!--关键词云-->
-            <div class="content-div" style="float:left;width:46%">
-                <div class="header">
-                    <div style="display: inline-block;">
-                        关键词云
-                    </div>
-
-                </div>
-                <div>
-                    <img src="4.jpg">
-                </div>
-
-            </div>
-
-            <!--关联词-->
-            <div class="content-div" style="float:right;width:46%">
-                <div class="header">
-                    <div style="display: inline-block;">
-                        关联词分析
-                    </div>
-
-                </div>
-                <div>
-                    <img src="5.jpg">
-                </div>
-
             </div>
         </div>
     </div>
+</script>
+
+<!--分页菜单-->
+<script>
+	var fillHTML = function(totalsubpageTmep, args) {
+		totalsubpageTmep = "";
+		// 页码大于等于4的时候，添加第一个页码元素
+		if (args.currPage != 1 && args.currPage >= 4 && args.totalPage != 4) {
+			totalsubpageTmep += "<li class='ali'><a href='javascript:void(0);' class='geraltTb_pager' data-go='' >" + 1 + "</a></li>";
+		}
+		/* 当前页码>4, 并且<=总页码，总页码>5，添加“···”*/
+		if (args.currPage - 2 > 2 && args.currPage <= args.totalPage && args.totalPage > 5) {
+			totalsubpageTmep += "<li class='ali'><a href='javascript:void(0);' class='geraltTb_' data-go='' >...</a></li>";
+		}
+		/* 当前页码的前两页 */
+		var start = args.currPage - 2;
+		/* 当前页码的后两页 */
+		var end = args.currPage + 2;
+
+		if ((start > 1 && args.currPage < 4) || args.currPage == 1) {
+			end++;
+		}
+		if (args.currPage > args.totalPage - 4 && args.currPage >= args.totalPage) {
+			start--;
+		}
+		for (; start <= end; start++) {
+			if (start <= args.totalPage && start >= 1) {
+				totalsubpageTmep += "<li class='ali'><a href='javascript:void(0);' class='geraltTb_pager' data-go='' >" + start + "</a></li>";
+			}
+		}
+		if (args.currPage + 2 < args.totalPage - 1 && args.currPage >= 1 && args.totalPage > 5) {
+			totalsubpageTmep += "<li class='ali'><a href='javascript:void(0);' class='geraltTb_' data-go='' >...</a></li>";
+		}
+
+		if (args.currPage != args.totalPage && args.currPage < args.totalPage - 2 && args.totalPage != 4) {
+			totalsubpageTmep += "<li class='ali'><a href='javascript:void(0);' class='geraltTb_pager' data-go='' >" + args.totalPage + "</a></li>";
+		}
+		$(".pagination").html(totalsubpageTmep);
+	}
+	var bindEvent = function(totalsubpageTmep, args) {
+		totalsubpageTmep.on("click", "a.geraltTb_pager", function(event) {
+			var current = parseInt($(this).text());
+			fillHTML(totalsubpageTmep, {
+				"currPage" : current,
+				"totalPage" : args.totalPage,
+				"turndown" : args.turndown
+			});
+			if (typeof (args.backFn) == "function") {
+				args.backFn(current);
+			}
+		});
+	}
+	$.fn.createPage = function(options) {
+		fillHTML(this, options);
+		bindEvent(this, options);
+	}
+</script>
+
+<!--折线图-->
+<script>
+	//热度指数折线图
+	function drawHeatValue(ele, x, flows, start, end) {
+		var chart = echarts.init(ele);
+		var duration = start + "——" + end;
+		var displayedLegend = [];
+		var optionYSeries = [];
+		var optionSeries = [];
+
+		console.log(flows);
+		var startTime = new Date(x[0]);
+		var endTime = new Date(x[x.length - 1]);
+
+		var flowFloor = 0;
+		var flowCeil = 1;
+		try {
+			var flowMax = flows[0]['value'][1];
+			var flowMin = flows[0]['value'][1];
+			flows.map(function(i) {
+				if (i['value'][1] < flowMin)
+					flowMin = i['value'][1];
+				if (i['value'][1] > flowMax)
+					flowMax = i['value'][1];
+			});
+
+			flowFloor = Math.floor((flowMin - (flowMax != flowMin ? (flowMax - flowMin) : flowMin) / 8) * 1000) / 1000;
+			flowCeil = Math.ceil((flowMax + (flowMax != flowMin ? (flowMax - flowMin) : flowMin) / 8) * 1000) / 1000;
+			if (flowFloor < 0)
+				flowFloor = 0;
+		} catch (e) {}
+
+		option = {
+			title : {
+				text : duration + " 热度指数",
+				left : 'center'
+			},
+			tooltip : {
+				axisPointer : {
+					snap : true
+				},
+				trigger : 'axis',
+				formatter : function(params, index) {
+					var result = "日期:" + params[0].data['value'][0].substring(0, 10);
+
+					if (params[0] != undefined && params[0].data != undefined) {
+						result += "<br/>热度指数:" + params[0].data['value'][1];
+					}
+					return result;
+				}
+			},
+			dataZoom : [ {
+				startValue : new Date(startTime.valueOf() - 24 * 2 * 60 * 60 * 1000),
+				endValue : new Date(endTime.valueOf() + 24 * 2 * 60 * 60 * 1000)
+			}, {
+				type : 'inside'
+			} ],
+			xAxis : {
+				type : 'time',
+				min : new Date(start),
+				max : new Date(end),
+				splitLine : {
+					show : false
+				}
+			},
+			yAxis : {
+				name : '热度指数',
+				type : 'value',
+				max : flowCeil,
+				min : flowFloor,
+				splitLine : {
+					show : false
+				}
+			},
+			series : [ {
+				name : '热度指数',
+				type : 'line',
+				symbol : 'circle',
+				itemStyle : {
+					normal : {
+						color : 'red',
+						lineStyle : {
+							color : 'red'
+						}
+					}
+				},
+				data : flows
+			} ]
+		};
+
+		chart.setOption(option);
+	}
+
+	function drawSourcePie(ele, datas, legends) {
+		var chart = echarts.init(ele);
+		option = {
+			tooltip : {
+				trigger : 'item',
+				formatter : "{a} <br/>{b}: {d}%"
+			},
+			series : [
+				{
+					name : null,
+					type : 'pie',
+					radius : '55%',
+					center : [ '50%', '50%' ],
+					data : datas,
+					itemStyle : {
+						emphasis : {
+							shadowBlur : 10,
+							shadowOffsetX : 0,
+							shadowColor : 'rgba(0, 0, 0, 0.5)'
+						}
+					}
+				}
+			]
+		};
+		chart.setOption(option);
+	}
+
+	function drawWordCloud(ele, datas) {
+		var chart = echarts.init(ele);
+
+		var option = {
+			series : [ {
+				type : 'wordCloud',
+
+				// The shape of the "cloud" to draw. Can be any polar equation represented as a
+				// callback function, or a keyword present. Available presents are circle (default),
+				// cardioid (apple or heart shape curve, the most known polar equation), diamond (
+				// alias of square), triangle-forward, triangle, (alias of triangle-upright, pentagon, and star.
+
+				shape : 'circle',
+
+				// A silhouette image which the white area will be excluded from drawing texts.
+				// The shape option will continue to apply as the shape of the cloud to grow.
+
+				maskImage : maskImage,
+
+				// Folllowing left/top/width/height/right/bottom are used for positioning the word cloud
+				// Default to be put in the center and has 75% x 80% size.
+
+				left : 'center',
+				top : 'center',
+				width : '70%',
+				height : '80%',
+				right : null,
+				bottom : null,
+
+				// Text size range which the value in data will be mapped to.
+				// Default to have minimum 12px and maximum 60px size.
+
+				sizeRange : [ 12, 60 ],
+
+				// Text rotation range and step in degree. Text will be rotated randomly in range [-90, 90] by rotationStep 45
+
+				rotationRange : [ -90, 90 ],
+				rotationStep : 45,
+
+				// size of the grid in pixels for marking the availability of the canvas
+				// the larger the grid size, the bigger the gap between words.
+
+				gridSize : 8,
+
+				// set to true to allow word being draw partly outside of the canvas.
+				// Allow word bigger than the size of the canvas to be drawn
+				drawOutOfBound : false,
+
+				// Global text style
+				textStyle : {
+					normal : {
+						fontFamily : 'sans-serif',
+						fontWeight : 'bold',
+						// Color can be a callback function or a color string
+						color : function() {
+							// Random color
+							return 'rgb(' + [
+									Math.round(Math.random() * 160),
+									Math.round(Math.random() * 160),
+									Math.round(Math.random() * 160)
+								].join(',') + ')';
+						}
+					},
+					emphasis : {
+						shadowBlur : 10,
+						shadowColor : '#333'
+					}
+				},
+
+				// Data is an array. Each array item must have name and value property.
+				data : [ {
+					name : 'Farrah Abraham',
+					value : 366,
+					// Style of single text
+					textStyle : {
+						normal : {},
+						emphasis : {}
+					}
+				} ]
+			} ]
+		};
+
+		chart.setOption(option);
+	}
+	var draw = function(type, resultJson, startTime, endTime) {
+
+		//画图
+		if (type == "heat") {
+			var times = new Array();
+			var flows = new Array();
+			for (var item in resultJson.data) {
+				var time = item;
+				var flow = resultJson.data[time];
+
+				times.push(time);
+
+				var tempData = new Object();
+				tempData['name'] = new Date(time).toString();
+				var value = [ time, flow ];
+				tempData['value'] = value;
+
+				flows.push(tempData);
+			}
+			//时间正序排序
+			var flows = flows.sort(function(a, b) {
+				return Date.parse(a.name) - Date.parse(b.name);
+			});
+			drawHeatValue(document.getElementById('heatValue'), times, flows, startTime, endTime);
+		} else if (type == "media") {
+			var datas = new Array();
+			var legends = new Array();
+
+			for (var item in resultJson.data) {
+				var source = item;
+				var percent = resultJson.data[source];
+
+				legends.push(source);
+				var tempData = new Object();
+				tempData['name'] = source;
+				tempData['value'] = percent;
+
+				datas.push(tempData);
+			}
+			drawSourcePie(document.getElementById("sourcePie"), datas, legends);
+		} else if (type == "wordCloud") {
+			
+			drawWordCloud(document.getElementById("wordCloud",datas));
+		}
 
 
-    <script src="assets/js/jquery.js"></script>
-    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="assets/js/index.js"></script>
-    <script>
-        initTime($("#time1"));
-        initTime($("#time2"));
-    </script>
-</body>
+	}
+</script>
+
+<script>
+	var changeTitleSize = function() {
+		var tempWidth = $(".content").eq(0).width();
+		$("h5").css("width", tempWidth);
+	}
+
+	var changeIconType = function(button) {
+		var thisButton = $(button);
+		var cardbox = thisButton.parents(".card-box");
+		console.log(cardbox.attr("id"));
+		if (thisButton.attr("button-type") == "book") {
+			thisButton.find("span").toggleClass("glyphicon-star-empty");
+			thisButton.find("span").toggleClass("glyphicon-star");
+		} else if (thisButton.attr("button-type") == "like") {
+			thisButton.find("span").toggleClass("glyphicon-heart-empty");
+			thisButton.find("span").toggleClass("glyphicon-heart");
+		}
+	}
+	//新闻标题大小随页面大小变化而变化
+	$(window).resize(changeTitleSize);
+
+	function formatTime(date) {
+		var year = date.getFullYear();
+		var month = date.getMonth() + 1,
+			month = month < 10 ? '0' + month : month;
+		var day = date.getDate(),
+			day = day < 10 ? '0' + day : day;
+		return year + '-' + month + '-' + day;
+	}
+	var getHeatValue = function() {
+		var duration = $("#time1").find("option:selected").val();
+
+		//自定义时间范围
+		if (duration == "custom") {
+			var timeRange = $("#time1").find("option:selected").text();
+			var startTime = timeRange.substring(0, 10);
+			var endTime = timeRange.substring(13, 23);
+			/* $.ajax({
+				type:"POST",
+				url:"/POSystem/CalHotValueServlet",
+				contentType:"application/x-www-form-urlencoded;charset=utf-8",
+				data:{
+					"keyword":"武汉",
+					"startDate":startTime,
+					"endDate":endTime
+				},
+				success:function(data){
+					alert(data);
+				}
+			}) */
+
+		} else {
+
+			var end = new Date();
+			var endTime = formatTime(end);
+
+			var start = new Date(end.setDate(end.getDate() - duration));
+			var startTime = formatTime(start);
+
+
+			var jsonString = '{"status":1,"message":"获取成功","data":{"2018-07-23":0.0462,"2018-07-22":0.0196,"2018-07-24":0.0182}}';
+			var json = JSON.parse(jsonString);
+			draw("heat", json, startTime, endTime);
+		}
+	};
+
+	var getSourcePie = function() {
+		/* var keyword="!23";
+		var url="/POSystem/MediaServlet?keyword="+keyword;
+		$.get(url,function(data){
+			
+		}); */
+		var jsonString = '{"status":1,"message":"获取成功","data":{"澎湃新闻":0.0238,"中国青年报":0.0476,"人民论坛网":0.0238,"中国社会科学网":0.0238,"中国新闻网":0.381,"生命时报微信公众号":0.0238,"人民网":0.0476,"科技日报":0.0476,"经济日报":0.0238,"中新经纬":0.0238,"中国经济周刊":0.0238,"光明日报":0.0238,"法制日报":0.0238,"新华网":0.0238,"武汉晚报":0.1429,"央视新闻客户端":0.0238,"检察日报":0.0238,"人民日报":0.0476}}';
+		var json = JSON.parse(jsonString);
+		draw("media", json, null, null);
+	}
+	$().ready(function() {
+		//获得父页面定义的iframe类型
+		var contentType = window.parent.contentType;
+		initTime($("#time1"));
+		initTime($("#time2"));
+		$("#header").html(contentType);
+		/* var url = "http://localhost:8080/NewsGetter/servlet/newsInfo?type=123";
+		$.get(url, function (data) {
+		    $('#div_demo').tmpl(data).appendTo('.masonry-container');
+		}); */
+
+		//单个新闻标题自适应
+		changeTitleSize();
+
+		$(".pagination").createPage({
+			totalPage : 30,
+			currPage : 1,
+			backFn : function(p) {
+				console.log("回调函数：" + p);
+			}
+		});
+
+		getHeatValue();
+		getSourcePie();
+		$("#time1").change(getHeatValue);
+	});
+</script>
 
 </html>

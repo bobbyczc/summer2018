@@ -1,63 +1,243 @@
 <html>
 
 <style>
-    .top-nav ul {
-        list-style-type: none;
-        margin: 0;
+    * {
         padding: 0;
-        overflow: hidden;
-        background-color: #333;
-        position: fixed;
-        top: 0;
-        width: 100%;
+        margin: 0;
     }
 
-    .top-nav li {
+    html,
+    body {
+        height: 100%
+    }
+
+    /* FOUR */
+
+    .hamburger .line {
+        width: 100%;
+        height: 3px;
+        background-color: #ecf0f1;
+        display: block;
+        margin: 4px auto;
+        -webkit-transition: all 0.3s ease-in-out;
+        -o-transition: all 0.3s ease-in-out;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .hamburger:hover {
+        cursor: pointer;
+    }
+
+    .button-active .line:nth-child(1),
+    .button-active .line:nth-child(3) {
+        width: 85%;
+    }
+
+    .button-active .line:nth-child(1) {
+        transform: translateX(3px) rotate(45deg);
+    }
+
+    .button-active .line:nth-child(3) {
+        transform: translateX(3px) rotate(-45deg);
+    }
+
+    .glyphicon:not(.glyphicon-chevron-right) {
+        font-size: 20px;
+    }
+
+    .top-nav {
+        width: 100%;
+        position: fixed;
+        background-color: rgb(0, 150, 136);
+    }
+
+    /*表头*/
+
+    .top-nav .top-header {
+        width: 200px;
+
+        -webkit-transition: all 0.1s ease-in-out;
+        -o-transition: all 0.1s ease-in-out;
+        transition: all 0.1s ease-in-out;
+    }
+
+    .top-nav .top-header .header-content {
+        width: 150px;
         float: left;
+        text-align: center;
+        padding: 15px;
+
+    }
+
+    .top-nav .header-active {
+        position: absolute;
+
+        -webkit-transform: translateX(-150px);
+        -ms-transform: translateX(-150px);
+        -o-transform: translateX(-150px);
+        transform: translateX(-150px);
+    }
+
+    .top-nav .top-header .hamburger {
+        float: left;
+        height: 50px;
+        width: 50px;
+        padding: 15px;
+    }
+
+    .top-nav .top-header .hamburger:hover {
+        background: rgb(0, 99, 90);
+    }
+
+    .top-nav .top-header a {
+        font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+        font-weight: 500;
+        color: rgb(34, 45, 50);
+        text-decoration: none;
+    }
+
+    /*浮动列表项*/
+
+    .top-nav .list {
+        padding-left: 50px;
+    }
+
+    .top-nav .tabs li:not(.dropdown-item) {
+        float: left;
+        list-style-type: none;
     }
 
     .top-nav li a {
         display: block;
-        color: white;
-        text-align: center;
-        padding: 14px 16px;
+        font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+        font-weight: 500;
+        color: rgb(34, 45, 50);
+        padding: 15px;
         text-decoration: none;
     }
 
-    .top-nav li a:hover:not(.active) {
-        background-color: #111;
+    .top-nav ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        background-color: #f1f1f1;
     }
 
-    .sidebar ul {
-        text-align: center;
+    /* 鼠标移动到选项上修改背景颜色 */
+
+    .top-nav li a:hover {
+        background-color: #555;
+        color: white;
+    }
+
+    /*下部*/
+
+    .combine-nav {
+        height: 100%;
+        padding-top: 50px;
+    }
+
+    .side-nav {
+        position: fixed;
+        height: 100%;
+        width: 200px;
+        background: rgb(34, 45, 50);
+        transition: width 0.1s;
+    }
+
+    .side-nav li {
+        word-break: keep-all;
+        /* 不换行 */
+        white-space: nowrap;
+        /* 不换行 */
+        /* 内容超出宽度时隐藏超出部分的内容 */
+    }
+
+    .combine-nav .side-active {
+        width: 50px;
+    }
+
+    .side-nav .sidebar ul {
         list-style-type: none;
     }
 
-    #collapseList li {
-        background-color: rgb(242, 242, 242);
+    .side-nav .sidebar a {
+        font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+        color: white;
+        transition: all 0.3s ease-in-out;
     }
 
-    .sidebar {
-        background-color: rgb(248, 248, 248);
+    .side-nav .sidebar a:hover,
+    .side-nav .sidebar .active,
+    .side-nav .sidebar a:focus {
+        background: rgb(13, 18, 20);
     }
 
-    .detailContent {
+    .side-nav .sidebar a.hoverdir {
+        position: relative;
+    }
+
+    .side-nav .sidebar a.hoverdir>ul {
+        top: 0px;
+        padding: 10px;
+        left: 50px;
+        width: 150px;
+        display: none;
+        background: rgb(34, 45, 50);
+    }
+
+
+    .side-nav .sidebar a.hoverdir:hover>ul {
+        display: block;
+        animation: hideIndex 0.5s;
+    }
+
+    @keyframes hideIndex {
+        0% {
+            opacity: 0;
+            transform: translate(200px, 0);
+        }
+        100% {
+            opacity: 1;
+            transform: translate(0, 0)
+        }
+    }
+
+    .side-nav .sidebar #collapseList span {
+        visibility: hidden;
+    }
+
+    .side-nav .sidebar #collapseList li {
+        font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+        background-color: rgb(34, 45, 50);
+    }
+
+    .side-nav .sidebar span {
+        margin-right: 15px;
+    }
+
+    /*详细信息页面*/
+
+    .combine-nav .content-nav {
+        height: 100%;
         background-color: rgb(238, 239, 241);
+
+        -webkit-transition: all 0.1s ease-in-out;
+        -o-transition: all 0.1s ease-in-out;
+        transition: all 0.1s ease-in-out;
     }
 
-    .inner {
+    .content-nav .inner {
+        height: 100%;
         background-color: white;
     }
-    #main {
-            width: 100%;
-            height: 100%;
-            display: block;
-            position: absolute;
-            overflow: hidden;
-            border: none;
-            top: 60px;
-            left:100px;
-        }
+
+    .content-nav #iframepage {
+        height: 100%;
+        width: 100%;
+        border: none;
+    }
 </style>
 
 <head>
@@ -70,65 +250,174 @@
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
-<body style="padding-top:50px">
+<body>
     <div id="content">
-        <div class="top-nav" style="position:fixed">
-            <nav>
-                <div>
-                    <ul>
-                        <li>
-                            <a> System </a>
-                        </li>
-                        <li>
-                            <a href="#">实时舆情</a>
-                        </li>
-                        <li class="active">
-                            <a href="#">舆情分析</a>
-                        </li>
-                        <li class="dropdown" style="float:right; position: relative;">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                用户
-                                <b class="caret"></b>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a href="#">账户信息</a>
-                                </li>
-                                <li>
-                                    <a href="#">设置</a>
-                                </li>
-                                <li class="divider"></li>
-                                <li>
-                                    <a href="#">登出</a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
+        <!--顶部导航栏-->
+        <div class="top-nav">
+            <div class="top-header" style="float:left">
+                <div class="header-content">
+                    <a href="/index.html">System</a>
                 </div>
-            </nav>
-        </div>
-        <div id="side-nav" style="position:fixed">
-            <nav class="sidebar" style="height:100%;position:fixed">
-                <a></a>
-                <ul class="nav">
+                <div class="hamburger" id="hamburger-4" >
+                    <span class="line"></span>
+                    <span class="line"></span>
+                    <span class="line"></span>
+                </div>
+
+            </div>
+
+            <div class="list">
+                <ul class="tabs">
+                    <li>
+                        <a href="/index.html">实时舆情</a>
+                    </li>
                     <li class="active">
-                        <a href="#">热度分析</a>
+                        <a href="/analysis.html">舆情分析</a>
                     </li>
                     <li>
-                        <a href="#">来源分布</a>
+                        <a href="/custom.html">我的舆情</a>
                     </li>
-                    <li>
-                        <a href="#">搜索词分析</a>
+                    <li class="dropdown" style="float:right;">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            用户
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li class="dropdown-item">
+                                <a href="/user.html">账户信息</a>
+                            </li>
+                            <li class="dropdown-item">
+                                <a href="#">设置</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li class="dropdown-item">
+                                <a href="#">登出</a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
-            </nav>
+
+            </div>
         </div>
-        <div class="detailContent">
-            <div class="inner">
-                <iframe src="/analysisDetail.html" id="main"></iframe>
+
+
+        <div class="combine-nav">
+            <!--内容-->
+            <div class="content-nav" id="content-nav">
+                <div class="inner">
+                    <iframe src="/analysisDetail.html" id="iframepage" width="100%" height="600" frameborder="0" scrolling="auto"></iframe>
+                </div>
             </div>
         </div>
     </div>
+
+    <script type="text/javascript">
+        //标识iframe类型
+        var contentType = "推荐";
+
+        $(document).ready(function () {
+
+            someCustom();
+
+            //点击不同菜单项显示不同iframe
+            $(".sidebar a").click(function () {
+                //获得点击对象
+                var content = $(this).attr("data-content");
+
+                if (content != undefined) {
+                    contentType = content;
+
+                    $("#iframepage").attr("src", "/analysisDetail.html");
+                }
+
+            });
+        });
+
+        //自定义样式
+        function someCustom() {
+            $(".dataTables_wrapper .dataTables_paginate .paginate_button:hover").css("background", "rgb(249,249,249)");
+        }
+
+        //hover菜单显示切换
+        function changeHoverDir(content) {
+            for (var i = 0; i < content.length; i++) {
+                var temp=content.eq(i);
+
+                if (temp.hasClass("hoverdir")) {
+                    if (temp.hasClass("collapseMenu")) {
+                        var div = temp.children("div").eq(0);
+                        div.css("display", "none");
+                        var next = temp.next();
+
+                        //获得一个clone
+                        var clone=next.clone();
+                        clone.find("span").remove();
+                        clone.css("position","absolute");
+                        clone.css("padding","0px");
+                        //clone.removeClass();
+                        temp.append(clone);
+
+                        next.css("display", "none");
+                    }
+                    else {
+                        console.log(0);
+                        temp.find("p").wrap("<ul style='position:absolute'><li></li></ul>");
+                    }
+                }
+                else {
+                    if (temp.hasClass("collapseMenu")) {
+                        var div = temp.children("div").eq(0);
+                        div.css("display", "inline");
+                        temp.children("ul").remove();
+
+                        var next = temp.next();
+                        next.css("display",'');
+                    }
+                    else {
+                        temp.find("p").unwrap("<li></li>");
+                        temp.find("p").unwrap("<ul></ul>");
+                    }
+
+                }
+            }
+
+        }
+
+        //二级菜单显示切换
+        function changeSideBar(sideBar) {
+            if (sideBar.hasClass("side-active")) {
+                $("#collapseList").removeClass("in");
+                $(".collapseMenu").removeAttr("data-toggle");
+            }
+            else {
+                $(".collapseMenu").attr("data-toggle", "collapse");
+            }
+        }
+
+        //菜单滑动后样式显示
+        function changeContentSize(detailContent) {
+            if (detailContent.hasClass("content-active")) {
+                detailContent.css({
+                    "margin-left": "50px"
+                })
+            }
+            else {
+                detailContent.css({
+                    "margin-left": "200px"
+                })
+            }
+        }
+
+        function changeFrameHeight() {
+            var ifm = document.getElementById("iframepage");
+            ifm.height = document.documentElement.clientHeight;
+
+        }
+
+        window.onresize = function () {
+            changeFrameHeight();
+        }
+
+    </script>
 </body>
 
 </html>
