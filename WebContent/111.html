@@ -1,0 +1,504 @@
+<html>
+
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+    }
+
+    html,
+    body {
+        height: 100%
+    }
+
+    /* FOUR */
+
+    .hamburger .line {
+        width: 100%;
+        height: 3px;
+        background-color: #ecf0f1;
+        display: block;
+        margin: 4px auto;
+        -webkit-transition: all 0.3s ease-in-out;
+        -o-transition: all 0.3s ease-in-out;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .hamburger:hover {
+        cursor: pointer;
+    }
+
+    .button-active .line:nth-child(1),
+    .button-active .line:nth-child(3) {
+        width: 85%;
+    }
+
+    .button-active .line:nth-child(1) {
+        transform: translateX(3px) rotate(45deg);
+    }
+
+    .button-active .line:nth-child(3) {
+        transform: translateX(3px) rotate(-45deg);
+    }
+
+    .glyphicon:not(.glyphicon-chevron-right) {
+        font-size: 20px;
+    }
+
+    .top-nav {
+        width: 100%;
+        position: fixed;
+        background-color: rgb(0, 150, 136);
+    }
+
+    /*表头*/
+
+    .top-nav .top-header {
+        width: 200px;
+
+        -webkit-transition: all 0.1s ease-in-out;
+        -o-transition: all 0.1s ease-in-out;
+        transition: all 0.1s ease-in-out;
+    }
+
+    .top-nav .top-header .header-content {
+        width: 150px;
+        float: left;
+        text-align: center;
+        padding: 15px;
+
+    }
+
+    .top-nav .header-active {
+        position: absolute;
+
+        -webkit-transform: translateX(-150px);
+        -ms-transform: translateX(-150px);
+        -o-transform: translateX(-150px);
+        transform: translateX(-150px);
+    }
+
+    .top-nav .top-header .hamburger {
+        float: left;
+        height: 50px;
+        width: 50px;
+        padding: 15px;
+    }
+
+    .top-nav .top-header .hamburger:hover {
+        background: rgb(0, 99, 90);
+    }
+
+    .top-nav .top-header a {
+        font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+        font-weight: 500;
+        color: rgb(34, 45, 50);
+        text-decoration: none;
+    }
+
+    /*浮动列表项*/
+
+    .top-nav .list {
+        padding-left: 50px;
+    }
+
+    .top-nav .tabs li:not(.dropdown-item) {
+        float: left;
+        list-style-type: none;
+    }
+
+    .top-nav li a {
+        display: block;
+        font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+        font-weight: 500;
+        color: rgb(34, 45, 50);
+        padding: 15px;
+        text-decoration: none;
+    }
+
+    .top-nav ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        background-color: #f1f1f1;
+    }
+
+    /* 鼠标移动到选项上修改背景颜色 */
+
+    .top-nav li a:hover {
+        background-color: #555;
+        color: white;
+    }
+
+    /*下部*/
+
+    .combine-nav {
+        height: 100%;
+        padding-top: 50px;
+    }
+
+    .side-nav {
+        position: fixed;
+        height: 100%;
+        width: 200px;
+        background: rgb(34, 45, 50);
+        transition: width 0.1s;
+    }
+
+    .side-nav li {
+        word-break: keep-all;
+        /* 不换行 */
+        white-space: nowrap;
+        /* 不换行 */
+        /* 内容超出宽度时隐藏超出部分的内容 */
+    }
+
+    .combine-nav .side-active {
+        width: 50px;
+    }
+
+    .side-nav .sidebar ul {
+        list-style-type: none;
+    }
+
+    .side-nav .sidebar a {
+        font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+        color: white;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .side-nav .sidebar a:hover,
+    .side-nav .sidebar .active,
+    .side-nav .sidebar a:focus {
+        background: rgb(13, 18, 20);
+    }
+
+    .side-nav .sidebar a.hoverdir {
+        position: relative;
+    }
+
+    .side-nav .sidebar a.hoverdir>ul {
+        top: 0px;
+        padding: 10px;
+        left: 50px;
+        width: 150px;
+        display: none;
+        background: rgb(34, 45, 50);
+    }
+
+
+    .side-nav .sidebar a.hoverdir:hover>ul {
+        display: block;
+        animation: hideIndex 0.5s;
+    }
+
+    @keyframes hideIndex {
+        0% {
+            opacity: 0;
+            transform: translate(200px, 0);
+        }
+        100% {
+            opacity: 1;
+            transform: translate(0, 0)
+        }
+    }
+
+    .side-nav .sidebar #collapseList span {
+        visibility: hidden;
+    }
+
+    .side-nav .sidebar #collapseList li {
+        font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+        background-color: rgb(34, 45, 50);
+    }
+
+    .side-nav .sidebar span {
+        margin-right: 15px;
+    }
+
+    /*详细信息页面*/
+
+    .combine-nav .content-nav {
+        height: 100%;
+        margin-left: 200px;
+        background-color: rgb(238, 239, 241);
+
+        -webkit-transition: all 0.1s ease-in-out;
+        -o-transition: all 0.1s ease-in-out;
+        transition: all 0.1s ease-in-out;
+    }
+
+    .content-nav .inner {
+        height: 100%;
+        background-color: white;
+    }
+
+    .content-nav #iframepage {
+        height: 100%;
+        width: 100%;
+        border: none;
+    }
+</style>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Index</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <div id="content">
+        <!--顶部导航栏-->
+        <div class="top-nav">
+            <div class="top-header" style="float:left">
+                <div class="header-content">
+                    <a href="/index.html">System</a>
+                </div>
+                <div class="hamburger" id="hamburger-4">
+                    <span class="line"></span>
+                    <span class="line"></span>
+                    <span class="line"></span>
+                </div>
+
+            </div>
+
+            <div class="list">
+                <ul class="tabs">
+                    <li class="active">
+                        <a href="/index.html">实时舆情</a>
+                    </li>
+                    <li>
+                        <a href="#">舆情分析</a>
+                    </li>
+                    <li class="dropdown" style="float:right;">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            用户
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li class="dropdown-item">
+                                <a href="/user.html">账户信息</a>
+                            </li>
+                            <li class="dropdown-item">
+                                <a href="#">设置</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li class="dropdown-item">
+                                <a href="#">登出</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+
+
+        <div class="combine-nav">
+            <!--侧边导航栏-->
+            <div class="side-nav">
+                <nav class="sidebar">
+                    <ul class="nav">
+                        <li class="active">
+                            <a href="#" data-content="total">
+                                <span class="glyphicon glyphicon-signal"></span>
+
+                                <p style="display:inline;margin:10px 0 0">全部舆情</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="collapseMenu" data-toggle="collapse" href="#collapseList">
+                                <span class="glyphicon glyphicon-indent-left"></span>
+                                <div style="display:inline">
+                                    <p style="display: inline;margin:10px 0 0">分类舆情</p>
+                                    <span class="glyphicon glyphicon-chevron-right" style="margin:0 0 0 3em"></span>
+                                </div>
+                            </a>
+                            <ul id="collapseList" class="nav panel-collapse collapse">
+                                <li>
+                                    <a data-content="CJ" href="#">
+                                        <span class="glyphicon glyphicon-indent-left"></span>
+                                        <p style="display: inline;margin:10px 0 0">财经</p>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a data-content="JK" href="#">
+                                        <span class="glyphicon glyphicon-indent-left"></span>
+                                        <p style="display: inline;margin:10px 0 0">健康</p>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a data-content="JS" href="#">
+                                        <span class="glyphicon glyphicon-indent-left"></span>
+                                        <p style="display: inline;margin:10px 0 0">军事</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a data-content="custom" href="#">
+                                <span class="glyphicon glyphicon-map-marker"></span>
+                                <p style="display: inline;margin:10px 0 0">自定义舆情</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a data-content="collection" href="#">
+                                <span class="glyphicon glyphicon-bookmark"></span>
+                                <p style="display: inline;margin:10px 0 0">我的收藏</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a data-content="warning" href="#">
+                                <span class="glyphicon glyphicon-warning-sign"></span>
+                                <p style="display: inline;margin:10px 0 0">舆情预警</p>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <!--内容-->
+            <div class="content-nav" id="content-nav">
+                <div class="inner">
+                    <iframe src="/indexDetail.html" id="iframepage" width="100%" height="600" frameborder="0" scrolling="auto"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        //标识iframe类型
+        var contentType = "total";
+
+        $(document).ready(function () {
+
+            someCustom();
+
+            $(".hamburger").click(function () {
+                //iframe内容自适应
+                var detailContent = $('.content-nav:first');
+                detailContent.toggleClass("content-active");
+                changeContentSize(detailContent);
+
+                //标题
+                $(".top-header").toggleClass("header-active");
+
+                //侧边栏
+                var sidebar = $(".side-nav");
+                sidebar.toggleClass("side-active");
+                changeSideBar(sidebar);
+                $(".sidebar a").toggleClass("hoverdir");
+                changeHoverDir($(".sidebar a"));
+
+                //按钮
+                $(this).toggleClass("button-active");
+
+
+            });
+
+            //点击不同菜单项显示不同iframe
+            $(".sidebar a").click(function () {
+                //获得点击对象
+                var content = $(this).attr("data-content");
+
+                if (content != undefined) {
+                    contentType = content;
+
+                    $("#iframepage").attr("src", "/indexDetail.html");
+                }
+
+            });
+        });
+
+        //自定义样式
+        function someCustom() {
+            $(".dataTables_wrapper .dataTables_paginate .paginate_button:hover").css("background", "rgb(249,249,249)");
+        }
+
+        //hover菜单显示切换
+        function changeHoverDir(content) {
+            for (var i = 0; i < content.length; i++) {
+                var temp=content.eq(i);
+
+                if (temp.hasClass("hoverdir")) {
+                    if (temp.hasClass("collapseMenu")) {
+                        var div = temp.children("div").eq(0);
+                        div.css("display", "none");
+                        var next = temp.next();
+
+                        //获得一个clone
+                        var clone=next.clone();
+                        clone.find("span").remove();
+                        clone.css("position","absolute");
+                        clone.css("padding","0px");
+                        //clone.removeClass();
+                        temp.append(clone);
+
+                        next.css("display", "none");
+                    }
+                    else {
+                        console.log(0);
+                        temp.find("p").wrap("<ul style='position:absolute'><li></li></ul>");
+                    }
+                }
+                else {
+                    if (temp.hasClass("collapseMenu")) {
+                        var div = temp.children("div").eq(0);
+                        div.css("display", "inline");
+                        temp.children("ul").remove();
+
+                        var next = temp.next();
+                        next.css("display",'');
+                    }
+                    else {
+                        temp.find("p").unwrap("<li></li>");
+                        temp.find("p").unwrap("<ul></ul>");
+                    }
+
+                }
+            }
+
+        }
+
+        //二级菜单显示切换
+        function changeSideBar(sideBar) {
+            if (sideBar.hasClass("side-active")) {
+                $("#collapseList").removeClass("in");
+                $(".collapseMenu").removeAttr("data-toggle");
+            }
+            else {
+                $(".collapseMenu").attr("data-toggle", "collapse");
+            }
+        }
+
+        //菜单滑动后样式显示
+        function changeContentSize(detailContent) {
+            if (detailContent.hasClass("content-active")) {
+                detailContent.css({
+                    "margin-left": "50px"
+                })
+            }
+            else {
+                detailContent.css({
+                    "margin-left": "200px"
+                })
+            }
+        }
+
+        function changeFrameHeight() {
+            var ifm = document.getElementById("iframepage");
+            ifm.height = document.documentElement.clientHeight;
+
+        }
+
+        window.onresize = function () {
+            changeFrameHeight();
+        }
+
+    </script>
+</body>
+
+</html>

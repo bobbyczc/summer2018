@@ -1,0 +1,28 @@
+body{
+	background-color: #3e4d74;
+	width:100%
+}
+
+.container{
+	
+	height£º 100%;
+	margin-top:10%;
+}
+
+#frame{
+	background-color: #778899;
+	opacity:0.7
+}
+
+.nav{
+	margin-top:20%;
+	color: white;
+}
+#loginTab{
+	background-color:#3e4d74;
+	border:1px solid #3e4d74;
+	
+}
+#registerTab{
+	border:1px solid white;
+}

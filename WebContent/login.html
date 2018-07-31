@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="js/jquery-3.3.1.js"></script>
+<script src="js/bootstrap.js"></script>
+<link rel="stylesheet" href="css/login.css"></link>
+<link rel="stylesheet" href="css/bootstrap.min.css"></link>
+<title>登录</title>
+</head>
+<body style="background-color:#3e4d74;">
+	<div class="container">
+	<div id="frame" class="col-md-6 col-md-offset-3">
+		<!--<h1 class="text-center">个性化网络舆情检测系统</h1>-->
+		<div class="row col-md-8 col-md-offset-2">
+			<div class=" nav col-md-6" id="loginTab" onclick="changeToLogin()">
+				<h4 class="text-center">登录</h4>
+			</div>
+			<div class="nav col-md-6" id="registerTab" onclick="changeToRegister()">
+				<h4 class="text-center">注册</h4>
+			</div>
+		</div>
+		<div class="form row col-md-8 col-md-offset-2" id="loginForm" style="margin-top: 10%">
+			<div class="form-horizontal" id="login-dorm">
+				<div class="form-group">
+					<input class="form-control required" type="text" placeholder="请输入手机号或邮箱" id="username" autofocus="autofocus" maxlength="20"/>				
+				</div>
+				<div class="form-group">
+					<input class="form-control required" type="password" placeholder="请输入密码" id="password" maxlength="10">
+				</div>
+				<div id="errmsg">
+					<h5 class="text-warning"></h5>
+				</div>
+				<div class="form-group col-md-offset-6">
+					<button type="submit" class="btn btn-success pull-right" onclick="postUserInfo()">登录</button>
+				</div>
+			</div>
+		</div>
+		<div class="form row col-md-8 col-md-offset-2" id="registerForm" style="display:none;margin-top: 10%;">
+			<div class="form-horizontal" id="login-dorm">
+				<div class="form-group">
+					<input class="form-control required" type="text" placeholder="请输入手机号" id="new-phone" autofocus="autofocus" maxlength="20"/>				
+				</div>
+				<div class="form-group">
+					<input class="form-control required" type="text" placeholder="请输入邮箱" id="new-email" maxlength="20"/>				
+				</div>
+				<div class="form-group">
+					<i class="fa fa-lock fa-lg"></i>
+					<input class="form-control required" type="password" placeholder="请输入密码" id="new-password" maxlength="10">
+				</div>
+				<div class="form-group">
+					<i class="fa fa-lock fa-lg"></i>
+					<input class="form-control required" type="password" placeholder="请输入密码" id="confirm-password" maxlength="10">
+				</div>
+				<div id="register-errmsg">
+					<h5 class="text-warning"></h5>
+				</div>
+				<div class="form-group col-md-offset-6">
+					<button type="submit" class="btn btn-success pull-right" onclick="register()">注册</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+</body>
+<script src="js/api/login.js"> </script>
+</html>
+
+

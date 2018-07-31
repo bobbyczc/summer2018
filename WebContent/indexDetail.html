@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>detail</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="assets/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="assets/css/dataTables.bootstrap.css" rel="stylesheet">
+
+
+</head>
+
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+    }
+
+    html,
+    body {
+        background: rgb(248, 248, 248);
+        height: 100%
+    }
+
+    .content {
+        height: 100%;
+        background: white;
+        padding: 20px;
+    }
+
+    td.details-control {
+        background: url('show.png') no-repeat center center;
+        background-size: 1em;
+        cursor: pointer;
+    }
+
+    tr.shown td.details-control {
+
+        background: url('hide.png') no-repeat center center;
+        background-size: 1em;
+    }
+</style>
+
+<body>
+    <div class="content">
+        <table id="detailTable" class="display" width="100%">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>新闻标题</th>
+                    <th>来源</th>
+                    <th>日期</th>
+                    <th>关联程度</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody id="table">
+
+            </tbody>
+        </table>
+    </div>
+
+</body>
+<script src="assets/js/jquery-1.10.2.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="assets/js/jquery.dataTables.min.js"></script>
+<script src="http://cdn.datatables.net/plug-ins/28e7751dbec/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+<script src="assets/js/jquery.tmpl.min.js"></script>
+
+<script id="table_demo" type="text/x-jquery-tmpl">
+    <tr>
+        <td class="details-control" id="${id}"></td>
+        <td><a href="${link}">${title}</a></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+</script>
+<script>
+    function showChild(row, tr) {
+
+
+        var firstTd = $(row.node()).children("td").get(0);
+        var id = $(firstTd).attr("id");
+        var url = "http://localhost:8080/NewsGetter/servlet/detailInfo?id=" + id;
+        if (row.child() == undefined) {
+            $.ajax({
+                //请求方式  
+                type: "GET",
+                //文件位置  
+                url: url,
+                dataType: "json",
+
+                success: function (data) {
+                    var content = '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
+                        '<tr>' +
+                        '<td style="white-space: nowrap;">内容概要:</td>' +
+                        '<td rowspan="5">' + data.content + '...</td>' +
+                        '</tr>' +
+                        '</table>';
+
+                    row.child(content).show();
+                    tr.addClass('shown');
+                },
+                error: function () {
+                    alert("Error!");
+                }
+            });
+        } else {
+            row.child.show();
+            tr.addClass('shown');
+        }
+    }
+
+    function someCustom(){
+            $(".dataTables_wrapper .dataTables_paginate .paginate_button").hover(function(){
+                $(this).css("background","rgb(249,249,249)");
+                $(this).css("border","none");
+            });
+        }
+
+    $(document).ready(function () {
+        var contentType=window.parent.contentType;
+        var url = "http://localhost:8080/NewsGetter/servlet/newsInfo?type=123";
+        $.get(url, function (data) {
+
+            $('#table_demo').tmpl(data).appendTo('#table');
+            $('#detailTable').DataTable(
+                {
+                    "columnDefs": [
+                        { "orderable": false, "targets": 0 }
+                    ],
+                    "order": [[1, 'asc']]
+                }
+            );
+            someCustom();
+        });
+
+
+        $('#detailTable tbody').on('click', 'td.details-control', function () {
+            var table = $('#detailTable').DataTable();
+            var tr = $(this).closest('tr');
+            var row = table.row(tr);
+
+            if (row.child.isShown()) {
+                // This row is already open - close it
+                row.child.hide();
+                tr.removeClass('shown');
+            }
+            else {
+                // Open this row
+                showChild(row, tr);
+
+            }
+        });
+    });
+
+</script>
+
+</html>
