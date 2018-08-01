@@ -7,8 +7,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.eclipse.jdt.internal.compiler.apt.util.EclipseFileObject;
-
 import model.ResponseEntity;
 import service.UserService;
 
@@ -42,6 +40,7 @@ public class ChangePsw extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
+		response.setHeader("content-type","text/html;charset=UTF-8");
 		int userid = Integer.parseInt(request.getParameter("userid"));
 		String newpass = request.getParameter("newpsw");
 		System.out.println(userid+ " "+ newpass);

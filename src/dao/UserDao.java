@@ -7,7 +7,6 @@ import java.sql.SQLException;
 
 import javax.jws.soap.SOAPBinding.Use;
 
-import org.apache.catalina.tribes.transport.RxTaskPool;
 
 import model.User;
 
