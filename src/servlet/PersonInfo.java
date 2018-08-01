@@ -34,6 +34,7 @@ public class PersonInfo extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
+		response.setHeader("content-type","text/html;charset=UTF-8");
 		UserService service = new UserService();
 		int userid = Integer.parseInt(request.getParameter("userid"));
 		User user = service.getUserById(userid);

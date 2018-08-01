@@ -40,7 +40,7 @@ public class MediaServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		String keyword = request.getParameter("keyword");
 		NewsDao dao = new NewsDao();
-		List<News> list = dao.getNewsByKeyword(keyword);
+		List<News> list = dao.getAllNewsByKeyword(keyword);
 		int total = list.size();
 		HashMap<String, Integer> newscount = new HashMap<>();
 		for(News n:list) {

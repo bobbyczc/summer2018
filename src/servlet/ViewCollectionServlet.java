@@ -1,8 +1,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.util.HashMap;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,22 +8,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import dao.NewsDao;
+import dao.UserActionDao;
+import model.News;
 import model.ResponseEntity;
 
 /**
- * Servlet implementation class CalHotValueServlet
+ * Servlet implementation class ViewCollectionServlet
  */
-@WebServlet("/CalHotValueServlet")
-public class CalHotValueServlet extends HttpServlet {
+@WebServlet("/ViewCollectionServlet")
+public class ViewCollectionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CalHotValueServlet() {
+    public ViewCollectionServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,24 +36,25 @@ public class CalHotValueServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
-		response.setHeader("content-type","text/html;charset=UTF-8");
-		String keyword = request.getParameter("keyword");
-		String startDate = request.getParameter("startDate");
-		String endDate = request.getParameter("endDate");
-		System.out.println(keyword+" "+startDate+" "+endDate);
+		String userid = request.getParameter("userid");
+		UserActionDao actionDao = new UserActionDao();
 		NewsDao dao = new NewsDao();
-		HashMap<String, Float> info = dao.getKeywordHotList(keyword, startDate, endDate);
-		Gson gson = new GsonBuilder().serializeSpecialFloatingPointValues().create();
+		String collectionStr = actionDao.getUserCollectionsStr(Integer.parseInt(userid));
+		String[] nids = collectionStr.split(",");
+		StringBuilder builder = new StringBuilder();
 		ResponseEntity entity = new ResponseEntity();
-		if(info.size()>0) {
-			entity.setStatus(1);
-			entity.setMessage("获取成功");
-			entity.setData(gson.toJson(info));
-		}else {
-			entity.setStatus(0);
-			entity.setMessage("获取失败");
-			entity.setData("无数据");
+		Gson gson = new Gson();
+		builder.append("[");
+		for(String id:nids) {
+			News news = dao.getNewsById(Integer.parseInt(id));
+			builder.append(gson.toJson(news));
+			builder.append(",");
 		}
+		builder.deleteCharAt(builder.lastIndexOf(","));
+		builder.append("]");
+		entity.setStatus(1);
+		entity.setMessage("success");
+		entity.setData(builder.toString());
 		response.getWriter().write(entity.toString());
 	}
 

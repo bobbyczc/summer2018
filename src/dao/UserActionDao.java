@@ -22,12 +22,11 @@ public class UserActionDao extends BaseDao{
 	 */
 	public String getUserCollectionsStr(int userid){
 		ResultSet resultSet;
-		String news_collected =null;
+		String news_collected = null;
 		try {
-			String sql = "select news_collected from user_action where user_id = ?";
+			String sql = "select news_collected from user_action where user_id ="+ userid;
 			conn = this.getConn();		
 			pstm = conn.prepareStatement(sql);
-			pstm.setInt(1, userid);
 			resultSet = pstm.executeQuery();
 			if(resultSet.next()) {
 				news_collected = resultSet.getString("news_collected");
