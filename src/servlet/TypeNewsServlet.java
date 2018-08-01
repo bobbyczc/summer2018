@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
 import dao.NewsDao;
 import model.News;
 import model.ResponseEntity;
@@ -41,10 +43,11 @@ public class TypeNewsServlet extends HttpServlet {
 		System.out.println(type);
 		ResponseEntity entity = new ResponseEntity();
 		List<News> newss = dao.getNewsByType(type);
+		Gson gson = new Gson();
 		if(!newss.isEmpty()) {
 			builder.append("[");
 			for(News n:newss){
-				builder.append(n.toString());
+				builder.append(gson.toJson(n));
 				builder.append(",");
 			}
 			builder.deleteCharAt(builder.lastIndexOf(","));
