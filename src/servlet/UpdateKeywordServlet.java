@@ -1,31 +1,27 @@
 package servlet;
 
 import java.io.IOException;
-import java.util.HashMap;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import dao.NewsDao;
+import dao.UserActionDao;
 import model.ResponseEntity;
+import utils.TransUtil.UpdateMode;
 
 /**
- * Servlet implementation class CalHotValueServlet
+ * Servlet implementation class UpdateKeywordServlet
  */
-@WebServlet("/CalHotValueServlet")
-public class CalHotValueServlet extends HttpServlet {
+@WebServlet("/UpdateKeywordServlet")
+public class UpdateKeywordServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CalHotValueServlet() {
+    public UpdateKeywordServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,24 +33,19 @@ public class CalHotValueServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
-		response.setHeader("content-type","text/html;charset=UTF-8");
+		int userid = Integer.parseInt(request.getParameter("userid"));
 		String keyword = request.getParameter("keyword");
-		String startDate = request.getParameter("startDate");
-		String endDate = request.getParameter("endDate");
-		System.out.println(keyword+" "+startDate+" "+endDate);
-		NewsDao dao = new NewsDao();
-		HashMap<String, Float> info = dao.getKeywordHotList(keyword, startDate, endDate);
-		Gson gson = new GsonBuilder().serializeSpecialFloatingPointValues().create();
+		String mode = request.getParameter("mode");
+		UserActionDao actionDao = new UserActionDao();
 		ResponseEntity entity = new ResponseEntity();
-		if(info.size()>0) {
-			entity.setStatus(1);
-			entity.setMessage("获取成功");
-			entity.setData(gson.toJson(info));
-		}else {
-			entity.setStatus(0);
-			entity.setMessage("获取失败");
-			entity.setData("无数据");
+		if(mode.equals("add")) {
+			actionDao.updateKeywords(userid, keyword, UpdateMode.ADD);
+		}else if(mode.equals("delete")){
+			actionDao.updateKeywords(userid, keyword, UpdateMode.DELETE);
 		}
+		entity.setStatus(1);
+		entity.setMessage("success");
+		entity.setData("\""+keyword+"\"");
 		response.getWriter().write(entity.toString());
 	}
 

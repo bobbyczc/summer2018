@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
 import dao.NewsDao;
 import model.News;
 import model.ResponseEntity;
@@ -37,14 +39,24 @@ public class TypeNewsServlet extends HttpServlet {
 		NewsDao dao = new NewsDao();
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
+		response.setHeader("content-type","text/html;charset=UTF-8");
 		String type = request.getParameter("type");
+//		String type = new String(typestr.getBytes("ISO-8859-1"),"UTF-8");
+		String pagestr = request.getParameter("page");
+		int page = 1;
+		if(pagestr!=null) {
+			page = Integer.parseInt(pagestr);
+		}
 		System.out.println(type);
+//		System.out.println(type);
+		System.out.println(page);
 		ResponseEntity entity = new ResponseEntity();
-		List<News> newss = dao.getNewsByType(type);
+		List<News> newss = dao.getNewsByType(type,page);
+		Gson gson = new Gson();
 		if(!newss.isEmpty()) {
 			builder.append("[");
 			for(News n:newss){
-				builder.append(n.toString());
+				builder.append(gson.toJson(n));
 				builder.append(",");
 			}
 			builder.deleteCharAt(builder.lastIndexOf(","));

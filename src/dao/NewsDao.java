@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import model.News;
+import model.User;
 
 public class NewsDao extends BaseDao{
 	private Connection conn;
@@ -24,13 +25,13 @@ public class NewsDao extends BaseDao{
 	 * @param type
 	 * @return
 	 */
-	public List<News> getNewsByType(String type){
+	public List<News> getNewsByType(String type,int page){
 		List<News> list = new ArrayList<>();
 		String sql;
 		ResultSet rs;
 		try {
 			conn = this.getConn();
-			sql = "select * from news where type = ?";
+			sql = "select * from news where type = ? order by date desc limit "+(0+(page-1)*8)+","+ page*8;
 			pstm = conn.prepareStatement(sql);
 			pstm.setString(1, type);
 			rs = pstm.executeQuery();
@@ -108,13 +109,16 @@ public class NewsDao extends BaseDao{
 	 * @param keyword
 	 * @return
 	 */
-	public List<News> getNewsByKeyword(String keyword){
+	public List<News> getNewsByKeyword(String keyword, int page){
 		List<News> list = new ArrayList<>();
 		String sql;
 		ResultSet rs;
 		try {
 			conn = this.getConn();
-			sql = "select * from news where content like \'%"+keyword+"%\'";
+			sql = "select * from news "
+					+ "where content like \'%"+keyword+"%\' "
+							+ "order by date desc "
+							+ "limit "+(0+(page-1)*8)+","+ page*8;
 			pstm = conn.prepareStatement(sql);
 			rs = pstm.executeQuery();
 			while(rs.next()) {
@@ -139,8 +143,48 @@ public class NewsDao extends BaseDao{
 		}
 		return list;
 	}
-	
-	
+	/**
+	 * 根据关键词获取全部新闻
+	 * @param keyword
+	 * @return
+	 */
+	public List<News> getAllNewsByKeyword(String keyword){
+		List<News> list = new ArrayList<>();
+		String sql;
+		ResultSet rs;
+		try {
+			conn = this.getConn();
+			sql = "select * from news "
+					+ "where content like \'%"+keyword+"%\' ";
+			pstm = conn.prepareStatement(sql);
+			rs = pstm.executeQuery();
+			while(rs.next()) {
+				News news = new News();
+				System.out.println(rs.getInt("id"));
+				news.setId(rs.getInt("id"));
+				news.setUrl(rs.getString("url"));
+				news.setType(rs.getString("type"));
+				news.setTitle(rs.getString("title"));
+				news.setContent(rs.getString("content"));
+				news.setSource(rs.getString("source"));
+				news.setDate(rs.getString("date"));
+				list.add(news);
+			}
+			conn.close();
+			pstm.close();
+			rs.close();
+			
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
+	/**
+	 * 根据时间或者关键词获取新闻条数
+	 * @param parm
+	 * @return
+	 */
 	private int getNewsCountByTimeOrKeyword(String[] parm) {
 		int result = 0;
 		String sql = null;
@@ -256,6 +300,7 @@ public class NewsDao extends BaseDao{
 			String sql = "select * from news where id = ?";
 			conn = this.getConn();
 			pstm = conn.prepareStatement(sql);
+			pstm.setInt(1, newsid);
 			rs = pstm.executeQuery();
 			if(rs.next()) {
 				news.setId(rs.getInt("id"));

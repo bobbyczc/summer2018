@@ -22,10 +22,9 @@ public class TransUtil {
 		StringBuilder sb = new StringBuilder();
 		for(String s: list) {
 			sb.append(s);
-			if(!s.equals(list.get(list.size()-1))) {
-				sb.append(",");
-			}
+			sb.append(",");
 		}
+		sb.deleteCharAt(sb.lastIndexOf(","));
 		return sb.toString();
 	}
 }
