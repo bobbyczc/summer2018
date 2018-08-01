@@ -257,7 +257,7 @@
         <div class="top-nav">
             <div class="top-header" style="float:left">
                 <div class="header-content">
-                    <a href="/index.html">System</a>
+                    <a href="index.html">System</a>
                 </div>
                 <div class="hamburger" id="hamburger-4">
                     <span class="line"></span>
@@ -270,13 +270,13 @@
             <div class="list">
                 <ul class="tabs">
                     <li class="active">
-                        <a href="/index.html">实时舆情</a>
+                        <a href="index.html">实时舆情</a>
                     </li>
                     <li>
-                        <a href="/analysis.html">舆情分析</a>
+                        <a href="analysis.html">舆情分析</a>
                     </li>
                     <li>
-                        <a href="/custom.html">我的舆情</a>
+                        <a href="custom.html">我的舆情</a>
                     </li>
                     <li class="dropdown" style="float:right;">
                         <a href="#" id="user" class="dropdown-toggle" data-toggle="dropdown">
@@ -284,7 +284,7 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-right">
                             <li class="dropdown-item">
-                                <a href="/user.html">账户信息</a>
+                                <a href="user.html">账户信息</a>
                             </li>
                             <li class="dropdown-item">
                                 <a href="#">设置</a>
@@ -354,7 +354,7 @@
             <!--内容-->
             <div class="content-nav" id="content-nav">
                 <div class="inner">
-                    <iframe src="/indexDetail.html" id="iframepage" width="100%" height="600" frameborder="0" scrolling="auto"></iframe>
+                    <iframe src="./indexDetail.html" id="iframepage" width="100%" height="600" frameborder="0" scrolling="auto"></iframe>
                 </div>
             </div>
         </div>
@@ -402,7 +402,7 @@
                 if (content != undefined) {
                     contentType = content;
 
-                    $("#iframepage").attr("src", "/indexDetail.html");
+                    $("#iframepage").attr("src", "./indexDetail.html");
                 }
 
             });
@@ -412,7 +412,7 @@
             localStorage.removeItem("userid");
             localStorage.removeItem("username");
 
-            window.location.href="/login.html";
+            window.location.href="login.html";
         }
 
         //自定义样式

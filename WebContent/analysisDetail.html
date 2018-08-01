@@ -23,12 +23,12 @@ body {
 }
 
 /*隐藏滚动条*/
-html {
+html{
 	-ms-overflow-style: none;
 	overflow: -moz-scrollbars-none;
 }
 
-html::-webkit-scrollbar {
+html::-webkit-scrollbar{
 	width: 0px
 }
 
@@ -61,6 +61,25 @@ h5 {
 	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
 	border-color: #dedede;
 }
+
+#searchBar{
+	border-color:#f2f2f2;
+	border-radius:0px;
+	display:inline-block;
+	color:black;
+	width:200px;
+	height:100%;
+}
+#searchButton{
+	display:inline-block;
+	height:100%;
+	width:70px;
+	vertical-align:top;
+}
+
+.headerButton{
+	margin-left:20px;
+}
 </style>
 </head>
 
@@ -71,7 +90,21 @@ h5 {
 
 			<div class="totalHeader"
 				style="width:100%;background:rgb(250,250,250);margin-bottom:20px">
-				<h3>习近平</h3>
+				<div style="padding:10px 10px 10px 30px;width:100%;height:60px;">
+					<input id="searchBar" type="text" class="form-control" style="font-size:20px">
+
+					<button type="button" class="btn btn-warning headerButton">
+						<span class="glyphicon glyphicon-search" style="padding-right:5px">
+						</span>
+						搜索
+					</button>
+					
+					<button type="button" class="btn btn-info headerButton">
+						<span class="glyphicon glyphicon-heart-empty" style="padding-right:5px">
+						</span> 关注
+					</button>
+				</div>
+				
 			</div>
 			<!--热度指数趋势模块-->
 			<div class="heat">
@@ -106,8 +139,8 @@ h5 {
 
 						<div class="heatPic">
 							<div class="chart-box" id="heatValue"
-								style="width: 60%;height:400px;"></div>
-							<div class="side-info"></div>
+								style="width: 58%;margin-right:2%;height:400px;display:inline-block;border-right:solid 1px rgb(227, 227, 226)"></div>
+							<div class="side-info" style="width:38%;height:400px;display:inline-block"></div>
 						</div>
 					</div>
 				</div>
@@ -162,8 +195,8 @@ h5 {
 						<div class="masonry-container">
 							<div class="heatPic">
 								<div class="chart-box" id="sourcePie"
-									style="width: 60%;height:400px;"></div>
-								<div class="side-info"></div>
+									style="width: 58%;margin-right:2%;height:400px;display:inline-block;border-right:solid 1px rgb(227, 227, 226)"></div>
+								<div class="side-info" style="width:38%;height:400px;display:inline-block;overflow:auto"></div>
 							</div>
 						</div>
 					</div>
@@ -189,7 +222,7 @@ h5 {
 						class="panel-collapse collapse panel-body in">
 						<div class="heatPic">
 							<div class="chart-box" id="wordCloud"
-									style="width: 100%;height:400px;"></div>
+								style="width: 100%;height:300px;"></div>
 						</div>
 					</div>
 				</div>
@@ -210,7 +243,8 @@ h5 {
 					<div id="collapseList6"
 						class="panel-collapse collapse panel-body in">
 						<div class="heatPic">
-							<img src="img/5.jpg" style="width: 100%" />
+							<div class="chart-box" id="relativeWord"
+								style="width: 100%;height:300px;"></div>
 						</div>
 					</div>
 				</div>
@@ -230,33 +264,35 @@ h5 {
 
 <!-- div模块模板 -->
 <script id="div_demo" type="text/x-jquery-tmpl">
-    <div id="${id}" class="card-box col-md-3 col-sm-6">
-            <div class="card">
-                <div class="content">
-                    <h5 class="title">
-                        <a href="#" title="${title}">${title}.replace(/[\r\n]/g,"")).</a>
-                    </h5>
-                    <p class="description">${content}.substring(0,100)</p>
-
-                    <p class="description">${date}</p>
-                </div>
-
-                <div class="footer" style="padding-top:10px">
-                    <p class="description" style="display: inline">#${source}</p>
-                    <div class="action">
-                        <button type="button" button-type="book" class="btn btn-primary btn-xs" onclick="changeIconType(this)">
-                            <span class="glyphicon glyphicon-star-empty"></span> 收藏
-                        </button>
-                        <button type="button" button-type="like" class="btn btn-primary btn-xs" onclick="changeIconType(this)">
-                            <span class="glyphicon glyphicon-heart-empty"></span> 关注
-                        </button>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
+    <div class="card-container active-container">
+		{{each(i,news) data}}
+			<div id="${news.id}" class="card-box col-md-3 col-sm-6">
+					<div class="card">
+						<div class="content">
+							<h5 class="title">
+								<a href="${news.url}" title="${news.title}">${news.title.replace(/\s/g,"")}</a>
+							</h5>
+							<p class="description">${news.content.replace(/\s/g,"").substring(0,100)}...</p>
+		
+							<p class="description">${news.date}</p>
+						</div>
+		
+						<div class="footer" style="padding-top:10px">
+							<p class="description" style="display: inline">#${news.source}</p>
+							<div class="action">
+								<button type="button" button-type="book" class="btn btn-primary btn-xs" onclick="changeIconType(this)">
+									<span class="glyphicon glyphicon-star-empty"></span> 收藏
+								</button>
+							</div>
+		
+						</div>
+					</div>
+			</div>
+		{{/each}}
+	</div>
 </script>
+
+
 
 <!--分页菜单-->
 <script>
@@ -324,7 +360,6 @@ h5 {
 		var optionYSeries = [];
 		var optionSeries = [];
 
-		console.log(flows);
 		var startTime = new Date(x[0]);
 		var endTime = new Date(x[x.length - 1]);
 
@@ -438,63 +473,28 @@ h5 {
 		var chart = echarts.init(ele);
 
 		var option = {
+			tooltip : {},
 			series : [ {
 				type : 'wordCloud',
-
-				// The shape of the "cloud" to draw. Can be any polar equation represented as a
-				// callback function, or a keyword present. Available presents are circle (default),
-				// cardioid (apple or heart shape curve, the most known polar equation), diamond (
-				// alias of square), triangle-forward, triangle, (alias of triangle-upright, pentagon, and star.
-
-				shape : 'circle',
-
-				// A silhouette image which the white area will be excluded from drawing texts.
-				// The shape option will continue to apply as the shape of the cloud to grow.
-
-				maskImage : maskImage,
-
-				// Folllowing left/top/width/height/right/bottom are used for positioning the word cloud
-				// Default to be put in the center and has 75% x 80% size.
-
-				left : 'center',
-				top : 'center',
-				width : '70%',
-				height : '80%',
-				right : null,
-				bottom : null,
-
-				// Text size range which the value in data will be mapped to.
-				// Default to have minimum 12px and maximum 60px size.
-
-				sizeRange : [ 12, 60 ],
-
-				// Text rotation range and step in degree. Text will be rotated randomly in range [-90, 90] by rotationStep 45
-
+				gridSize : 8,
+				size : [ '80%', '100%' ],
+				sizeRange : [ 16, 48 ],
 				rotationRange : [ -90, 90 ],
 				rotationStep : 45,
-
-				// size of the grid in pixels for marking the availability of the canvas
-				// the larger the grid size, the bigger the gap between words.
-
-				gridSize : 8,
-
-				// set to true to allow word being draw partly outside of the canvas.
-				// Allow word bigger than the size of the canvas to be drawn
-				drawOutOfBound : false,
-
-				// Global text style
+				width: '100%',
+        		height: '100%',
+				autoSize : {
+					enable : true,
+					minSize : 16
+				},
 				textStyle : {
 					normal : {
-						fontFamily : 'sans-serif',
-						fontWeight : 'bold',
-						// Color can be a callback function or a color string
 						color : function() {
-							// Random color
-							return 'rgb(' + [
+							return 'rgb('
+								+ [ Math.round(Math.random() * 160),
 									Math.round(Math.random() * 160),
-									Math.round(Math.random() * 160),
-									Math.round(Math.random() * 160)
-								].join(',') + ')';
+									Math.round(Math.random() * 160) ]
+									.join(',') + ')';
 						}
 					},
 					emphasis : {
@@ -502,17 +502,7 @@ h5 {
 						shadowColor : '#333'
 					}
 				},
-
-				// Data is an array. Each array item must have name and value property.
-				data : [ {
-					name : 'Farrah Abraham',
-					value : 366,
-					// Style of single text
-					textStyle : {
-						normal : {},
-						emphasis : {}
-					}
-				} ]
+				data : datas
 			} ]
 		};
 
@@ -542,6 +532,7 @@ h5 {
 				return Date.parse(a.name) - Date.parse(b.name);
 			});
 			drawHeatValue(document.getElementById('heatValue'), times, flows, startTime, endTime);
+			drawTop5HeatTable(flows);
 		} else if (type == "media") {
 			var datas = new Array();
 			var legends = new Array();
@@ -558,20 +549,90 @@ h5 {
 				datas.push(tempData);
 			}
 			drawSourcePie(document.getElementById("sourcePie"), datas, legends);
+			drawSourcePieValue(datas);
 		} else if (type == "wordCloud") {
+			var datas = new Array();
+
+			for (var item in resultJson.data) {
+				var word = item;
+				var frequency = resultJson.data[word];
+
+				var tempData = new Object();
+				tempData['name'] = word;
+				tempData['value'] = frequency;
+
+				datas.push(tempData);
+			}
 			
-			drawWordCloud(document.getElementById("wordCloud",datas));
+			drawWordCloud(document.getElementById("wordCloud"), datas);
 		}
 
 
 	}
 </script>
 
+
+<script>
+	var drawTop5HeatTable=function(data){
+		var data=data.sort(function(a,b){
+			return b.value[1]-a.value[1];
+		})
+		var table = '<table class="table table-hover">' +
+			'<thead>' +
+			'<tr>' +
+			'<th colspan="2">热度爆发时间TOP5</th>' +
+			'</tr>' +
+			'<tr>' +
+			'<th>时间</th>' +
+			'<th>热度指数</th>' +
+			'</tr>' +
+			'</thead>'+
+			'<tbody>';
+
+		for(var i=0;i<(data.length>5?5:data.length);i++){
+			var time=data[i].value[0];
+			var value=data[i].value[1];
+			
+			var tableRow="<tr><td>"+time+"</td><td>"+value+"</td></tr>";
+			table+=tableRow;
+		}
+		table+="</tbody></table>";
+		$(".side-info").eq(0).append($(table));
+	}
+	
+	var drawSourcePieValue=function(data){
+		var data=data.sort(function(a,b){
+			return b.value-a.value;
+		});
+		var table = '<table class="table table-hover">' +
+			'<thead>' +
+			'<tr>' +
+			'<th colspan="3">媒体来源</th>' +
+			'</tr>' +
+			'<tr>' +
+			'<th>媒体</th>' +
+			'<th>舆情贡献量</th>' +
+			'<th>占比</th>'
+			'</tr>' +
+			'</thead>'+
+			'<tbody>';
+			
+		for(var i=0;i<(data.length);i++){
+			var time=data[i].name;
+			var value=data[i].value;
+			
+			var tableRow="<tr><td>"+time+"</td><td></td><td>"+(value*100).toFixed(2)+"%</td></tr>";
+			table+=tableRow;
+		}
+		$(".side-info").eq(1).append($(table));
+	}
+</script>
 <script>
 	var changeTitleSize = function() {
 		var tempWidth = $(".content").eq(0).width();
 		$("h5").css("width", tempWidth);
 	}
+	
 
 	var changeIconType = function(button) {
 		var thisButton = $(button);
@@ -587,7 +648,7 @@ h5 {
 	}
 	//新闻标题大小随页面大小变化而变化
 	$(window).resize(changeTitleSize);
-
+	
 	function formatTime(date) {
 		var year = date.getFullYear();
 		var month = date.getMonth() + 1,
@@ -643,6 +704,12 @@ h5 {
 		var json = JSON.parse(jsonString);
 		draw("media", json, null, null);
 	}
+
+	var getWordCloud = function() {
+		var jsonString = '{"status":1,"message":"success","data":{"疫苗":633,"公司":239,"月":264,"管理":111,"长生":208,"长春":205,"疾控中心":78,"工作":138,"百白破":130,"药品":95,"技术":65,"狂犬":269,"生物":129,"信息":102,"人用":72,"责任":86,"未":80,"火箭":78,"中":126,"武汉":116,"发展":69,"涉事":87,"企业":134,"服务":89,"监督":77,"预防":78,"合格":74,"中心":161,"公务":69,"高温":67,"接种":162,"批次":108,"国家":157,"采购":85,"发布":78,"控制":77,"日":212,"狂犬病":193,"生产":159,"有限":120,"消息":71,"研究":87,"称":71,"数据":76,"年":151,"相关":73,"时":73,"公务员":67,"中国":129,"�":124}}';
+		var json = JSON.parse(jsonString);
+		draw("wordCloud", json, null, null);
+	}
 	$().ready(function() {
 		//获得父页面定义的iframe类型
 		var contentType = window.parent.contentType;
@@ -667,6 +734,9 @@ h5 {
 
 		getHeatValue();
 		getSourcePie();
+		getWordCloud();
+		$(".side-info td").css("text-align","center");
+		$(".side-info th").css("text-align","center");
 		$("#time1").change(getHeatValue);
 	});
 </script>

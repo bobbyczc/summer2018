@@ -231,6 +231,7 @@
         var originUrl = url + "&page=" + "1";
         $.get(originUrl, function (data) {
             var dataJson = JSON.parse(data);
+            console.log(dataJson);
             $('#div_demo').tmpl(dataJson).appendTo('.card-containers');
             $(".active-container").attr("id", "page1");
         });
