@@ -99,6 +99,10 @@ public class UserDao extends BaseDao {
 				pstm.setString(3, user.getPhone());
 				pstm.setString(4, user.getNickname());
 				pstm.executeUpdate();
+				conn.close();
+				pstm.close();
+				UserActionDao actionDao = new UserActionDao();
+				actionDao.addRecord(getUserByname(user.getPhone()).getId());
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

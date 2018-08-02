@@ -51,6 +51,7 @@ public class TypeNewsServlet extends HttpServlet {
 //		System.out.println(type);
 		System.out.println(page);
 		ResponseEntity entity = new ResponseEntity();
+		int count = dao.getNewsCountByType(type);
 		List<News> newss = dao.getNewsByType(type,page);
 		Gson gson = new Gson();
 		if(!newss.isEmpty()) {
@@ -63,6 +64,7 @@ public class TypeNewsServlet extends HttpServlet {
 			builder.append("]");
 			entity.setStatus(1);
 			entity.setMessage("获取成功");
+			entity.setCount(count);
 			entity.setData(builder.toString());
 		}else {
 			entity.setStatus(0);

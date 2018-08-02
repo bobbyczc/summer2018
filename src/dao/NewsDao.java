@@ -31,7 +31,7 @@ public class NewsDao extends BaseDao{
 		ResultSet rs;
 		try {
 			conn = this.getConn();
-			sql = "select * from news where type = ? order by date desc limit "+(0+(page-1)*8)+",8";
+			sql = "select * from news where type = ? order by date desc limit "+(page-1)*8+","+ 8;
 			pstm = conn.prepareStatement(sql);
 			pstm.setString(1, type);
 			rs = pstm.executeQuery();
@@ -118,7 +118,7 @@ public class NewsDao extends BaseDao{
 			sql = "select * from news "
 					+ "where content like \'%"+keyword+"%\' "
 							+ "order by date desc "
-							+ "limit "+(0+(page-1)*8)+",8";
+							+ "limit "+(page-1)*8+","+ 8;
 			pstm = conn.prepareStatement(sql);
 			rs = pstm.executeQuery();
 			while(rs.next()) {
@@ -180,6 +180,64 @@ public class NewsDao extends BaseDao{
 		}
 		return list;
 	}
+	/**
+	 * 根据type获取新闻数量
+	 * @param type
+	 * @return
+	 */
+	public int getNewsCountByType(String type) {
+		int result = 0;
+		String sql = null;
+		ResultSet rs;
+		try {
+			conn = this.getConn();
+			sql = "select count(id) as count from news where type = ?";
+			pstm = conn.prepareStatement(sql);
+			pstm.setString(1, type);
+			rs = pstm.executeQuery();
+			if(rs.next()) {
+				result = rs.getInt("count");
+			}
+			conn.close();
+			pstm.close();
+			rs.close();
+			
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	/**
+	 * 根据关键词获取新闻数量
+	 * @param keyword
+	 * @return
+	 */
+	public int getNewsCountByKeyWord(String keyword) {
+		int result = 0;
+		String sql = null;
+		ResultSet rs;
+		try {
+			conn = this.getConn();
+			sql = "select count(id) as count from news where content like \'%"+keyword+"%\'";
+			pstm = conn.prepareStatement(sql);
+			rs = pstm.executeQuery();
+			if(rs.next()) {
+				result = rs.getInt("count");
+			}
+			conn.close();
+			pstm.close();
+			rs.close();
+			
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
 	/**
 	 * 根据时间或者关键词获取新闻条数
 	 * @param parm

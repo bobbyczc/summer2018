@@ -1,13 +1,16 @@
 package model;
 
+import java.util.concurrent.CountDownLatch;
+
 public class ResponseEntity {
 	public static String failMsg = "{\"success\":\"false\"}";
 	private int status;
 	private String message;
+	private int count;
 	private String data;
 	
 	public ResponseEntity() {
-		
+		this.count = 0;
 	}
 	public ResponseEntity(int status, String message) {
 		this.setStatus(status);
@@ -31,15 +34,22 @@ public class ResponseEntity {
 	public void setData(String data) {
 		this.data = data;
 	}
-	
+	public int getCount() {
+		return count;
+	}
+	public void setCount(int count) {
+		this.count = count;
+	}
 	
 	@Override
 	public String toString() {
 		return "{"
 				+ "\"status\":" + this.status+","
 				+ "\"message\":\""+this.message+"\""+","
+				+ "\"count\":"+this.count+","
 				+ "\"data\":"+ this.data
 				+ "}";
 	}
+	
 	
 }

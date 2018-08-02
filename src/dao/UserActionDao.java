@@ -15,6 +15,28 @@ public class UserActionDao extends BaseDao{
 	private Connection conn;
 	private PreparedStatement pstm;
 	
+	
+	/**
+	 * 用户注册时在user_action表添加一条记录
+	 * @param userid
+	 */
+	public void addRecord(int userid) {
+		try {
+			conn = this.getConn();
+			String sql= "insert into user_action(user_id) values(?)";
+			pstm = conn.prepareStatement(sql);
+			pstm.setInt(1, userid);
+			pstm.executeUpdate();
+			conn.close();
+			pstm.close();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	/**
 	 * 获取用户收藏
 	 * @param userid
