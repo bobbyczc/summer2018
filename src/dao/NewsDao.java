@@ -31,7 +31,7 @@ public class NewsDao extends BaseDao{
 		ResultSet rs;
 		try {
 			conn = this.getConn();
-			sql = "select * from news where type = ? order by date desc limit "+(0+(page-1)*8)+","+ page*8;
+			sql = "select * from news where type = ? order by date desc limit "+(0+(page-1)*8)+",8";
 			pstm = conn.prepareStatement(sql);
 			pstm.setString(1, type);
 			rs = pstm.executeQuery();
@@ -118,7 +118,7 @@ public class NewsDao extends BaseDao{
 			sql = "select * from news "
 					+ "where content like \'%"+keyword+"%\' "
 							+ "order by date desc "
-							+ "limit "+(0+(page-1)*8)+","+ page*8;
+							+ "limit "+(0+(page-1)*8)+",8";
 			pstm = conn.prepareStatement(sql);
 			rs = pstm.executeQuery();
 			while(rs.next()) {

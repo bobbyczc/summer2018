@@ -23,12 +23,12 @@ body {
 }
 
 /*隐藏滚动条*/
-html{
+html {
 	-ms-overflow-style: none;
 	overflow: -moz-scrollbars-none;
 }
 
-html::-webkit-scrollbar{
+html::-webkit-scrollbar {
 	width: 0px
 }
 
@@ -48,6 +48,7 @@ h5 {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	word-break: keep-all;
+	white-space:nowrap;
 }
 
 .action {
@@ -62,23 +63,24 @@ h5 {
 	border-color: #dedede;
 }
 
-#searchBar{
-	border-color:#f2f2f2;
-	border-radius:0px;
-	display:inline-block;
-	color:black;
-	width:200px;
-	height:100%;
-}
-#searchButton{
-	display:inline-block;
-	height:100%;
-	width:70px;
-	vertical-align:top;
+#searchBar {
+	border-color: #f2f2f2;
+	border-radius: 0px;
+	display: inline-block;
+	color: black;
+	width: 200px;
+	height: 100%;
 }
 
-.headerButton{
-	margin-left:20px;
+#searchButton {
+	display: inline-block;
+	height: 100%;
+	width: 70px;
+	vertical-align: top;
+}
+
+.headerButton {
+	margin-left: 20px;
 }
 </style>
 </head>
@@ -91,20 +93,20 @@ h5 {
 			<div class="totalHeader"
 				style="width:100%;background:rgb(250,250,250);margin-bottom:20px">
 				<div style="padding:10px 10px 10px 30px;width:100%;height:60px;">
-					<input id="searchBar" type="text" class="form-control" style="font-size:20px">
+					<input id="searchBar" type="text" class="form-control"
+						style="font-size:20px">
 
-					<button type="button" class="btn btn-warning headerButton">
+					<button type="button" id="search" class="btn btn-warning headerButton">
 						<span class="glyphicon glyphicon-search" style="padding-right:5px">
-						</span>
-						搜索
+						</span> 搜索
 					</button>
-					
-					<button type="button" class="btn btn-info headerButton">
-						<span class="glyphicon glyphicon-heart-empty" style="padding-right:5px">
-						</span> 关注
+
+					<button type="button" id="follow" class="btn btn-info headerButton">
+						<span class="glyphicon glyphicon-heart-empty"
+							style="padding-right:5px"> </span> 关注
 					</button>
 				</div>
-				
+
 			</div>
 			<!--热度指数趋势模块-->
 			<div class="heat">
@@ -115,11 +117,11 @@ h5 {
 							style="padding-left:30px;font-size:20px;display: inline-block">热度指数趋势</h3>
 
 						<div id='wrapper' style="display: inline-block;">
-							<form>
+							<form class="time-container">
 								<select id="time1" class='custom-date' name='select'">
-									<option value='7'>7 天</option>
+									<option selected='selected' value='7'>7 天</option>
 									<option value='30'>30 天</option>
-									<option selected='selected' value='90'>90 天</option>
+									<option value='90'>90 天</option>
 									<option value='180'>180 天</option>
 									<option value='365'>365 天</option>
 									<option value='custom'>自定义</option>
@@ -140,7 +142,8 @@ h5 {
 						<div class="heatPic">
 							<div class="chart-box" id="heatValue"
 								style="width: 58%;margin-right:2%;height:400px;display:inline-block;border-right:solid 1px rgb(227, 227, 226)"></div>
-							<div class="side-info" style="width:38%;height:400px;display:inline-block"></div>
+							<div class="side-info"
+								style="width:38%;height:400px;display:inline-block"></div>
 						</div>
 					</div>
 				</div>
@@ -150,18 +153,18 @@ h5 {
 						<h3 id="header"
 							style="padding-left:30px;font-size:20px;display: inline-block">热点舆情</h3>
 
-						<div id='wrapper' style="display: inline-block;">
+						<!-- <div id='wrapper' style="display: inline-block;">
 							<form>
 								<select id="time2" class='custom-date' name='select'>
-									<option value='7'>7 天</option>
+									<option selected='selected' value='7'>7 天</option>
 									<option value='30'>30 天</option>
-									<option selected='selected' value='90'>90 天</option>
+									<option value='90'>90 天</option>
 									<option value='180'>180 天</option>
 									<option value='365'>365 天</option>
 									<option value='custom'>自定义</option>
 								</select>
 							</form>
-						</div>
+						</div> -->
 						<div
 							style="display: inline-block;float:right;padding-top:20px;padding-right:20px">
 							<a data-toggle="collapse" href="#collapseList2"
@@ -171,7 +174,17 @@ h5 {
 						</div>
 					</div>
 					<div id="collapseList2"
-						class="panel-collapse collapse panel-body in"></div>
+						class="panel-collapse collapse panel-body in">
+						<div class="card-containers" style="display: inline-block">
+
+						</div>
+
+						<div class="pagination-container" class="panel-footers"
+							style="display: inline-block;float:right">
+							<ul class='pagination' style='margin:0;float:right'>
+							</ul>
+						</div>
+					</div>
 				</div>
 			</div>
 
@@ -196,7 +209,8 @@ h5 {
 							<div class="heatPic">
 								<div class="chart-box" id="sourcePie"
 									style="width: 58%;margin-right:2%;height:400px;display:inline-block;border-right:solid 1px rgb(227, 227, 226)"></div>
-								<div class="side-info" style="width:38%;height:400px;display:inline-block;overflow:auto"></div>
+								<div class="side-info"
+									style="width:38%;height:400px;display:inline-block;overflow:auto"></div>
 							</div>
 						</div>
 					</div>
@@ -264,32 +278,32 @@ h5 {
 
 <!-- div模块模板 -->
 <script id="div_demo" type="text/x-jquery-tmpl">
-    <div class="card-container active-container">
-		{{each(i,news) data}}
-			<div id="${news.id}" class="card-box col-md-3 col-sm-6">
-					<div class="card">
-						<div class="content">
-							<h5 class="title">
-								<a href="${news.url}" title="${news.title}">${news.title.replace(/\s/g,"")}</a>
-							</h5>
-							<p class="description">${news.content.replace(/\s/g,"").substring(0,100)}...</p>
-		
-							<p class="description">${news.date}</p>
-						</div>
-		
-						<div class="footer" style="padding-top:10px">
-							<p class="description" style="display: inline">#${news.source}</p>
-							<div class="action">
-								<button type="button" button-type="book" class="btn btn-primary btn-xs" onclick="changeIconType(this)">
-									<span class="glyphicon glyphicon-star-empty"></span> 收藏
-								</button>
-							</div>
-		
-						</div>
-					</div>
-			</div>
-		{{/each}}
-	</div>
+            <div class="card-container active-container">
+                {{each(i,news) data}}
+                    <div id="${news.id}" class="card-box col-md-3 col-sm-6">
+                            <div class="card">
+                                <div class="content">
+                                    <h5 class="title">
+                                        <a href="#" onclick="javascript:top.location.href='${news.url}'" title="${news.title}">${news.title.replace(/\s/g,"").replace("：",":")}</a>
+                                    </h5>
+                                    <p class="description">${news.content.replace(/\s/g,"").substring(0,100)}...</p>
+                
+                                    <p class="description">${news.date}</p>
+                                </div>
+                
+                                <div class="footer" style="padding-top:10px">
+                                    <p class="description" style="display: inline">#${news.source}</p>
+                                    <div class="action">
+                                        <button type="button" button-type="book" class="btn btn-primary btn-xs" onclick="collect(this)">
+                                            <span class="glyphicon glyphicon-star-empty"></span> 收藏
+                                        </button>
+                                    </div>
+                
+                                </div>
+                            </div>
+                    </div>
+                {{/each}}
+            </div>
 </script>
 
 
@@ -329,7 +343,14 @@ h5 {
 		if (args.currPage != args.totalPage && args.currPage < args.totalPage - 2 && args.totalPage != 4) {
 			totalsubpageTmep += "<li class='ali'><a href='javascript:void(0);' class='geraltTb_pager' data-go='' >" + args.totalPage + "</a></li>";
 		}
-		$(".pagination").html(totalsubpageTmep);
+
+		//当前页数
+		var temp = $(totalsubpageTmep).each(function() {
+			if ($(this).text() == args.currPage) {
+				$(this).find("a").css("background", "rgb(250,250,250)");
+			}
+		});
+		$(".pagination").html(temp);
 	}
 	var bindEvent = function(totalsubpageTmep, args) {
 		totalsubpageTmep.on("click", "a.geraltTb_pager", function(event) {
@@ -401,15 +422,15 @@ h5 {
 				}
 			},
 			dataZoom : [ {
-				startValue : new Date(startTime.valueOf() - 24 * 2 * 60 * 60 * 1000),
-				endValue : new Date(endTime.valueOf() + 24 * 2 * 60 * 60 * 1000)
+				startValue : new Date(startTime.valueOf() - 24 * 1 * 60 * 60 * 1000),
+				endValue : new Date(endTime.valueOf() + 24 * 1 * 60 * 60 * 1000)
 			}, {
 				type : 'inside'
 			} ],
 			xAxis : {
 				type : 'time',
-				min : new Date(start),
-				max : new Date(end),
+				min : new Date(new Date(start).valueOf() - 24 * 2 * 60 * 60 * 1000),
+				max : new Date(new Date(end).valueOf() + 24 * 2 * 60 * 60 * 1000),
 				splitLine : {
 					show : false
 				}
@@ -481,8 +502,8 @@ h5 {
 				sizeRange : [ 16, 48 ],
 				rotationRange : [ -90, 90 ],
 				rotationStep : 45,
-				width: '100%',
-        		height: '100%',
+				width : '100%',
+				height : '100%',
 				autoSize : {
 					enable : true,
 					minSize : 16
@@ -518,6 +539,9 @@ h5 {
 				var time = item;
 				var flow = resultJson.data[time];
 
+				if (flow == 0) {
+					continue;
+				}
 				times.push(time);
 
 				var tempData = new Object();
@@ -563,7 +587,7 @@ h5 {
 
 				datas.push(tempData);
 			}
-			
+
 			drawWordCloud(document.getElementById("wordCloud"), datas);
 		}
 
@@ -573,9 +597,11 @@ h5 {
 
 
 <script>
-	var drawTop5HeatTable=function(data){
-		var data=data.sort(function(a,b){
-			return b.value[1]-a.value[1];
+	var drawTop5HeatTable = function(data) {
+		
+		$(".side-info").eq(0).empty();
+		var data = data.sort(function(a, b) {
+			return b.value[1] - a.value[1];
 		})
 		var table = '<table class="table table-hover">' +
 			'<thead>' +
@@ -586,23 +612,24 @@ h5 {
 			'<th>时间</th>' +
 			'<th>热度指数</th>' +
 			'</tr>' +
-			'</thead>'+
+			'</thead>' +
 			'<tbody>';
 
-		for(var i=0;i<(data.length>5?5:data.length);i++){
-			var time=data[i].value[0];
-			var value=data[i].value[1];
-			
-			var tableRow="<tr><td>"+time+"</td><td>"+value+"</td></tr>";
-			table+=tableRow;
+		for (var i = 0; i < (data.length > 5 ? 5 : data.length); i++) {
+			var time = data[i].value[0];
+			var value = data[i].value[1];
+
+			var tableRow = "<tr><td>" + time + "</td><td>" + value + "</td></tr>";
+			table += tableRow;
 		}
-		table+="</tbody></table>";
+		table += "</tbody></table>";
 		$(".side-info").eq(0).append($(table));
 	}
-	
-	var drawSourcePieValue=function(data){
-		var data=data.sort(function(a,b){
-			return b.value-a.value;
+
+	var drawSourcePieValue = function(data) {
+		$(".side-info").eq(1).empty();
+		var data = data.sort(function(a, b) {
+			return b.value - a.value;
 		});
 		var table = '<table class="table table-hover">' +
 			'<thead>' +
@@ -613,26 +640,51 @@ h5 {
 			'<th>媒体</th>' +
 			'<th>舆情贡献量</th>' +
 			'<th>占比</th>'
-			'</tr>' +
-			'</thead>'+
-			'<tbody>';
-			
-		for(var i=0;i<(data.length);i++){
-			var time=data[i].name;
-			var value=data[i].value;
-			
-			var tableRow="<tr><td>"+time+"</td><td></td><td>"+(value*100).toFixed(2)+"%</td></tr>";
-			table+=tableRow;
+		'</tr>' +
+		'</thead>' +
+		'<tbody>';
+
+		for (var i = 0; i < (data.length); i++) {
+			var time = data[i].name;
+			var value = data[i].value;
+
+			var tableRow = "<tr><td>" + time + "</td><td></td><td>" + (value * 100).toFixed(2) + "%</td></tr>";
+			table += tableRow;
 		}
 		$(".side-info").eq(1).append($(table));
 	}
 </script>
 <script>
+	var collect = function (button) {
+        var thisButton = $(button);
+        var cardbox = thisButton.parents(".card-box");
+        var id=cardbox.attr("id");
+        var url="/POSystem/UpdateCollectionServlet?userid="+localStorage.getItem("userid")+"&newsid="+id+"&mode=";
+        
+        if (thisButton.attr("button-type") == "book") {
+        	var icon=thisButton.find("span");
+        	if(icon.hasClass("glyphicon-star-empty")){
+        		icon.removeClass("glyphicon-star-empty");
+        		icon.addClass("glyphicon-star");
+        		
+        		url+="add";
+        	}
+        	else{
+        		icon.removeClass("glyphicon-star");
+        		icon.addClass("glyphicon-star-empty");
+        		
+        		url+="delete";
+        	}
+        	
+        	$.get(url);
+        }
+    }
+    
 	var changeTitleSize = function() {
 		var tempWidth = $(".content").eq(0).width();
 		$("h5").css("width", tempWidth);
 	}
-	
+
 
 	var changeIconType = function(button) {
 		var thisButton = $(button);
@@ -648,7 +700,7 @@ h5 {
 	}
 	//新闻标题大小随页面大小变化而变化
 	$(window).resize(changeTitleSize);
-	
+
 	function formatTime(date) {
 		var year = date.getFullYear();
 		var month = date.getMonth() + 1,
@@ -657,93 +709,171 @@ h5 {
 			day = day < 10 ? '0' + day : day;
 		return year + '-' + month + '-' + day;
 	}
-	var getHeatValue = function() {
+	var getHeatValue = function(keyword) {
 		var duration = $("#time1").find("option:selected").val();
-
+		var startTime,
+			endTime;
 		//自定义时间范围
 		if (duration == "custom") {
 			var timeRange = $("#time1").find("option:selected").text();
-			var startTime = timeRange.substring(0, 10);
-			var endTime = timeRange.substring(13, 23);
-			/* $.ajax({
-				type:"POST",
-				url:"/POSystem/CalHotValueServlet",
-				contentType:"application/x-www-form-urlencoded;charset=utf-8",
-				data:{
-					"keyword":"武汉",
-					"startDate":startTime,
-					"endDate":endTime
-				},
-				success:function(data){
-					alert(data);
-				}
-			}) */
+			startTime = timeRange.substring(0, 10);
+			endTime = timeRange.substring(13, 23);
 
 		} else {
 
 			var end = new Date();
-			var endTime = formatTime(end);
+			endTime = formatTime(end);
 
 			var start = new Date(end.setDate(end.getDate() - duration));
-			var startTime = formatTime(start);
-
-
-			var jsonString = '{"status":1,"message":"获取成功","data":{"2018-07-23":0.0462,"2018-07-22":0.0196,"2018-07-24":0.0182}}';
-			var json = JSON.parse(jsonString);
-			draw("heat", json, startTime, endTime);
+			startTime = formatTime(start);
 		}
+		
+		//console.log("Start from: " + startTime + " and End at: " + endTime);
+		//var jsonString='{"status":1,"message":"获取成功","data":{"2018-07-30":0.0335,"2018-08-01":0.0,"2018-07-31":0.0391,"2018-07-29":0.0}}';
+		//var json=JSON.parse(jsonString);
+		//draw("heat", json, startTime, endTime);
+		$.ajax({
+			type : "POST",
+			url : "/POSystem/CalHotValueServlet",
+			contentType : "application/x-www-form-urlencoded;charset=utf-8",
+			data : {
+				"keyword" : keyword,
+				"startDate" : startTime,
+				"endDate" : endTime
+			},
+			success : function(data) {
+				var json = JSON.parse(data);
+				draw("heat", json, startTime, endTime);
+			}
+		}); 
+		
+
 	};
 
-	var getSourcePie = function() {
-		/* var keyword="!23";
+	var getSourcePie = function(keyword) {
 		var url="/POSystem/MediaServlet?keyword="+keyword;
 		$.get(url,function(data){
-			
-		}); */
-		var jsonString = '{"status":1,"message":"获取成功","data":{"澎湃新闻":0.0238,"中国青年报":0.0476,"人民论坛网":0.0238,"中国社会科学网":0.0238,"中国新闻网":0.381,"生命时报微信公众号":0.0238,"人民网":0.0476,"科技日报":0.0476,"经济日报":0.0238,"中新经纬":0.0238,"中国经济周刊":0.0238,"光明日报":0.0238,"法制日报":0.0238,"新华网":0.0238,"武汉晚报":0.1429,"央视新闻客户端":0.0238,"检察日报":0.0238,"人民日报":0.0476}}';
-		var json = JSON.parse(jsonString);
-		draw("media", json, null, null);
+			var json = JSON.parse(data);
+			draw("media", json, null, null);
+		});
+		//var jsonString = '{"status":1,"message":"获取成功","data":{"澎湃新闻":0.0238,"中国青年报":0.0476,"人民论坛网":0.0238,"中国社会科学网":0.0238,"中国新闻网":0.381,"生命时报微信公众号":0.0238,"人民网":0.0476,"科技日报":0.0476,"经济日报":0.0238,"中新经纬":0.0238,"中国经济周刊":0.0238,"光明日报":0.0238,"法制日报":0.0238,"新华网":0.0238,"武汉晚报":0.1429,"央视新闻客户端":0.0238,"检察日报":0.0238,"人民日报":0.0476}}';
+		//var json = JSON.parse(jsonString);
+		//draw("media", json, null, null);
 	}
 
-	var getWordCloud = function() {
-		var jsonString = '{"status":1,"message":"success","data":{"疫苗":633,"公司":239,"月":264,"管理":111,"长生":208,"长春":205,"疾控中心":78,"工作":138,"百白破":130,"药品":95,"技术":65,"狂犬":269,"生物":129,"信息":102,"人用":72,"责任":86,"未":80,"火箭":78,"中":126,"武汉":116,"发展":69,"涉事":87,"企业":134,"服务":89,"监督":77,"预防":78,"合格":74,"中心":161,"公务":69,"高温":67,"接种":162,"批次":108,"国家":157,"采购":85,"发布":78,"控制":77,"日":212,"狂犬病":193,"生产":159,"有限":120,"消息":71,"研究":87,"称":71,"数据":76,"年":151,"相关":73,"时":73,"公务员":67,"中国":129,"�":124}}';
-		var json = JSON.parse(jsonString);
-		draw("wordCloud", json, null, null);
+	var getWordCloud = function(keyword) {
+		var url="/POSystem/WordFrenquencyServlet?keyword="+keyword;
+		$.get(url,function(data){
+			var json=JSON.parse(data);
+			draw("wordCloud",json,null,null);
+		});
+		//var jsonString = '{"status":1,"message":"success","data":{"疫苗":633,"公司":239,"月":264,"管理":111,"长生":208,"长春":205,"疾控中心":78,"工作":138,"百白破":130,"药品":95,"技术":65,"狂犬":269,"生物":129,"信息":102,"人用":72,"责任":86,"未":80,"火箭":78,"中":126,"武汉":116,"发展":69,"涉事":87,"企业":134,"服务":89,"监督":77,"预防":78,"合格":74,"中心":161,"公务":69,"高温":67,"接种":162,"批次":108,"国家":157,"采购":85,"发布":78,"控制":77,"日":212,"狂犬病":193,"生产":159,"有限":120,"消息":71,"研究":87,"称":71,"数据":76,"年":151,"相关":73,"时":73,"公务员":67,"中国":129,"�":124}}';
+		//var json = JSON.parse(jsonString);
+		//draw("wordCloud", json, null, null);
 	}
-	$().ready(function() {
-		//获得查询关键词
-      	var keyword=localStorage.getItem("keyword");
-      	
-      	if(keyword==""||keyword==undefined||keyword==null){
-      		$(".collapse").removeClass("in");
-      	}
-      	
-		initTime($("#time1"));
-		initTime($("#time2"));
+	
+	var searchByKeyword=function(keyword){
+		//清空
+		$(".card-containers").empty();
+		$(".time-container").empty();
+		$(".pagination-container").empty();
+		var time="<select id='time1' class='custom-date' name='select'>"+
+									"<option selected='selected' value='7'>7 天</option>"+
+									"<option value='30'>30 天</option>"+
+									"<option value='90'>90 天</option>"+
+									"<option value='180'>180 天</option>"+
+									"<option value='365'>365 天</option>"+
+									"<option value='custom'>自定义</option>"+
+									"</select>";
+		var pagination="<ul class='pagination' style='margin:0;float:right'></ul>";
+		$(".time-container").append($(time));
+		$(".pagination-container").append($(pagination));
 		
-		$("#header").html(contentType);
-		/* var url = "http://localhost:8080/NewsGetter/servlet/newsInfo?type=123";
-		$.get(url, function (data) {
-		    $('#div_demo').tmpl(data).appendTo('.masonry-container');
-		}); */
+		if(!$(".collapse").hasClass("in")){
+			$(".collapse").addClass("in");
+		}
+		
+		initTime($("#time1"));
+		
+		$("#searchBar").val(keyword);
+		var url = "/POSystem/KeywordNewsServlet?keyword=" + keyword;
+		var originUrl = url + "&page=" + "1";
+		$.get(originUrl, function(data) {
+			var dataJson = JSON.parse(data);
+			console.log(dataJson);
+			$('#div_demo').tmpl(dataJson).appendTo('.card-containers');
+			$(".active-container").attr("id", "page1");
+		});
 
 		//单个新闻标题自适应
-		changeTitleSize();
+		var titleSize = changeTitleSize();
 
 		$(".pagination").createPage({
 			totalPage : 30,
 			currPage : 1,
+			//点击反馈函数
 			backFn : function(p) {
-				console.log("回调函数：" + p);
+				var target = document.getElementById("page" + p);
+				if (target == null) {
+					var targetPage = p;
+					var targetUrl = url + "&page=" + p;
+
+					$.get(targetUrl, function(data) {
+						var dataJson = JSON.parse(data);
+						var curPage = $(".active-container").eq(0);
+						curPage.removeClass("active-container");
+						$('#div_demo').tmpl(dataJson).appendTo('.card-containers');
+						curPage.slideUp(500);
+						curPage = $(".active-container").eq(0);
+						curPage.attr("id", "page" + p);
+
+						$("h5").css("width", titleSize);
+						curPage.slideDown(500);
+					});
+				} else {
+					var curPage = $(".active-container").eq(0);
+					if (curPage.attr("id") != ("page" + p)) {
+						curPage.removeClass("active-container");
+						curPage.slideUp(500);
+
+						var tarPage = $("#page" + p);
+						tarPage.addClass("active-container");
+
+						$("h5").css("width", titleSize);
+						tarPage.slideDown(500);
+					}
+				}
+
 			}
 		});
 
-		getHeatValue();
-		getSourcePie();
-		getWordCloud();
-		$(".side-info td").css("text-align","center");
-		$(".side-info th").css("text-align","center");
-		$("#time1").change(getHeatValue);
+		getHeatValue(keyword);
+		getSourcePie(keyword);
+		getWordCloud(keyword);
+		
+		$(".side-info td").css("text-align", "center");
+		$(".side-info th").css("text-align", "center");
+		$("#time1").change(function() {
+			getHeatValue(keyword);
+		});
+	}
+	
+	$().ready(function() {
+		//获得查询关键词
+		var keyword = localStorage.getItem("keyword");
+		
+		if (keyword == "" || keyword == undefined || keyword == null) {
+			$(".collapse").removeClass("in");
+		}
+		else{
+			searchByKeyword(keyword);
+		}
+		
+		
+		$("#search").click(function(){
+			var key=$("#searchBar").val();
+			searchByKeyword(key);
+		});
 	});
 </script>
 
