@@ -711,10 +711,16 @@ h5 {
 		draw("wordCloud", json, null, null);
 	}
 	$().ready(function() {
-		//获得父页面定义的iframe类型
-		var contentType = window.parent.contentType;
+		//获得查询关键词
+      	var keyword=localStorage.getItem("keyword");
+      	
+      	if(keyword==""||keyword==undefined||keyword==null){
+      		$(".collapse").removeClass("in");
+      	}
+      	
 		initTime($("#time1"));
 		initTime($("#time2"));
+		
 		$("#header").html(contentType);
 		/* var url = "http://localhost:8080/NewsGetter/servlet/newsInfo?type=123";
 		$.get(url, function (data) {

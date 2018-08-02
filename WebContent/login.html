@@ -65,6 +65,18 @@
 	</div>
 </body>
 <script src="js/api/login.js"> </script>
+<script>
+	$().ready(function(){
+		var param="message";
+		var reg = new RegExp('(^|&)' + param + '=([^&]*)(&|$)', 'i');
+      	var r = window.location.search.substr(1).match(reg);
+      	if(r != null) {
+        	var message=decodeURI(r[2]);
+        	alert(message);
+      	}
+	});
+	
+</script>
 </html>
 
 
