@@ -33,7 +33,7 @@ function postUserInfo(){
 					"password":password
 				},
 				success: function(data){
-					alert(data);
+					//alert(data);
 					var response = JSON.parse(data);
 					if(response.status==-1){
 						$("#errmsg h5").text("该用户名尚未注册");
@@ -41,7 +41,7 @@ function postUserInfo(){
 						$("#errmsg h5").text("用户名或密码错误");
 					}else{
 						localStorage.setItem("userid",response.data.userid);
-						alert(response.data.userid);
+						//alert(response.data.userid);
 						window.location.href = "./index.html";
 					}
 				},

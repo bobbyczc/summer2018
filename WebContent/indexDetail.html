@@ -225,8 +225,12 @@
         //获得父页面定义的iframe类型
         var contentType = window.parent.contentType;
         $("#header").html(contentType);
-
-        contentType = "科技";
+		
+		/*待定,个性化推荐*/
+		if(contentType=="推荐"){
+			contentType="财经";
+		}
+		
         var url = "/POSystem/TypeNewsServlet?type=" + contentType;
         var originUrl = url + "&page=" + "1";
         $.get(originUrl, function (data) {

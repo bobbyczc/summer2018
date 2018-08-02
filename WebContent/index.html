@@ -212,7 +212,9 @@
         font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
         background-color: rgb(34, 45, 50);
     }
-
+	.side-nav .sidebar #collapseList li.active{
+		background:rgb(13, 18, 20);
+	}
     .side-nav .sidebar span {
         margin-right: 15px;
     }
@@ -335,9 +337,39 @@
                                     </a>
                                 </li>
                                 <li>
+                                    <a data-content="教育" href="#">
+                                        <span class="glyphicon glyphicon-indent-left"></span>
+                                        <p style="display: inline;margin:10px 0 0">教育</p>
+                                    </a>
+                                </li>
+                                <li>
                                     <a data-content="军事" href="#">
                                         <span class="glyphicon glyphicon-indent-left"></span>
                                         <p style="display: inline;margin:10px 0 0">军事</p>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a data-content="科技" href="#">
+                                        <span class="glyphicon glyphicon-indent-left"></span>
+                                        <p style="display: inline;margin:10px 0 0">科技</p>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a data-content="旅游" href="#">
+                                        <span class="glyphicon glyphicon-indent-left"></span>
+                                        <p style="display: inline;margin:10px 0 0">旅游</p>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a data-content="体育" href="#">
+                                        <span class="glyphicon glyphicon-indent-left"></span>
+                                        <p style="display: inline;margin:10px 0 0">体育</p>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a data-content="文化" href="#">
+                                        <span class="glyphicon glyphicon-indent-left"></span>
+                                        <p style="display: inline;margin:10px 0 0">文化</p>
                                     </a>
                                 </li>
                             </ul>
@@ -365,12 +397,16 @@
         var contentType = "推荐";
 
         $(document).ready(function () {
-
-            someCustom();
-
-            var userid=localStorage.getItem("userid");
-            var username=localStorage.getItem("username");
-            $("#user").html(username);
+			
+			someCustom();
+			
+			var uid=localStorage.getItem("userid");
+			console.log("UID : "+uid);
+           	if (uid == "" || uid == "null" || uid == undefined ) {
+                window.location.href = "./login.html?message=登录超时!请重新登陆!";
+            }
+            
+            //$("#user").html(username);
 
             $(".hamburger").click(function () {
                 //iframe内容自适应
@@ -398,8 +434,12 @@
             $(".sidebar a").click(function () {
                 //获得点击对象
                 var content = $(this).attr("data-content");
-
+				
+				//排除ul
                 if (content != undefined) {
+                	$(".sidebar li").removeClass("active");
+                	$(this).parent("li").addClass("active");
+                	console.log($(this).parent("li"));
                     contentType = content;
 
                     $("#iframepage").attr("src", "./indexDetail.html");
