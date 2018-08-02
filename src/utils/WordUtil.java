@@ -60,7 +60,7 @@ public class WordUtil {
 	 * @param list
 	 * @return
 	 */
-	private List<String> filter(List<SegToken> list){
+	public List<String> filter(List<SegToken> list){
 		List<String> resultList = new ArrayList<>();
 		for(SegToken s:list) {
 			if(!this.stopWords.contains(s.word)) {

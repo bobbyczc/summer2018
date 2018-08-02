@@ -9,12 +9,16 @@ public class TransUtil {
 	public  static enum UpdateMode{
 		DELETE,ADD
 	}
+	@SuppressWarnings("null")
 	public static List<String> strToList(String s){
 		List<String> list = new ArrayList<>();
-		StringTokenizer tokenizer = new StringTokenizer(s, ",");
-		while(tokenizer.hasMoreTokens()) {
-			list.add(tokenizer.nextToken());
+		if(s!=null||!s.equals("")) {
+			StringTokenizer tokenizer = new StringTokenizer(s, ",");
+			while(tokenizer.hasMoreTokens()) {
+				list.add(tokenizer.nextToken());
+			}
 		}
+
 		return list;
 	}
 	
