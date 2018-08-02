@@ -181,6 +181,64 @@ public class NewsDao extends BaseDao{
 		return list;
 	}
 	/**
+	 * 根据type获取新闻数量
+	 * @param type
+	 * @return
+	 */
+	public int getNewsCountByType(String type) {
+		int result = 0;
+		String sql = null;
+		ResultSet rs;
+		try {
+			conn = this.getConn();
+			sql = "select count(id) as count from news where type = ?";
+			pstm = conn.prepareStatement(sql);
+			pstm.setString(1, type);
+			rs = pstm.executeQuery();
+			if(rs.next()) {
+				result = rs.getInt("count");
+			}
+			conn.close();
+			pstm.close();
+			rs.close();
+			
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	/**
+	 * 根据关键词获取新闻数量
+	 * @param keyword
+	 * @return
+	 */
+	public int getNewsCountByKeyWord(String keyword) {
+		int result = 0;
+		String sql = null;
+		ResultSet rs;
+		try {
+			conn = this.getConn();
+			sql = "select count(id) as count from news where content like \'%"+keyword+"%\'";
+			pstm = conn.prepareStatement(sql);
+			rs = pstm.executeQuery();
+			if(rs.next()) {
+				result = rs.getInt("count");
+			}
+			conn.close();
+			pstm.close();
+			rs.close();
+			
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	/**
 	 * 根据时间或者关键词获取新闻条数
 	 * @param parm
 	 * @return

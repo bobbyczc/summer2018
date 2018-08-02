@@ -53,6 +53,7 @@ public class KeywordNewsServlet extends HttpServlet {
 		System.out.println(page);
 		ResponseEntity entity = new ResponseEntity();
 		List<News> newss = dao.getNewsByKeyword(keyword,page);
+		int count = dao.getNewsCountByKeyWord(keyword);
 		Gson gson = new Gson();
 		if(!newss.isEmpty()) {
 			builder.append("[");
@@ -64,6 +65,7 @@ public class KeywordNewsServlet extends HttpServlet {
 			builder.append("]");
 			entity.setStatus(1);
 			entity.setMessage("获取成功");
+			entity.setCount(count);
 			entity.setData(builder.toString());
 		}else {
 			entity.setStatus(0);
