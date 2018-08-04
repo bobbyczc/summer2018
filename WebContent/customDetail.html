@@ -158,8 +158,13 @@ h5 a {
                                     <h5 class="title">
                                         <a href="#" onclick="javascript:top.location.href='${news.url}'" title="${news.title}">${news.title.replace(/\s/g,"").replace("：",":")}</a>
                                     </h5>
-                                    <p class="description">${news.content.replace(/\s/g,"").substring(0,100)}...</p>
-                
+                                    <p class="description" style="word-wrap:break-word">
+										{{if news.content.replace(/\s/g,"").length>100}}
+											${news.content.replace(/\s/g,"").substring(0,100)}...
+										{{else}}
+											${news.content.replace(/\s/g,"")}...${Array(100-news.content.replace(/\s/g,"").length).join("&emsp;")}
+										{{/if}}
+									</p>
                                     <p class="description">${news.date}</p>
                                 </div>
                 
@@ -247,11 +252,11 @@ h5 a {
 </script>
 
 <script>
-	var changeTitleSize = function() {
-		var tempWidth = $(".content").eq(0).width();
-		$("h5").css("width", tempWidth);
-		return tempWidth;
-	}
+	var changeTitleSize = function () {
+        var tempWidth = $(".active-container").find(".content").eq(0).width();
+        $("h5").css("width", tempWidth);
+        return tempWidth;
+    }
 
 	var collect = function(button) {
 		var thisButton = $(button);

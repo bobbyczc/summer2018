@@ -118,7 +118,13 @@
                                     <h5 class="title">
                                         <a href="#" onclick="javascript:top.location.href='${news.url}'" title="${news.title}">${news.title.replace(/\s/g,"").replace("：",":")}</a>
                                     </h5>
-                                    <p class="description">${news.content.replace(/\s/g,"").substring(0,100)}...</p>
+                                    <p class="description" style="word-wrap:break-word">
+										{{if news.content.replace(/\s/g,"").length>100}}
+											${news.content.replace(/\s/g,"").substring(0,100)}...
+										{{else}}
+											${news.content.replace(/\s/g,"")}...${Array(100-news.content.replace(/\s/g,"").length).join("&emsp;")}
+										{{/if}}
+									</p>
                 
                                     <p class="description">${news.date}</p>
                                 </div>
@@ -201,7 +207,7 @@
 
 <script>
     var changeTitleSize = function () {
-        var tempWidth = $(".content").eq(0).width();
+        var tempWidth = $(".active-container").find(".content").eq(0).width();
         $("h5").css("width", tempWidth);
         return tempWidth;
     }
@@ -230,9 +236,7 @@
         	$.get(url);
         }
     }
-    //新闻标题大小随页面大小变化而变化
-    $(window).resize(changeTitleSize);
-
+    
     $().ready(function () {
         //获得父页面定义的iframe类型
         var contentType = window.parent.contentType;
@@ -294,7 +298,12 @@
 
             }
         });
+        
+        //新闻标题大小随页面大小变化而变化
+    	$(window).resize(changeTitleSize);
     });
+    
+    
 </script>
 
 </html>
