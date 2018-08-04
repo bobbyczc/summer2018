@@ -175,7 +175,7 @@ h5 {
 					</div>
 					<div id="collapseList2"
 						class="panel-collapse collapse panel-body in">
-						<div class="card-containers" style="display: inline-block">
+						<div class="card-containers" style="width:100%;display: inline-block">
 
 						</div>
 
@@ -257,7 +257,7 @@ h5 {
 					<div id="collapseList6"
 						class="panel-collapse collapse panel-body in">
 						<div class="heatPic">
-							<div class="chart-box" id="relativeWord"
+							<div class="chart-box" id="relationPic"
 								style="width: 100%;height:300px;"></div>
 						</div>
 					</div>
@@ -529,6 +529,12 @@ h5 {
 
 		chart.setOption(option);
 	}
+	
+	function drawRelationPic(ele,datas){
+		var chart = echarts.init(ele);
+		
+	}
+	
 	var draw = function(type, resultJson, startTime, endTime) {
 
 		//画图
@@ -589,6 +595,21 @@ h5 {
 			}
 
 			drawWordCloud(document.getElementById("wordCloud"), datas);
+		}else if (type == "relationPic") {
+			var datas = new Array();
+
+			for (var item in resultJson.data) {
+				var word = item;
+				var frequency = resultJson.data[word];
+
+				var tempData = new Object();
+				tempData['name'] = word;
+				tempData['value'] = frequency;
+
+				datas.push(tempData);
+			}
+
+			drawRelationPic(document.getElementById("relationPic"), datas);
 		}
 
 
@@ -772,6 +793,12 @@ h5 {
 		//draw("wordCloud", json, null, null);
 	}
 	
+	var getRelationPic=function(keyword){
+		var jsonString = '{"status":1,"message":"success","data":{"疫苗":633,"公司":239,"月":264,"管理":111,"长生":208,"长春":205,"疾控中心":78,"工作":138,"百白破":130,"药品":95,"技术":65,"狂犬":269,"生物":129,"信息":102,"人用":72,"责任":86,"未":80,"火箭":78,"中":126,"武汉":116,"发展":69,"涉事":87,"企业":134,"服务":89,"监督":77,"预防":78,"合格":74,"中心":161,"公务":69,"高温":67,"接种":162,"批次":108,"国家":157,"采购":85,"发布":78,"控制":77,"日":212,"狂犬病":193,"生产":159,"有限":120,"消息":71,"研究":87,"称":71,"数据":76,"年":151,"相关":73,"时":73,"公务员":67,"中国":129,"�":124}}';
+		var json = JSON.parse(jsonString);
+		draw("relationPic", json, null, null);
+	}
+	
 	var searchByKeyword=function(keyword){
 		//清空
 		$(".card-containers").empty();
@@ -850,7 +877,7 @@ h5 {
 		getHeatValue(keyword);
 		getSourcePie(keyword);
 		getWordCloud(keyword);
-		
+		getRelationPic(keyword);
 		$(".side-info td").css("text-align", "center");
 		$(".side-info th").css("text-align", "center");
 		$("#time1").change(function() {
@@ -863,16 +890,39 @@ h5 {
 		var keyword = localStorage.getItem("keyword");
 		
 		if (keyword == "" || keyword == undefined || keyword == null) {
-			$(".collapse").removeClass("in");
+			//$(".collapse").removeClass("in");
 		}
 		else{
 			searchByKeyword(keyword);
 		}
 		
+		getRelationPic(keyword);
 		
 		$("#search").click(function(){
 			var key=$("#searchBar").val();
 			searchByKeyword(key);
+		});
+		
+		$("#follow").click(function(){
+			var theKey=$("#searchBar").val();
+        	var url="/POSystem/UpdateKeywordServlet?userid="+localStorage.getItem("userid")+"&keyword="+theKey+"&mode=";
+        
+        	console.log($(this));
+        	var icon=$(this).find("span");
+        	if(icon.hasClass("glyphicon-heart-empty")){
+        		icon.removeClass("glyphicon-heart-empty");
+        		icon.addClass("glyphicon-heart");
+        		
+        		url+="add";
+        	}
+        	else{
+        		icon.removeClass("glyphicon-heart");
+        		icon.addClass("glyphicon-heart-empty");
+        		
+        		url+="delete";
+        	}
+        	
+        	$.get(url);
 		});
 	});
 </script>

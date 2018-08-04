@@ -212,7 +212,9 @@
         font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
         background-color: rgb(34, 45, 50);
     }
-
+	.side-nav .sidebar #collapseList li.active{
+		background:rgb(13, 18, 20);
+	}
     .side-nav .sidebar span {
         margin-right: 15px;
     }
@@ -275,11 +277,11 @@
                     <li>
                         <a href="analysis.html">舆情分析</a>
                     </li>
-                    <li  class="active">
+                    <li class="active">
                         <a href="custom.html">我的舆情</a>
                     </li>
                     <li class="dropdown" style="float:right;">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <a href="#" id="user" class="dropdown-toggle" data-toggle="dropdown">
                             用户
                         </a>
                         <ul class="dropdown-menu dropdown-menu-right">
@@ -291,7 +293,7 @@
                             </li>
                             <li class="divider"></li>
                             <li class="dropdown-item">
-                                <a href="#">登出</a>
+                                <a href="#" onclick="logout()">登出</a>
                             </li>
                         </ul>
                     </li>
@@ -307,15 +309,16 @@
                 <nav class="sidebar">
                     <ul class="nav">
                         <li class="active">
-                            <a href="#" data-content="热度分析">
+                            <a href="#" data-content="我的收藏">
                                 <span class="glyphicon glyphicon-signal"></span>
 
                                 <p style="display:inline;margin:10px 0 0">我的收藏</p>
                             </a>
                         </li>
+                        
                         <li>
-                            <a data-content="来源分布" href="#">
-                                <span class="glyphicon glyphicon-bookmark"></span>
+                            <a data-content="我的关注" href="#">
+                                <span class="glyphicon glyphicon-warning-sign"></span>
                                 <p style="display: inline;margin:10px 0 0">我的关注</p>
                             </a>
                         </li>
@@ -333,11 +336,19 @@
 
     <script type="text/javascript">
         //标识iframe类型
-        var contentType = "推荐";
+        var contentType = "我的收藏";
 
         $(document).ready(function () {
-
-            someCustom();
+			
+			someCustom();
+			
+			var uid=localStorage.getItem("userid");
+			console.log("UID : "+uid);
+           	if (uid == "" || uid == "null" || uid == undefined ) {
+                window.location.href = "./login.html?message=登录超时!请重新登陆!";
+            }
+            
+            //$("#user").html(username);
 
             $(".hamburger").click(function () {
                 //iframe内容自适应
@@ -365,90 +376,32 @@
             $(".sidebar a").click(function () {
                 //获得点击对象
                 var content = $(this).attr("data-content");
-
+				
+				//排除ul
                 if (content != undefined) {
+                	$(".sidebar li").removeClass("active");
+                	$(this).parent("li").addClass("active");
+                	console.log($(this).parent("li"));
                     contentType = content;
 
-                    $("#iframepage").attr("src", "./analysisDetail.html");
+                    $("#iframepage").attr("src", "./customDetail.html");
                 }
 
             });
         });
+
+        function logout(){
+            localStorage.removeItem("userid");
+            localStorage.removeItem("username");
+
+            window.location.href="login.html";
+        }
 
         //自定义样式
         function someCustom() {
             $(".dataTables_wrapper .dataTables_paginate .paginate_button:hover").css("background", "rgb(249,249,249)");
         }
 
-        //hover菜单显示切换
-        function changeHoverDir(content) {
-            for (var i = 0; i < content.length; i++) {
-                var temp=content.eq(i);
-
-                if (temp.hasClass("hoverdir")) {
-                    if (temp.hasClass("collapseMenu")) {
-                        var div = temp.children("div").eq(0);
-                        div.css("display", "none");
-                        var next = temp.next();
-
-                        //获得一个clone
-                        var clone=next.clone();
-                        clone.find("span").remove();
-                        clone.css("position","absolute");
-                        clone.css("padding","0px");
-                        //clone.removeClass();
-                        temp.append(clone);
-
-                        next.css("display", "none");
-                    }
-                    else {
-                        console.log(0);
-                        temp.find("p").wrap("<ul style='position:absolute'><li></li></ul>");
-                    }
-                }
-                else {
-                    if (temp.hasClass("collapseMenu")) {
-                        var div = temp.children("div").eq(0);
-                        div.css("display", "inline");
-                        temp.children("ul").remove();
-
-                        var next = temp.next();
-                        next.css("display",'');
-                    }
-                    else {
-                        temp.find("p").unwrap("<li></li>");
-                        temp.find("p").unwrap("<ul></ul>");
-                    }
-
-                }
-            }
-
-        }
-
-        //二级菜单显示切换
-        function changeSideBar(sideBar) {
-            if (sideBar.hasClass("side-active")) {
-                $("#collapseList").removeClass("in");
-                $(".collapseMenu").removeAttr("data-toggle");
-            }
-            else {
-                $(".collapseMenu").attr("data-toggle", "collapse");
-            }
-        }
-
-        //菜单滑动后样式显示
-        function changeContentSize(detailContent) {
-            if (detailContent.hasClass("content-active")) {
-                detailContent.css({
-                    "margin-left": "50px"
-                })
-            }
-            else {
-                detailContent.css({
-                    "margin-left": "200px"
-                })
-            }
-        }
 
         function changeFrameHeight() {
             var ifm = document.getElementById("iframepage");
