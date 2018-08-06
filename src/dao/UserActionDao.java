@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.UserAction;
 import utils.TransUtil;
 import utils.TransUtil.UpdateMode;
 
@@ -15,7 +16,36 @@ public class UserActionDao extends BaseDao{
 	private Connection conn;
 	private PreparedStatement pstm;
 	
-	
+	/**
+	 * 获取所有用户行为
+	 * @return
+	 */
+	public List<UserAction> getAllUserAction(){
+		ResultSet resultSet;
+		List<UserAction> actions = new ArrayList<>();
+		try {
+			String sql = "select * from user_action";
+			conn = this.getConn();		
+			pstm = conn.prepareStatement(sql);
+			resultSet = pstm.executeQuery();
+			while(resultSet.next()) {
+				UserAction action = new UserAction();
+				action.setId(resultSet.getInt("id"));
+				action.setUserid(resultSet.getInt("user_id"));
+				action.setTopics(TransUtil.strToList(resultSet.getString("topics")));
+				action.setViewList(TransUtil.strToList(resultSet.getString("news_viewed")));
+				action.setCollectionList(TransUtil.strToList(resultSet.getString("news_collected")));
+				actions.add(action);
+			}
+			conn.close();
+			pstm.close();
+			resultSet.close();
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return actions;
+	}
 	/**
 	 * 用户注册时在user_action表添加一条记录
 	 * @param userid
