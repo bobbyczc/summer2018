@@ -131,7 +131,7 @@ html::-webkit-scrollbar {
                                     
                                     <p class="description" style="word-wrap:break-word">
 										{{if news.content.replace(/\s/g,"").length>100}}
-											${news.content.replace(/\s/g,"").substring(0,100)}...
+											${news.content.replace(/\s/g,"").substring(0,60)}...
 										{{else}}
 											${news.content.replace(/\s/g,"")}...${Array(100-news.content.replace(/\s/g,"").length).join("&emsp;")}
 										{{/if}}
