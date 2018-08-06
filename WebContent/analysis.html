@@ -312,8 +312,16 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-
-            someCustom();
+    
+    		var param = "keyword";
+    		var reg = new RegExp('(^|&)' + param + '=([^&]*)(&|$)', 'i');
+    		var r = window.location.search.substr(1).match(reg);
+    		if (r != null) {
+    			var message = decodeURI(r[2]);
+    			alert(message);
+    		}
+    
+    		someCustom();
 
 			var uid=localStorage.getItem("userid");
 			console.log("UID : "+uid);
