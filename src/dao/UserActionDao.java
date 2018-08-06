@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.ietf.jgss.GSSManager;
+
 import model.UserAction;
 import utils.TransUtil;
 import utils.TransUtil.UpdateMode;
@@ -16,6 +18,31 @@ public class UserActionDao extends BaseDao{
 	private Connection conn;
 	private PreparedStatement pstm;
 	
+	public UserAction getUserActionByUid(int userid){
+		ResultSet resultSet;
+		UserAction action = new UserAction();
+		try {
+			String sql = "select * from user_action where user_id=?";
+			conn = this.getConn();		
+			pstm = conn.prepareStatement(sql);
+			pstm.setInt(1, userid);
+			resultSet = pstm.executeQuery();
+			if(resultSet.next()) {
+				action.setId(resultSet.getInt("id"));
+				action.setUserid(resultSet.getInt("user_id"));
+				action.setTopics(TransUtil.strToList(resultSet.getString("topics")));
+				action.setViewList(TransUtil.strToList(resultSet.getString("news_viewed")));
+				action.setCollectionList(TransUtil.strToList(resultSet.getString("news_collected")));
+			}
+			conn.close();
+			pstm.close();
+			resultSet.close();
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return action;
+	}
 	/**
 	 * 获取所有用户行为
 	 * @return

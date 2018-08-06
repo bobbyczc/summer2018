@@ -20,6 +20,38 @@ public class NewsDao extends BaseDao{
 	private Connection conn;
 	private PreparedStatement pstm;
 	
+	
+	public List<News> getAllNews(){
+		List<News> list = new ArrayList<>();
+		String sql;
+		ResultSet rs;
+		try {
+			conn = this.getConn();
+			sql = "select * from news";
+			pstm = conn.prepareStatement(sql);
+			rs = pstm.executeQuery();
+			while(rs.next()) {
+				News news = new News();
+				System.out.println(rs.getInt("id"));
+				news.setId(rs.getInt("id"));
+				news.setUrl(rs.getString("url"));
+				news.setType(rs.getString("type"));
+				news.setTitle(rs.getString("title"));
+				news.setContent(rs.getString("content"));
+				news.setSource(rs.getString("source"));
+				news.setDate(rs.getString("date"));
+				list.add(news);
+			}
+			conn.close();
+			pstm.close();
+			rs.close();
+			
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
 	/**
 	 * 
 	 * @param type
@@ -35,9 +67,7 @@ public class NewsDao extends BaseDao{
 			pstm = conn.prepareStatement(sql);
 			pstm.setString(1, type);
 			rs = pstm.executeQuery();
-			int index = 0;
 			while(rs.next()) {
-				index++;
 				News news = new News();
 				System.out.println(rs.getInt("id"));
 				news.setId(rs.getInt("id"));
@@ -48,9 +78,6 @@ public class NewsDao extends BaseDao{
 				news.setSource(rs.getString("source"));
 				news.setDate(rs.getString("date"));
 				list.add(news);
-				if(index==8) {
-					break;
-				}
 			}
 			conn.close();
 			pstm.close();
