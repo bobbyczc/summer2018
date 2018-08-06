@@ -77,6 +77,7 @@ public class NewsDao extends BaseDao{
 				news.setContent(rs.getString("content"));
 				news.setSource(rs.getString("source"));
 				news.setDate(rs.getString("date"));
+				news.setKeywords(rs.getString("keywords"));
 				list.add(news);
 			}
 			conn.close();
@@ -116,6 +117,7 @@ public class NewsDao extends BaseDao{
 				news.setContent(rs.getString("content"));
 				news.setSource(rs.getString("source"));
 				news.setDate(rs.getString("date"));
+				news.setKeywords(rs.getString("keywords"));
 				list.add(news);
 				if(index==number) {
 					break;
@@ -158,6 +160,7 @@ public class NewsDao extends BaseDao{
 				news.setContent(rs.getString("content"));
 				news.setSource(rs.getString("source"));
 				news.setDate(rs.getString("date"));
+				news.setKeywords(rs.getString("keywords"));
 				list.add(news);
 			}
 			conn.close();
@@ -195,6 +198,7 @@ public class NewsDao extends BaseDao{
 				news.setContent(rs.getString("content"));
 				news.setSource(rs.getString("source"));
 				news.setDate(rs.getString("date"));
+				news.setKeywords(rs.getString("keywords"));
 				list.add(news);
 			}
 			conn.close();
@@ -326,6 +330,7 @@ public class NewsDao extends BaseDao{
 				news.setContent(rs.getString("content"));
 				news.setSource(rs.getString("source"));
 				news.setDate(rs.getString("date"));
+				news.setKeywords(rs.getString("keywords"));
 				list.add(news);
 			}
 			conn.close();
@@ -363,6 +368,7 @@ public class NewsDao extends BaseDao{
 				news.setContent(rs.getString("content"));
 				news.setSource(rs.getString("source"));
 				news.setDate(rs.getString("date"));
+				news.setKeywords(rs.getString("keywords"));
 				list.add(news);
 			}
 			
@@ -395,6 +401,7 @@ public class NewsDao extends BaseDao{
 				news.setContent(rs.getString("content"));
 				news.setSource(rs.getString("source"));
 				news.setDate(rs.getString("date"));
+				news.setKeywords(rs.getString("keywords"));
 			}
 			rs.close();
 			conn.close();

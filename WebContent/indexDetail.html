@@ -2,102 +2,109 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/png" href="/img/favicon.ico">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta charset="utf-8" />
+<link rel="icon" type="image/png" href="/img/favicon.ico">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-    <title>Index</title>
+<title>Index</title>
 
-    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
-    <meta name="viewport" content="width=device-width" />
+<meta
+	content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'
+	name='viewport' />
+<meta name="viewport" content="width=device-width" />
 
-    <link href="css/bootstrap.min.css" rel="stylesheet" />
-    <link href="css/hipster_cards.css" rel="stylesheet" />
+<link href="css/bootstrap.min.css" rel="stylesheet" />
+<link href="css/hipster_cards.css" rel="stylesheet" />
 
-    <style>
-        body {
-            background: rgb(238, 239, 241)
-        }
+<style>
+body {
+	background: rgb(238, 239, 241)
+}
 
-        /*隐藏滚动条*/
+/*隐藏滚动条*/
+html {
+	-ms-overflow-style: none;
+	overflow: -moz-scrollbars-none;
+}
 
-        html {
-            -ms-overflow-style: none;
-            overflow: -moz-scrollbars-none;
-        }
+html::-webkit-scrollbar {
+	width: 0px
+}
 
-        html::-webkit-scrollbar {
-            width: 0px
-        }
+.card {
+	margin-bottom: 20px;
+}
 
-        .card {
-            margin-bottom: 20px;
-        }
+.container {
+	padding-top: 20px;
+}
 
-        .container {
-            padding-top: 20px;
+.card .content, .card .card-header {
+	border-bottom: 1px solid rgb(231, 231, 231);
+}
 
-        }
+.card h5, .card .footer .description, .card .keywords {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	word-break: keep-all;
+	white-space: nowrap;
+}
 
-        .content {
-            border-bottom: 1px solid rgb(231, 231, 231);
-        }
+.card h5 a {
+	white-space: nowrap;
+}
 
-        h5 {
-            overflow: hidden;
-            text-overflow: ellipsis;
-            word-break: keep-all;
-            white-space:nowrap;
-        }
-        
-        h5 a{
-        	white-space: nowrap;
-        }
+.card .keywords a {
+	color: #9A9A9A;
+}
 
+.card .keywords a:hover {
+	color: #0096ff;
+}
 
+.card .action {
+	display: inline;
+	float: right;
+}
 
-        .action {
-            display: inline;
-            float: right;
-        }
-
-        .panel-header {
-            border: 1px solid transparent;
-            border-radius: 1px;
-            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
-            border-color: #dedede;
-        }
-    </style>
+.panel-header {
+	border: 1px solid transparent;
+	border-radius: 1px;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+	border-color: #dedede;
+}
+</style>
 </head>
 
 <body>
 
-    <div class="wrapper">
-        <div class="container">
-            <div class="panel">
-                <div class="panel-header" style="background:rgb(250,250,250)">
+	<div class="wrapper">
+		<div class="container">
+			<div class="panel">
+				<div class="panel-header" style="background:rgb(250,250,250)">
 
-                    <a data-toggle="collapse" href="#collapseList" style="color:black;">
-                        <div>
-                            <h3 id="header" style="padding-left:30px;font-size:20px;display: inline-block"></h3>
-                        </div>
-                    </a>
-                </div>
-                <div id="collapseList" class="panel-collapse collapse panel-body in">
-                    <div class="card-containers" style="width:100%;display: inline-block">
+					<a data-toggle="collapse" href="#collapseList" style="color:black;">
+						<div>
+							<h3 id="header"
+								style="padding-left:30px;font-size:20px;display: inline-block"></h3>
+						</div>
+					</a>
+				</div>
+				<div id="collapseList" class="panel-collapse collapse panel-body in">
+					<div class="card-containers"
+						style="width:100%;display: inline-block"></div>
 
-                    </div>
+					<div class="panel-footers"
+						style="display: inline-block;float:right">
+						<ul class="pagination" style="margin:0;float:right">
+						</ul>
+					</div>
+				</div>
+			</div>
 
-                    <div class="panel-footers" style="display: inline-block;float:right">
-                        <ul class="pagination" style="margin:0;float:right">
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-    <!-- end wrapper -->
+		</div>
+	</div>
+	<!-- end wrapper -->
 
 </body>
 
@@ -115,9 +122,13 @@
                     <div id="${news.id}" class="card-box col-md-3 col-sm-6">
                             <div class="card">
                                 <div class="content">
-                                    <h5 class="title">
-                                        <a href="#" onclick="javascript:top.location.href='${news.url}'" title="${news.title}">${news.title.replace(/\s/g,"").replace("：",":")}</a>
-                                    </h5>
+                                	<div class="card-header" style="margin-bottom:10px">
+                                		<h5 class="title" style="margin-bottom:5px">
+                                        	<a href="#" onclick="javascript:top.location.href='${news.url}'" title="${news.title}">${news.title}</a>
+                                    	</h5>
+                                    	<p class="description" style="text-align:center;margin-bottom:5px;">2018-08-01</p>
+                                	</div>
+                                    
                                     <p class="description" style="word-wrap:break-word">
 										{{if news.content.replace(/\s/g,"").length>100}}
 											${news.content.replace(/\s/g,"").substring(0,100)}...
@@ -126,11 +137,16 @@
 										{{/if}}
 									</p>
                 
-                                    <p class="description">${news.date}</p>
+                                    <p class="description keywords">
+                                    	关键词:
+                                    	<a href="#" onclick="javascript:top.location.href='analysis.html?keyword=${news.keywords.split(',')[0]}'" title="${news.keywords.split(',')[0]}">${news.keywords.split(',')[0]}</a>/
+                                    	<a href="#" onclick="javascript:top.location.href='analysis.html?keyword=${news.keywords.split(',')[1]}'" title="${news.keywords.split(',')[1]}">${news.keywords.split(',')[1]}</a>/
+                                    	<a href="#" onclick="javascript:top.location.href='analysis.html?keyword=${news.keywords.split(',')[2]}'" title="${news.keywords.split(',')[2]}">${news.keywords.split(',')[2]}</a>
+									</p>
                                 </div>
                 
-                                <div class="footer" style="padding-top:10px">
-                                    <p class="description" style="display: inline">#${news.source}</p>
+                                <div class="footer" style="padding:10px 15px 0">
+                                    <p class="description" style="display: inline-block" title="${news.source}">#${news.source}</p>
                                     <div class="action">
                                         <button type="button" button-type="book" class="btn btn-primary btn-xs" onclick="collect(this)">
                                             <span class="glyphicon glyphicon-star-empty"></span> 收藏
@@ -147,163 +163,167 @@
 
 <!--分页菜单-->
 <script>
-    var fillHTML = function (totalsubpageTmep, args) {
-        totalsubpageTmep = "";
-        // 页码大于等于4的时候，添加第一个页码元素
-        if (args.currPage != 1 && args.currPage >= 4 && args.totalPage != 4) {
-            totalsubpageTmep += "<li class='ali'><a href='javascript:void(0);' class='geraltTb_pager' data-go='' >" + 1 + "</a></li>";
-        }
-        /* 当前页码>4, 并且<=总页码，总页码>5，添加“···”*/
-        if (args.currPage - 2 > 2 && args.currPage <= args.totalPage && args.totalPage > 5) {
-            totalsubpageTmep += "<li class='ali'><a href='javascript:void(0);' class='geraltTb_' data-go='' >...</a></li>";
-        }
-        /* 当前页码的前两页 */
-        var start = args.currPage - 2;
-        /* 当前页码的后两页 */
-        var end = args.currPage + 2;
+	var fillHTML = function(totalsubpageTmep, args) {
+		totalsubpageTmep = "";
+		// 页码大于等于4的时候，添加第一个页码元素
+		if (args.currPage != 1 && args.currPage >= 4 && args.totalPage != 4) {
+			totalsubpageTmep += "<li class='ali'><a href='javascript:void(0);' class='geraltTb_pager' data-go='' >" + 1 + "</a></li>";
+		}
+		/* 当前页码>4, 并且<=总页码，总页码>5，添加“···”*/
+		if (args.currPage - 2 > 2 && args.currPage <= args.totalPage && args.totalPage > 5) {
+			totalsubpageTmep += "<li class='ali'><a href='javascript:void(0);' class='geraltTb_' data-go='' >...</a></li>";
+		}
+		/* 当前页码的前两页 */
+		var start = args.currPage - 2;
+		/* 当前页码的后两页 */
+		var end = args.currPage + 2;
 
-        if ((start > 1 && args.currPage < 4) || args.currPage == 1) {
-            end++;
-        }
-        if (args.currPage > args.totalPage - 4 && args.currPage >= args.totalPage) {
-            start--;
-        }
-        for (; start <= end; start++) {
-            if (start <= args.totalPage && start >= 1) {
-                totalsubpageTmep += "<li class='ali'><a href='javascript:void(0);' class='geraltTb_pager' data-go='' >" + start + "</a></li>";
-            }
-        }
-        if (args.currPage + 2 < args.totalPage - 1 && args.currPage >= 1 && args.totalPage > 5) {
-            totalsubpageTmep += "<li class='ali'><a href='javascript:void(0);' class='geraltTb_' data-go='' >...</a></li>";
-        }
+		if ((start > 1 && args.currPage < 4) || args.currPage == 1) {
+			end++;
+		}
+		if (args.currPage > args.totalPage - 4 && args.currPage >= args.totalPage) {
+			start--;
+		}
+		for (; start <= end; start++) {
+			if (start <= args.totalPage && start >= 1) {
+				totalsubpageTmep += "<li class='ali'><a href='javascript:void(0);' class='geraltTb_pager' data-go='' >" + start + "</a></li>";
+			}
+		}
+		if (args.currPage + 2 < args.totalPage - 1 && args.currPage >= 1 && args.totalPage > 5) {
+			totalsubpageTmep += "<li class='ali'><a href='javascript:void(0);' class='geraltTb_' data-go='' >...</a></li>";
+		}
 
-        if (args.currPage != args.totalPage && args.currPage < args.totalPage - 2 && args.totalPage != 4) {
-            totalsubpageTmep += "<li class='ali'><a href='javascript:void(0);' class='geraltTb_pager' data-go='' >" + args.totalPage + "</a></li>";
-        }
-        
-        //当前页数
-        var temp=$(totalsubpageTmep).each(function(){
-        	if($(this).text()==args.currPage){
-        		$(this).find("a").css("background","rgb(250,250,250)");
-        	}
-        });
-        $(".pagination").html(temp);
-    }
-    var bindEvent = function (totalsubpageTmep, args) {
-        totalsubpageTmep.on("click", "a.geraltTb_pager", function (event) {
-            var current = parseInt($(this).text());
-            fillHTML(totalsubpageTmep, { "currPage": current, "totalPage": args.totalPage, "turndown": args.turndown });
-            if (typeof (args.backFn) == "function") {
-                args.backFn(current);
-            }
-        });
-    }
-    $.fn.createPage = function (options) {
-        fillHTML(this, options);
-        bindEvent(this, options);
-    }
+		if (args.currPage != args.totalPage && args.currPage < args.totalPage - 2 && args.totalPage != 4) {
+			totalsubpageTmep += "<li class='ali'><a href='javascript:void(0);' class='geraltTb_pager' data-go='' >" + args.totalPage + "</a></li>";
+		}
 
+		//当前页数
+		var temp = $(totalsubpageTmep).each(function() {
+			if ($(this).text() == args.currPage) {
+				$(this).find("a").css("background", "rgb(250,250,250)");
+			}
+		});
+		$(".pagination").html(temp);
+	}
+	var bindEvent = function(totalsubpageTmep, args) {
+		totalsubpageTmep.on("click", "a.geraltTb_pager", function(event) {
+			var current = parseInt($(this).text());
+			fillHTML(totalsubpageTmep, {
+				"currPage" : current,
+				"totalPage" : args.totalPage,
+				"turndown" : args.turndown
+			});
+			if (typeof (args.backFn) == "function") {
+				args.backFn(current);
+			}
+		});
+	}
+	$.fn.createPage = function(options) {
+		fillHTML(this, options);
+		bindEvent(this, options);
+	}
 </script>
 
 <script>
-    var changeTitleSize = function () {
-        var tempWidth = $(".active-container").find(".content").eq(0).width();
-        $("h5").css("width", tempWidth);
-        return tempWidth;
-    }
+	var changeTitleSize = function() {
+		var tempWidth = $(".active-container").find(".content").eq(0).width();
+		$("h5").css("width", tempWidth);
+		$(".card .footer .description").css("width", 0.75 * tempWidth);
+		return tempWidth;
+	}
 
-    var collect = function (button) {
-        var thisButton = $(button);
-        var cardbox = thisButton.parents(".card-box");
-        var id=cardbox.attr("id");
-        var url="/POSystem/UpdateCollectionServlet?userid="+localStorage.getItem("userid")+"&newsid="+id+"&mode=";
-        
-        if (thisButton.attr("button-type") == "book") {
-        	var icon=thisButton.find("span");
-        	if(icon.hasClass("glyphicon-star-empty")){
-        		icon.removeClass("glyphicon-star-empty");
-        		icon.addClass("glyphicon-star");
-        		
-        		url+="add";
-        	}
-        	else{
-        		icon.removeClass("glyphicon-star");
-        		icon.addClass("glyphicon-star-empty");
-        		
-        		url+="delete";
-        	}
-        	
-        	$.get(url);
-        }
-    }
-    
-    $().ready(function () {
-        //获得父页面定义的iframe类型
-        var contentType = window.parent.contentType;
-        $("#header").html(contentType);
-		
-		/*待定,个性化推荐*/
-		if(contentType=="推荐"){
-			contentType="财经";
+	var collect = function(button) {
+		var thisButton = $(button);
+		var cardbox = thisButton.parents(".card-box");
+		var id = cardbox.attr("id");
+		var url = "/POSystem/UpdateCollectionServlet?userid=" + localStorage.getItem("userid") + "&newsid=" + id + "&mode=";
+
+		if (thisButton.attr("button-type") == "book") {
+			var icon = thisButton.find("span");
+			if (icon.hasClass("glyphicon-star-empty")) {
+				icon.removeClass("glyphicon-star-empty");
+				icon.addClass("glyphicon-star");
+
+				url += "add";
+			} else {
+				icon.removeClass("glyphicon-star");
+				icon.addClass("glyphicon-star-empty");
+
+				url += "delete";
+			}
+
+			$.get(url);
 		}
-		
-        var url = "/POSystem/TypeNewsServlet?type=" + contentType;
-        var originUrl = url + "&page=" + "1";
-        $.get(originUrl, function (data) {
-            var dataJson = JSON.parse(data);
-            console.log(dataJson);
-            $('#div_demo').tmpl(dataJson).appendTo('.card-containers');
-            $(".active-container").attr("id", "page1");
-        });
+	}
 
-        //单个新闻标题自适应
-        var titleSize=changeTitleSize();
-	
-        $(".pagination").createPage({
-            totalPage: 30,
-            currPage: 1,
-            //点击反馈函数
-            backFn: function (p) {
-                var target = document.getElementById("page" + p);
-                if (target == null) {
-                    var targetPage = p;
-                    var targetUrl = url + "&page=" + p;
+	$().ready(function() {
+		//获得父页面定义的iframe类型
+		var contentType = window.parent.contentType;
+		$("#header").html(contentType);
 
-                    $.get(targetUrl, function (data) {
-                        var dataJson = JSON.parse(data);
-                        var curPage = $(".active-container").eq(0);
-                        curPage.removeClass("active-container");
-                        $('#div_demo').tmpl(dataJson).appendTo('.card-containers');
-                        curPage.slideUp(500);
-                        curPage = $(".active-container").eq(0);
-                        curPage.attr("id", "page" + p);
-                        
-                        $("h5").css("width", titleSize);
-                        curPage.slideDown(500);
-                    });
-                }
-                else {
-                    var curPage = $(".active-container").eq(0);
-                    if (curPage.attr("id") != ("page" + p)) {
-                        curPage.removeClass("active-container");
-                        curPage.slideUp(500);
+		/*待定,个性化推荐*/
+		if (contentType == "推荐" || contentType == undefined) {
+			contentType = "财经";
+		}
 
-                        var tarPage = $("#page" + p);
-                        tarPage.addClass("active-container");
-                        
-                        $("h5").css("width", titleSize);
-                        tarPage.slideDown(500);
-                    }
-                }
+		var url = "/POSystem/TypeNewsServlet?type=" + contentType;
+		var originUrl = url + "&page=" + "1";
 
-            }
-        });
-        
-        //新闻标题大小随页面大小变化而变化
-    	$(window).resize(changeTitleSize);
-    });
-    
-    
+		$.get(originUrl, function(data) {
+			var dataJson = JSON.parse(data);
+			$('#div_demo').tmpl(dataJson).appendTo('.card-containers');
+			$(".active-container").attr("id", "page1");
+			var totalPage = Math.ceil(dataJson.count / 8);
+
+			$(".pagination").createPage({
+				totalPage : totalPage,
+				currPage : 1,
+				//点击反馈函数
+				backFn : function(p) {
+					var target = document.getElementById("page" + p);
+					if (target == null) {
+						var targetPage = p;
+						var targetUrl = url + "&page=" + p;
+
+						$.get(targetUrl, function(data) {
+							var dataJson = JSON.parse(data);
+							var curPage = $(".active-container").eq(0);
+							curPage.removeClass("active-container");
+							$('#div_demo').tmpl(dataJson).appendTo('.card-containers');
+							curPage.slideUp(500);
+							curPage = $(".active-container").eq(0);
+							curPage.attr("id", "page" + p);
+
+							$("h5").css("width", titleSize);
+							$(".card .footer .description").css("width", 0.75 * titleSize);
+							curPage.slideDown(500);
+						});
+					} else {
+						var curPage = $(".active-container").eq(0);
+						if (curPage.attr("id") != ("page" + p)) {
+							curPage.removeClass("active-container");
+							curPage.slideUp(500);
+
+							var tarPage = $("#page" + p);
+							tarPage.addClass("active-container");
+
+							$("h5").css("width", titleSize);
+							$(".card .footer .description").css("width", 0.75 * titleSize);
+							tarPage.slideDown(500);
+						}
+					}
+
+				}
+			});
+
+		});
+
+		//单个新闻标题自适应
+		var titleSize = changeTitleSize();
+
+		//新闻标题大小随页面大小变化而变化
+		$(window).resize(changeTitleSize);
+	});
 </script>
 
 </html>

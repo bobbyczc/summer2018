@@ -893,10 +893,9 @@ h5 {
 	
 	$().ready(function() {
 		//获得查询关键词
-		var keyword = localStorage.getItem("keyword");
-		
+		var keyword = window.parent.keyword;
 		if (keyword == "" || keyword == undefined || keyword == null) {
-			//$(".collapse").removeClass("in");
+			$(".collapse").removeClass("in");
 		}
 		else{
 			searchByKeyword(keyword);

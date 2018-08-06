@@ -8,7 +8,16 @@ public class News {
 	private String content;
 	private String date;
 	private String source;
+	private String keywords;
 	
+	public String getKeywords() {
+		return keywords;
+	}
+
+	public void setKeywords(String keywords) {
+		this.keywords = keywords;
+	}
+
 	public News() {
 		
 	}
@@ -64,7 +73,8 @@ public class News {
 				+ "\"url\":"+"\""+this.url+"\""+","
 //				+ "\"content\":"+"\""+this.content+"\""+","
 				+ "\"date\":"+"\""+this.date+"\""+","
-				+ "\"source\":"+"\""+this.source+"\""
+				+ "\"source\":"+"\""+this.source+"\""+","
+				+ "\"keywords\":"+"\""+this.keywords+"\""
 				+ "}" ;
 	}
 	

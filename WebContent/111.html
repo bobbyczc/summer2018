@@ -6,7 +6,7 @@
 <link rel="icon" type="image/png" href="/img/favicon.ico">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-<title>我的舆情</title>
+<title>Index</title>
 
 <meta
 	content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'
@@ -39,22 +39,30 @@ html::-webkit-scrollbar {
 	padding-top: 20px;
 }
 
-.content {
+.card .content, .card .card-header {
 	border-bottom: 1px solid rgb(231, 231, 231);
 }
 
-h5 {
+.card h5, .card .footer .description, .card .keywords {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	word-break: keep-all;
 	white-space: nowrap;
 }
 
-h5 a {
+.card h5 a {
 	white-space: nowrap;
 }
 
-.action {
+.card .keywords a {
+	color: #9A9A9A;
+}
+
+.card .keywords a:hover {
+	color: #0096ff;
+}
+
+.card .action {
 	display: inline;
 	float: right;
 }
@@ -64,31 +72,6 @@ h5 a {
 	border-radius: 1px;
 	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
 	border-color: #dedede;
-}
-
-.row p {
-	display: table-cell;
-	vertical-align: middle;
-	text-align: center;
-	font-size: 20px;
-}
-
-.row p a {
-	color: white;
-}
-
-.row p a:hover {
-	color: black;
-}
-
-.brick {
-	opacity: 0.7;
-	transition: all 0.5s;
-}
-
-.brick:hover {
-	opacity: 1;
-	transform: scale(1.1);
 }
 </style>
 </head>
@@ -108,79 +91,13 @@ h5 a {
 					</a>
 				</div>
 				<div id="collapseList" class="panel-collapse collapse panel-body in">
-					<div id="collections" class="card-containers"
+					<div class="card-containers"
 						style="width:100%;display: inline-block"></div>
-					<div id="followings" class="brick-containers"
-						style="width:100%;display:inline-block">
-						<div>
-							<div class="row brick-container"
-								style="margin:0;margin-right:15px;margin-bottom:30px">
-								<div class="col-md-4 col-sm-6">
-									<div class="row">
-										<div class="brick col-md-4 col-sm-4 col-xs-4"
-											style="padding:0 0 15px 15px">
-											<div
-												style="background:rgb(152, 185, 255);height:100px;display:table;width:100%">
-												<p>
-													<a href="#">武汉</a>
-												</p>
-											</div>
-										</div>
-										<div class="brick col-md-8 col-sm-8 col-xs-8"
-											style="padding:0 0 15px 15px">
-											<div
-												style="background:rgb(152, 185, 255);height:100px;display:table;width:100%">
-												<p>
-													<a href="#">武汉</a>
-												</p>
-											</div>
-										</div>
-									</div>
-									<div class="row">
-										<div class="brick col-md-4 col-sm-4 col-xs-4"
-											style="padding:0 0 15px 15px">
-											<div
-												style="background:rgb(152, 185, 255);height:100px;display:table;width:100%">
-												<p>
-													<a href="#">武汉</a>
-												</p>
-											</div>
-										</div>
-										<div class="col-md-4 col-sm-4 col-xs-4"
-											style="padding:0 0 15px 15px">
-											<div
-												style="background:rgb(152, 185, 255);height:100px;display:table;width:100%">
-												<p>
-													<a href="#">武汉</a>
-												</p>
-											</div>
-										</div>
-										<div class="col-md-4 col-sm-4 col-xs-4"
-											style="padding:0 0 15px 15px">
-											<div style="background:rgb(248,248,248);height:100px">
-											</div>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-md-4 col-sm-4 col-xs-4"
-											style="padding:0 0 15px 15px">
-											<div style="background:rgb(248,248,248);height:100px">
-											</div>
-										</div>
-										<div class="col-md-4 col-sm-4 col-xs-4"
-											style="padding:0 0 15px 15px">
-											<div style="background:rgb(248,248,248);height:100px">
-											</div>
-										</div>
-										<div class="col-md-4 col-sm-4 col-xs-4"
-											style="padding:0 0 15px 15px">
-											<div style="background:rgb(248,248,248);height:100px">
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
+
+					<div class="panel-footers"
+						style="display: inline-block;float:right">
+						<ul class="pagination" style="margin:0;float:right">
+						</ul>
 					</div>
 				</div>
 			</div>
@@ -205,19 +122,34 @@ h5 a {
                     <div id="${news.id}" class="card-box col-md-3 col-sm-6">
                             <div class="card">
                                 <div class="content">
-                                    <h5 class="title">
-                                        <a href="#" onclick="javascript:top.location.href='${news.url}'" title="${news.title}">${news.title.replace(/\s/g,"").replace("：",":")}</a>
-                                    </h5>
-                                    <p class="description">${news.content.replace(/\s/g,"").substring(0,100)}...</p>
+                                	<div class="card-header" style="margin-bottom:10px">
+                                		<h5 class="title" style="margin-bottom:5px">
+                                        	<a href="#" onclick="javascript:top.location.href='${news.url}'" title="${news.title}">${news.title}</a>
+                                    	</h5>
+                                    	<p class="description" style="text-align:center;margin-bottom:5px;">2018-08-01</p>
+                                	</div>
+                                    
+                                    <p class="description" style="word-wrap:break-word">
+										{{if news.content.replace(/\s/g,"").length>100}}
+											${news.content.replace(/\s/g,"").substring(0,100)}...
+										{{else}}
+											${news.content.replace(/\s/g,"")}...${Array(100-news.content.replace(/\s/g,"").length).join("&emsp;")}
+										{{/if}}
+									</p>
                 
-                                    <p class="description">${news.date}</p>
+                                    <p class="description keywords">
+                                    	关键词:
+                                    	<a href="#" onclick="javascript:top.location.href='analysis.html?keyword=${news.keywords.split(',')[0]}'" title="${news.keywords.split(',')[0]}">${news.keywords.split(',')[0]}</a>/
+                                    	<a href="#" onclick="javascript:top.location.href='analysis.html?keyword=${news.keywords.split(',')[1]}'" title="${news.keywords.split(',')[1]}">${news.keywords.split(',')[1]}</a>/
+                                    	<a href="#" onclick="javascript:top.location.href='analysis.html?keyword=${news.keywords.split(',')[2]}'" title="${news.keywords.split(',')[2]}">${news.keywords.split(',')[2]}</a>
+									</p>
                                 </div>
                 
-                                <div class="footer" style="padding-top:10px">
-                                    <p class="description" style="display: inline">#${news.source}</p>
+                                <div class="footer" style="padding:10px 15px 0">
+                                    <p class="description" style="display: inline-block" title="${news.source}">#${news.source}</p>
                                     <div class="action">
                                         <button type="button" button-type="book" class="btn btn-primary btn-xs" onclick="collect(this)">
-                                            <span class="glyphicon glyphicon-star"></span> 收藏
+                                            <span class="glyphicon glyphicon-star-empty"></span> 收藏
                                         </button>
                                     </div>
                 
@@ -229,78 +161,74 @@ h5 a {
 
 </script>
 
+<!--分页菜单-->
 <script>
-	var addBricks = function(data) {
-		var brickString = '<div class="brick col-md-4 col-sm-4 col-xs-4" style="padding:0 0 15px 15px">' +
-					'<div style="background:rgb(152, 185, 255);height:100px;display:table;width:100%">' +
-					'</div>' +
-					'</div>';
-		
-		var rows=new Array();
-		
-		var row=$("<div class='row'></div>");
-		var rowContent=0;
-		for (var i = 0; i < data.length; i++) {
-			var message="<p><a href='#'>"+data[i]+"</a></p>";
-			//排成行
-			var brickContent = Math.floor(Math.random() * 2) + 1;
-			
-			//没有剩余空间
-			if(brickContent > 3 - rowContent){
-				brickContent = 1;
-			}
-			rowContent+=brickContent;
-			
-			var brick;
-			if (brickContent == 1) {
-				brick = $(brickString);
-				brick.addClass("tall");
-			}
-			else{
-				var brickNow=brickString.replace("4","8");
-				brick=$(brickNow);
-				brick.addClass("grande");
-			}
-			brick.children("div").append($(message));
-			row.append(brick);
-			
-			if(rowContent==3|| i==data.length-1){
-				console.log("pushed!");
-				rows.push(row);
-				row=$("<div class='row'></div>");
-				rowContent=0;
-				console.log(rows);
+	var fillHTML = function(totalsubpageTmep, args) {
+		totalsubpageTmep = "";
+		// 页码大于等于4的时候，添加第一个页码元素
+		if (args.currPage != 1 && args.currPage >= 4 && args.totalPage != 4) {
+			totalsubpageTmep += "<li class='ali'><a href='javascript:void(0);' class='geraltTb_pager' data-go='' >" + 1 + "</a></li>";
+		}
+		/* 当前页码>4, 并且<=总页码，总页码>5，添加“···”*/
+		if (args.currPage - 2 > 2 && args.currPage <= args.totalPage && args.totalPage > 5) {
+			totalsubpageTmep += "<li class='ali'><a href='javascript:void(0);' class='geraltTb_' data-go='' >...</a></li>";
+		}
+		/* 当前页码的前两页 */
+		var start = args.currPage - 2;
+		/* 当前页码的后两页 */
+		var end = args.currPage + 2;
+
+		if ((start > 1 && args.currPage < 4) || args.currPage == 1) {
+			end++;
+		}
+		if (args.currPage > args.totalPage - 4 && args.currPage >= args.totalPage) {
+			start--;
+		}
+		for (; start <= end; start++) {
+			if (start <= args.totalPage && start >= 1) {
+				totalsubpageTmep += "<li class='ali'><a href='javascript:void(0);' class='geraltTb_pager' data-go='' >" + start + "</a></li>";
 			}
 		}
-		
-		var colNum=Math.ceil(rows.length/3);
-		for(var i=0;i<colNum;i++){
-			var colString="<div class='col-md-4 col-sm-6'></div>";
-			var col=$(colString);
-			
-			var startNum=3*i;
-			if(startNum+2<=rows.length){
-				col.append(rows[startNum]);
-				col.append(rows[startNum+1]);
-				col.append(rows[startNum+2]);
-			}
-			else{
-				//剩余一条/两条
-				var num=rows.length-startNum+1;
-				for (var j=0;j<num;j++){
-					col.append(rows[startNum+num]);
-				}
-			}
-			console.log(col);
-			$(".brick-container").append(col);
+		if (args.currPage + 2 < args.totalPage - 1 && args.currPage >= 1 && args.totalPage > 5) {
+			totalsubpageTmep += "<li class='ali'><a href='javascript:void(0);' class='geraltTb_' data-go='' >...</a></li>";
 		}
+
+		if (args.currPage != args.totalPage && args.currPage < args.totalPage - 2 && args.totalPage != 4) {
+			totalsubpageTmep += "<li class='ali'><a href='javascript:void(0);' class='geraltTb_pager' data-go='' >" + args.totalPage + "</a></li>";
+		}
+
+		//当前页数
+		var temp = $(totalsubpageTmep).each(function() {
+			if ($(this).text() == args.currPage) {
+				$(this).find("a").css("background", "rgb(250,250,250)");
+			}
+		});
+		$(".pagination").html(temp);
+	}
+	var bindEvent = function(totalsubpageTmep, args) {
+		totalsubpageTmep.on("click", "a.geraltTb_pager", function(event) {
+			var current = parseInt($(this).text());
+			fillHTML(totalsubpageTmep, {
+				"currPage" : current,
+				"totalPage" : args.totalPage,
+				"turndown" : args.turndown
+			});
+			if (typeof (args.backFn) == "function") {
+				args.backFn(current);
+			}
+		});
+	}
+	$.fn.createPage = function(options) {
+		fillHTML(this, options);
+		bindEvent(this, options);
 	}
 </script>
 
 <script>
 	var changeTitleSize = function() {
-		var tempWidth = $(".content").eq(0).width();
+		var tempWidth = $(".active-container").find(".content").eq(0).width();
 		$("h5").css("width", tempWidth);
+		$(".card .footer .description").css("width", 0.75 * tempWidth);
 		return tempWidth;
 	}
 
@@ -308,7 +236,7 @@ h5 a {
 		var thisButton = $(button);
 		var cardbox = thisButton.parents(".card-box");
 		var id = cardbox.attr("id");
-		var url = "/POSystem/ViewCollectionServlet?userid=" + localStorage.getItem("userid") + "&newsid=" + id + "&mode=";
+		var url = "/POSystem/UpdateCollectionServlet?userid=" + localStorage.getItem("userid") + "&newsid=" + id + "&mode=";
 
 		if (thisButton.attr("button-type") == "book") {
 			var icon = thisButton.find("span");
@@ -327,27 +255,74 @@ h5 a {
 			$.get(url);
 		}
 	}
-	//新闻标题大小随页面大小变化而变化
-	$(window).resize(changeTitleSize);
 
 	$().ready(function() {
 		//获得父页面定义的iframe类型
 		var contentType = window.parent.contentType;
 		$("#header").html(contentType);
 
-		var uid = localStorage.getItem("userid");
-		var url = "/POSystem/ViewCollectionServlet?userid=" + uid;
+		/*待定,个性化推荐*/
+		if (contentType == "推荐" || contentType == undefined) {
+			contentType = "财经";
+		}
 
-		/* $.get(url, function (data) {
-		    var dataJson = JSON.parse(data);
-		    console.log(dataJson);
-		    $('#div_demo').tmpl(dataJson).appendTo('.card-containers');
-		}); */
+		var url = "/POSystem/TypeNewsServlet?type=" + contentType;
+		var originUrl = url + "&page=" + "1";
+
+		$.get(originUrl, function(data) {
+			var dataJson = JSON.parse(data);
+			$('#div_demo').tmpl(dataJson).appendTo('.card-containers');
+			$(".active-container").attr("id", "page1");
+			var totalPage = Math.ceil(dataJson.count / 8);
+
+			$(".pagination").createPage({
+				totalPage : totalPage,
+				currPage : 1,
+				//点击反馈函数
+				backFn : function(p) {
+					var target = document.getElementById("page" + p);
+					if (target == null) {
+						var targetPage = p;
+						var targetUrl = url + "&page=" + p;
+
+						$.get(targetUrl, function(data) {
+							var dataJson = JSON.parse(data);
+							var curPage = $(".active-container").eq(0);
+							curPage.removeClass("active-container");
+							$('#div_demo').tmpl(dataJson).appendTo('.card-containers');
+							curPage.slideUp(500);
+							curPage = $(".active-container").eq(0);
+							curPage.attr("id", "page" + p);
+
+							$("h5").css("width", titleSize);
+							$(".card .footer .description").css("width", 0.75 * titleSize);
+							curPage.slideDown(500);
+						});
+					} else {
+						var curPage = $(".active-container").eq(0);
+						if (curPage.attr("id") != ("page" + p)) {
+							curPage.removeClass("active-container");
+							curPage.slideUp(500);
+
+							var tarPage = $("#page" + p);
+							tarPage.addClass("active-container");
+
+							$("h5").css("width", titleSize);
+							$(".card .footer .description").css("width", 0.75 * titleSize);
+							tarPage.slideDown(500);
+						}
+					}
+
+				}
+			});
+
+		});
 
 		//单个新闻标题自适应
 		var titleSize = changeTitleSize();
-		
-		addBricks(null);
+
+		//新闻标题大小随页面大小变化而变化
+		$(window).resize(changeTitleSize);
 	});
 </script>
 
