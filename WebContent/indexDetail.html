@@ -47,6 +47,7 @@
             overflow: hidden;
             text-overflow: ellipsis;
             word-break: keep-all;
+            white-space:nowrap;
         }
         
         h5 a{
@@ -83,7 +84,7 @@
                     </a>
                 </div>
                 <div id="collapseList" class="panel-collapse collapse panel-body in">
-                    <div class="card-containers" style="display: inline-block">
+                    <div class="card-containers" style="width:100%;display: inline-block">
 
                     </div>
 
@@ -115,9 +116,15 @@
                             <div class="card">
                                 <div class="content">
                                     <h5 class="title">
-                                        <a href="${news.url}" title="${news.title}">${news.title.replace(/\s/g,"").replace("：",":")}</a>
+                                        <a href="#" onclick="javascript:top.location.href='${news.url}'" title="${news.title}">${news.title.replace(/\s/g,"").replace("：",":")}</a>
                                     </h5>
-                                    <p class="description">${news.content.replace(/\s/g,"").substring(0,100)}...</p>
+                                    <p class="description" style="word-wrap:break-word">
+										{{if news.content.replace(/\s/g,"").length>100}}
+											${news.content.replace(/\s/g,"").substring(0,100)}...
+										{{else}}
+											${news.content.replace(/\s/g,"")}...${Array(100-news.content.replace(/\s/g,"").length).join("&emsp;")}
+										{{/if}}
+									</p>
                 
                                     <p class="description">${news.date}</p>
                                 </div>
@@ -125,7 +132,7 @@
                                 <div class="footer" style="padding-top:10px">
                                     <p class="description" style="display: inline">#${news.source}</p>
                                     <div class="action">
-                                        <button type="button" button-type="book" class="btn btn-primary btn-xs" onclick="changeIconType(this)">
+                                        <button type="button" button-type="book" class="btn btn-primary btn-xs" onclick="collect(this)">
                                             <span class="glyphicon glyphicon-star-empty"></span> 收藏
                                         </button>
                                     </div>
@@ -200,27 +207,36 @@
 
 <script>
     var changeTitleSize = function () {
-        var tempWidth = $(".content").eq(0).width();
+        var tempWidth = $(".active-container").find(".content").eq(0).width();
         $("h5").css("width", tempWidth);
         return tempWidth;
     }
 
-    var changeIconType = function (button) {
+    var collect = function (button) {
         var thisButton = $(button);
         var cardbox = thisButton.parents(".card-box");
-        console.log(cardbox.attr("id"));
+        var id=cardbox.attr("id");
+        var url="/POSystem/UpdateCollectionServlet?userid="+localStorage.getItem("userid")+"&newsid="+id+"&mode=";
+        
         if (thisButton.attr("button-type") == "book") {
-            thisButton.find("span").toggleClass("glyphicon-star-empty");
-            thisButton.find("span").toggleClass("glyphicon-star");
-        }
-        else if (thisButton.attr("button-type") == "like") {
-            thisButton.find("span").toggleClass("glyphicon-heart-empty");
-            thisButton.find("span").toggleClass("glyphicon-heart");
+        	var icon=thisButton.find("span");
+        	if(icon.hasClass("glyphicon-star-empty")){
+        		icon.removeClass("glyphicon-star-empty");
+        		icon.addClass("glyphicon-star");
+        		
+        		url+="add";
+        	}
+        	else{
+        		icon.removeClass("glyphicon-star");
+        		icon.addClass("glyphicon-star-empty");
+        		
+        		url+="delete";
+        	}
+        	
+        	$.get(url);
         }
     }
-    //新闻标题大小随页面大小变化而变化
-    $(window).resize(changeTitleSize);
-
+    
     $().ready(function () {
         //获得父页面定义的iframe类型
         var contentType = window.parent.contentType;
@@ -282,7 +298,12 @@
 
             }
         });
+        
+        //新闻标题大小随页面大小变化而变化
+    	$(window).resize(changeTitleSize);
     });
+    
+    
 </script>
 
 </html>

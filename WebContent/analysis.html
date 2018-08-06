@@ -315,6 +315,12 @@
 
             someCustom();
 
+			var uid=localStorage.getItem("userid");
+			console.log("UID : "+uid);
+           	if (uid == "" || uid == "null" || uid == undefined ) {
+                window.location.href = "./login.html?message=登录超时!请重新登陆!";
+            }
+            
             //点击不同菜单项显示不同iframe
             $(".sidebar a").click(function () {
                 //获得点击对象

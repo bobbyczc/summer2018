@@ -241,14 +241,17 @@
 
             <div class="list">
                 <ul class="tabs">
-                    <li class="active">
+                    <li>
                         <a href="index.html">实时舆情</a>
                     </li>
                     <li>
-                        <a href="#">舆情分析</a>
+                        <a href="analysis.html">舆情分析</a>
+                    </li>
+                    <li>
+                        <a href="custom.html">我的舆情</a>
                     </li>
                     <li class="dropdown" style="float:right;">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <a href="#" id="user" class="dropdown-toggle" data-toggle="dropdown">
                             用户
                         </a>
                         <ul class="dropdown-menu dropdown-menu-right">
@@ -260,7 +263,7 @@
                             </li>
                             <li class="divider"></li>
                             <li class="dropdown-item">
-                                <a href="login.html">登出</a>
+                                <a href="#" onclick="logout()">登出</a>
                             </li>
                         </ul>
                     </li>
