@@ -112,25 +112,25 @@ h5 a {
 						style="width:100%;display: inline-block"></div>
 				</div>
 			</div>
-			
+
 			<div class="panel" id="following" style="display:none">
 				<div class="panel-header" style="background:rgb(250,250,250)">
 
-					<a data-toggle="collapse" href="#collapseList2" style="color:black;">
+					<a data-toggle="collapse" href="#collapseList2"
+						style="color:black;">
 						<div>
 							<h3 id="header"
 								style="padding-left:30px;font-size:20px;display: inline-block">我的关注</h3>
 						</div>
 					</a>
 				</div>
-				<div id="collapseList2" class="panel-collapse collapse panel-body in">
+				<div id="collapseList2"
+					class="panel-collapse collapse panel-body in">
 					<div id="followings" class="brick-containers"
 						style="width:100%;display:inline-block">
 						<div>
 							<div class="row brick-container"
-								style="margin:0;margin-right:15px;margin-bottom:30px">
-								
-							</div>
+								style="margin:0;margin-right:15px;margin-bottom:30px"></div>
 						</div>
 					</div>
 				</div>
@@ -162,7 +162,7 @@ h5 a {
 										{{if news.content.replace(/\s/g,"").length>100}}
 											${news.content.replace(/\s/g,"").substring(0,100)}...
 										{{else}}
-											${news.content.replace(/\s/g,"")}...${Array(100-news.content.replace(/\s/g,"").length).join("&emsp;")}
+											${news.content.replace(/\s/g,"")}...${Array(8000-news.content.replace(/\s/g,"").length).join("&emsp;")}
 										{{/if}}
 									</p>
                                     <p class="description">${news.date}</p>
@@ -186,63 +186,61 @@ h5 a {
 
 <script>
 	var addBricks = function(data) {
-		data=[1,3,2,3,1,3,2,3,1,3,2,3,1,3,2,3,1,3,2,3];
+		var dataArray = data.split(",");
 		var brickString = '<div class="brick col-md-4 col-sm-4 col-xs-4" style="padding:0 0 15px 15px">' +
-					'<div style="background:rgb(152, 185, 255);height:100px;display:table;width:100%">' +
-					'</div>' +
-					'</div>';
-		
-		var rows=new Array();
-		
-		var row=$("<div class='row'></div>");
-		var rowContent=0;
-		for (var i = 0; i < data.length; i++) {
-			var message="<p><a href='#'>"+data[i]+"</a></p>";
+			'<div style="background:rgb(152, 185, 255);height:100px;display:table;width:100%">' +
+			'</div>' +
+			'</div>';
+
+		var rows = new Array();
+
+		var row = $("<div class='row'></div>");
+		var rowContent = 0;
+		for (var i = 0; i < dataArray.length; i++) {
+			var message = "<p><a href='#'>" + dataArray[i] + "</a></p>";
 			//排成行
 			var brickContent = Math.floor(Math.random() * 2) + 1;
-			
+
 			//没有剩余空间
-			if(brickContent > 3 - rowContent){
+			if (brickContent > 3 - rowContent) {
 				brickContent = 1;
 			}
-			rowContent+=brickContent;
-			
+			rowContent += brickContent;
+
 			var brick;
 			if (brickContent == 1) {
 				brick = $(brickString);
 				brick.addClass("tall");
-			}
-			else{
-				var brickNow=brickString.replace("4","8");
-				brick=$(brickNow);
+			} else {
+				var brickNow = brickString.replace("4", "8");
+				brick = $(brickNow);
 				brick.addClass("grande");
 			}
 			brick.children("div").append($(message));
 			row.append(brick);
-			
-			if(rowContent==3|| i==data.length-1){
+
+			if (rowContent == 3 || i == dataArray.length - 1) {
 				rows.push(row);
-				row=$("<div class='row'></div>");
-				rowContent=0;
+				row = $("<div class='row'></div>");
+				rowContent = 0;
 			}
 		}
-		
-		var colNum=Math.ceil(rows.length/3);
-		for(var i=0;i<colNum;i++){
-			var colString="<div class='col-md-4 col-sm-6'></div>";
-			var col=$(colString);
-			
-			var startNum=3*i;
-			if(startNum+2<=rows.length){
+
+		var colNum = Math.ceil(rows.length / 3);
+		for (var i = 0; i < colNum; i++) {
+			var colString = "<div class='col-md-4 col-sm-6'></div>";
+			var col = $(colString);
+
+			var startNum = 3 * i;
+			if (startNum + 2 <= rows.length) {
 				col.append(rows[startNum]);
-				col.append(rows[startNum+1]);
-				col.append(rows[startNum+2]);
-			}
-			else{
+				col.append(rows[startNum + 1]);
+				col.append(rows[startNum + 2]);
+			} else {
 				//剩余一条/两条
-				var num=rows.length-startNum+1;
-				for (var j=0;j<num;j++){
-					col.append(rows[startNum+num]);
+				var num = rows.length - startNum + 1;
+				for (var j = 0; j < num; j++) {
+					col.append(rows[startNum + num]);
 				}
 			}
 			console.log(col);
@@ -252,11 +250,11 @@ h5 a {
 </script>
 
 <script>
-	var changeTitleSize = function () {
-        var tempWidth = $(".active-container").find(".content").eq(0).width();
-        $("h5").css("width", tempWidth);
-        return tempWidth;
-    }
+	var changeTitleSize = function() {
+		var tempWidth = $(".active-container").find(".content").eq(0).width();
+		$("h5").css("width", tempWidth);
+		return tempWidth;
+	}
 
 	var collect = function(button) {
 		var thisButton = $(button);
@@ -287,27 +285,32 @@ h5 a {
 	$().ready(function() {
 		//获得父页面定义的iframe类型
 		var contentType = window.parent.contentType;
-		
+
 		var uid = localStorage.getItem("userid");
+		var url;
 		
-		if(contentType=="我的收藏"){
-			$("#collection").css("display","block");
-		}
-		else if(contentType=="我的关注"){
-			$("#following").css("display","block");
-		}
-		var url = "/POSystem/ViewCollectionServlet?userid=" + uid;
+		if (contentType == "我的收藏") {
+			url = "/POSystem/ViewCollectionServlet?userid=" + uid;
+			$("#collection").css("display", "block");
 
-		/* $.get(url, function (data) {
-		    var dataJson = JSON.parse(data);
-		    console.log(dataJson);
-		    $('#div_demo').tmpl(dataJson).appendTo('.card-containers');
-		});  */
+			$.get(url, function(data) {
+				var dataJson = JSON.parse(data);
+				console.log(dataJson);
+				$('#div_demo').tmpl(dataJson).appendTo('.card-containers');
+			});
+		} 
+		else if (contentType == "我的关注") {
+			url = "/POSystem/ViewKeywordServlet?userid=" + uid;
+			$("#following").css("display", "block");
 
+			$.get(url, function(data) {
+				var dataJson = JSON.parse(data);
+				addBricks(dataJson.data);
+			});
+		}
+		
 		//单个新闻标题自适应
 		var titleSize = changeTitleSize();
-		
-		addBricks(null);
 	});
 </script>
 

@@ -36,6 +36,7 @@ public class ViewKeywordServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		 request.setCharacterEncoding("UTF-8");
 		 response.setCharacterEncoding("UTF-8");
+		 response.setHeader("content-type", "text/html;charset=UTF-8");
 		 UserActionDao actionDao = new UserActionDao();
 		 String userid = request.getParameter("userid");
 		 List<String> keList = TransUtil.strToList(actionDao.getKeyWordsStr(Integer.parseInt(userid)));

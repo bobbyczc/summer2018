@@ -304,118 +304,45 @@
             <!--内容-->
             <div class="content-nav" id="content-nav">
                 <div class="inner">
-                    <iframe src="./analysisDetail.html" id="iframepage" width="100%" height="600" frameborder="0" scrolling="auto"></iframe>
-                </div>
+                    
+				</div>
             </div>
         </div>
     </div>
 
+	<script>
+		window.onload=function(){
+			var ifr=$('<iframe id="iframepage" width="100%" height="600" frameborder="0" scrolling="auto"></iframe>');
+			$(".inner").append(ifr);
+			ifr.attr("src","./analysisDetail.html");
+		};
+	</script>
+	
     <script type="text/javascript">
+    	var keyword=null;
+    	
         $(document).ready(function () {
-    
-    		var param = "keyword";
-    		var reg = new RegExp('(^|&)' + param + '=([^&]*)(&|$)', 'i');
-    		var r = window.location.search.substr(1).match(reg);
-    		if (r != null) {
-    			var message = decodeURI(r[2]);
-    			alert(message);
-    		}
-    
-    		someCustom();
-
-			var uid=localStorage.getItem("userid");
+        	var uid=localStorage.getItem("userid");
 			console.log("UID : "+uid);
            	if (uid == "" || uid == "null" || uid == undefined ) {
                 window.location.href = "./login.html?message=登录超时!请重新登陆!";
             }
-            
-            //点击不同菜单项显示不同iframe
-            $(".sidebar a").click(function () {
-                //获得点击对象
-                var content = $(this).attr("data-content");
-
-                if (content != undefined) {
-                    contentType = content;
-
-                    $("#iframepage").attr("src", "./analysisDetail.html");
-                }
-
-            });
+        	
+        	//获取查询关键词
+    		var param = "keyword";
+    		var reg = new RegExp('(^|&)' + param + '=([^&]*)(&|$)', 'i');
+    		var r = window.location.search.substr(1).match(reg);
+    		if (r != null) {
+    			keyword = decodeURI(r[2]);
+    		}
+    		$("#iframepage").attr("src", "./analysisDetail.html");
+    		
+    		someCustom();
         });
 
         //自定义样式
         function someCustom() {
             $(".dataTables_wrapper .dataTables_paginate .paginate_button:hover").css("background", "rgb(249,249,249)");
-        }
-
-        //hover菜单显示切换
-        function changeHoverDir(content) {
-            for (var i = 0; i < content.length; i++) {
-                var temp=content.eq(i);
-
-                if (temp.hasClass("hoverdir")) {
-                    if (temp.hasClass("collapseMenu")) {
-                        var div = temp.children("div").eq(0);
-                        div.css("display", "none");
-                        var next = temp.next();
-
-                        //获得一个clone
-                        var clone=next.clone();
-                        clone.find("span").remove();
-                        clone.css("position","absolute");
-                        clone.css("padding","0px");
-                        //clone.removeClass();
-                        temp.append(clone);
-
-                        next.css("display", "none");
-                    }
-                    else {
-                        console.log(0);
-                        temp.find("p").wrap("<ul style='position:absolute'><li></li></ul>");
-                    }
-                }
-                else {
-                    if (temp.hasClass("collapseMenu")) {
-                        var div = temp.children("div").eq(0);
-                        div.css("display", "inline");
-                        temp.children("ul").remove();
-
-                        var next = temp.next();
-                        next.css("display",'');
-                    }
-                    else {
-                        temp.find("p").unwrap("<li></li>");
-                        temp.find("p").unwrap("<ul></ul>");
-                    }
-
-                }
-            }
-
-        }
-
-        //二级菜单显示切换
-        function changeSideBar(sideBar) {
-            if (sideBar.hasClass("side-active")) {
-                $("#collapseList").removeClass("in");
-                $(".collapseMenu").removeAttr("data-toggle");
-            }
-            else {
-                $(".collapseMenu").attr("data-toggle", "collapse");
-            }
-        }
-
-        //菜单滑动后样式显示
-        function changeContentSize(detailContent) {
-            if (detailContent.hasClass("content-active")) {
-                detailContent.css({
-                    "margin-left": "50px"
-                })
-            }
-            else {
-                detailContent.css({
-                    "margin-left": "200px"
-                })
-            }
         }
 
         function changeFrameHeight() {

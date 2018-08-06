@@ -386,18 +386,26 @@
             <!--内容-->
             <div class="content-nav" id="content-nav">
                 <div class="inner">
-                    <iframe src="./indexDetail.html" id="iframepage" width="100%" height="600" frameborder="0" scrolling="auto"></iframe>
+                
                 </div>
             </div>
         </div>
     </div>
 
+	<script>
+		window.onload=function(){
+			var ifr=$('<iframe id="iframepage" width="100%" height="600" frameborder="0" scrolling="auto"></iframe>');
+			$(".inner").append(ifr);
+			ifr.attr("src","./indexDetail.html");
+		};
+	</script>
     <script type="text/javascript">
+    	
         //标识iframe类型
         var contentType = "推荐";
 
-        $(document).ready(function () {
-			
+        $(document).ready(function () {      
+        
 			someCustom();
 			
 			var uid=localStorage.getItem("userid");
