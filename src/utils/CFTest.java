@@ -31,19 +31,19 @@ public class CFTest {
 //			System.out.print("\n");
 //		}
 		
-		List<Integer> userids = CFUtil.getKNNUserActionIds(user4, actions);
-		List<UserAction> similarUsers = CFUtil.findUserActionsbyid(actions, userids);
-		HashMap<Integer, Float> hashMap = CFUtil.getInterestDegree(similarUsers, user4);
-		for(Map.Entry<Integer, Float> entry:hashMap.entrySet()) {
-			System.out.println(entry.getKey()+"   "+entry.getValue());
-		}
-
-		List<Map.Entry<Integer, Float>> recommandation = CFUtil.getTopNNews(hashMap);
-		System.out.println(user4.getUserid()+"用户的个性推荐：");
-		for(Map.Entry<Integer, Float> entry:recommandation) {
-			System.out.println("推荐新闻id:"+entry.getKey()+",  推荐指数："+entry.getValue());
-		}
-		
+//		List<Integer> userids = CFUtil.getKNNUserActionIds(user4, actions);
+//		List<UserAction> similarUsers = CFUtil.findUserActionsbyid(actions, userids);
+//		HashMap<Integer, Float> hashMap = CFUtil.getInterestDegree(similarUsers, user4);
+//		for(Map.Entry<Integer, Float> entry:hashMap.entrySet()) {
+//			System.out.println(entry.getKey()+"   "+entry.getValue());
+//		}
+//
+//		List<Map.Entry<Integer, Float>> recommandation = CFUtil.getTopNNews(hashMap);
+//		System.out.println(user4.getUserid()+"用户的个性推荐：");
+//		for(Map.Entry<Integer, Float> entry:recommandation) {
+//			System.out.println("推荐新闻id:"+entry.getKey()+",  推荐指数："+entry.getValue());
+//		}
+//		
 		
 	}
 }

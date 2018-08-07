@@ -18,6 +18,11 @@ public class UserActionDao extends BaseDao{
 	private Connection conn;
 	private PreparedStatement pstm;
 	
+	/**
+	 * 根据用户ID获取用户行为
+	 * @param userid
+	 * @return
+	 */
 	public UserAction getUserActionByUid(int userid){
 		ResultSet resultSet;
 		UserAction action = new UserAction();
@@ -121,7 +126,7 @@ public class UserActionDao extends BaseDao{
 	}
 	
 	/**
-	 * �ж������ڲ����û��ղ��б�
+	 * 判断新闻是否已经被用户收藏
 	 * @param userid
 	 * @param newsid
 	 * @return
@@ -131,7 +136,7 @@ public class UserActionDao extends BaseDao{
 	}
 	
 	/**
-	 * �����û��ղ���
+	 * 更新用户收藏
 	 * @param userid
 	 * @param newcl
 	 */
@@ -157,7 +162,7 @@ public class UserActionDao extends BaseDao{
 		}
 	}
 	/**
-	 * �û��ղ�ʱ����
+	 * 增加用户收藏
 	 * @param userid
 	 * @param newsid
 	 */
@@ -170,7 +175,7 @@ public class UserActionDao extends BaseDao{
 		return TransUtil.listToStr(list);
 	}
 	/**
-	 * �û�ȡ���ղ�ʱ
+	 * 取消用户收藏
 	 * @param userid
 	 * @param newsid
 	 * @return
@@ -185,7 +190,7 @@ public class UserActionDao extends BaseDao{
 	}
 	
 	/**
-	 * ��ȡ�û���ע�ؼ���
+	 * 获取用户关注
 	 * @param userid
 	 * @return
 	 */
@@ -211,7 +216,7 @@ public class UserActionDao extends BaseDao{
 	}
 	
 	/**
-	 * ��ע�ؼ��ʸı�ʱ����
+	 * 更新用户关注
 	 * @param userid
 	 * @param newTps
 	 */
@@ -239,7 +244,7 @@ public class UserActionDao extends BaseDao{
 	}
 	
 	/**
-	 * ����û���ע�ؼ���
+	 * 增加用户关注
 	 * @param userid
 	 * @param word
 	 * @return
@@ -254,7 +259,7 @@ public class UserActionDao extends BaseDao{
 	}
 	
 	/**
-	 * ȡ����ע
+	 * 取消用户关注
 	 * @param userid
 	 * @param word
 	 * @return
@@ -268,6 +273,11 @@ public class UserActionDao extends BaseDao{
 		return TransUtil.listToStr(list);
 	}
 	
+	/**
+	 * 获取用户浏览列表
+	 * @param userid
+	 * @return
+	 */
 	public String getViewStr(int userid) {
 		String views = null;
 		ResultSet rs;
@@ -286,7 +296,12 @@ public class UserActionDao extends BaseDao{
 		}
 		return views;
 	}
-	
+	/**
+	 * 增加用户浏览
+	 * @param userid
+	 * @param newsid
+	 * @return
+	 */
 	private String addViewed(int userid, int newsid) {
 		String views = getViewStr(userid);
 		List<String> list = TransUtil.strToList(views);
@@ -298,6 +313,11 @@ public class UserActionDao extends BaseDao{
 		return TransUtil.listToStr(list);
 	}
 	
+	/**
+	 * 删除用户浏览
+	 * @param userid
+	 * @return
+	 */
 	private String deleteAThird(int userid) {
 		String views = getViewStr(userid);
 		List<String> list = TransUtil.strToList(views);
@@ -307,11 +327,37 @@ public class UserActionDao extends BaseDao{
 		}
 		return TransUtil.listToStr(list);
 	}
-	
-	public void deleteviews(int userid) {
-		
+	/**
+	 * 更新用户浏览
+	 * @param userid
+	 * @param newsid
+	 * @param mode
+	 */
+	public void updateViewList(int userid, int newsid, UpdateMode mode) {
+		String newViews = null;
+		if(mode.equals(TransUtil.UpdateMode.DELETE)) {
+			newViews = deleteAThird(userid);
+		}else if(mode.equals(TransUtil.UpdateMode.ADD)) {
+			newViews = addViewed(userid, newsid);				
+		}
+		try {
+			String sql = "update user_action set news_viewed = ? where user_id = ?";
+			conn = this.getConn();
+			pstm = conn.prepareStatement(sql);
+			pstm.setString(1, newViews);
+			pstm.setInt(2, userid); 
+			pstm.executeUpdate();
+			pstm.close();
+			conn.close();
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-	
+	/**
+	 * 获取所有用户ID
+	 * @return
+	 */
 	public List<Integer> getUserIds(){
 		ResultSet resultSet;
 		List<Integer> result = new ArrayList<>();

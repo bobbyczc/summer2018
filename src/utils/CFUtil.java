@@ -38,7 +38,7 @@ public class CFUtil {
 	 * @param news
 	 * @return
 	 */
-	public static int[][] getUserActionAndNewsMatrix(List<UserAction> UserActions, List<News> news){
+	private static int[][] getUserActionAndNewsMatrix(List<UserAction> UserActions, List<News> news){
 		int row = UserActions.size()+1;
 		int colum = news.size()+1;
 		int[][] result = new int[row][colum];
@@ -91,7 +91,7 @@ public class CFUtil {
 	 * @param UserActions
 	 * @return
 	 */
-	public static float[][] getUserActionsMetrix(List<UserAction> userActions) {
+	private static float[][] getUserActionsMetrix(List<UserAction> userActions) {
 		int size = userActions.size();
 		float[][] results = new float[size+1][size+1];
 		results[0][0]=0;
@@ -119,7 +119,7 @@ public class CFUtil {
 	 * @param N 相似用户数量
 	 * @return
 	 */
-	public static List<Integer> getKNNUserActionIds(UserAction UserAction, List<UserAction> actions){
+	private static List<Integer> getKNNUserActionIds(UserAction UserAction, List<UserAction> actions){
 		float[][] matrix = getUserActionsMetrix(actions);
 		List<Integer> list = new ArrayList<>();
 		List<Integer> ids = new ArrayList<>();
@@ -179,7 +179,7 @@ public class CFUtil {
 	 * @param ids
 	 * @return
 	 */
-	public static List<UserAction> findUserActionsbyid(List<UserAction> UserActions, List<Integer> ids){
+	private static List<UserAction> findUserActionsbyid(List<UserAction> UserActions, List<Integer> ids){
 		List<UserAction> result = new ArrayList<>();
 		for(int id:ids) {
 			for(UserAction u:UserActions) {
@@ -203,7 +203,7 @@ public class CFUtil {
 	 * @param newsid 计算的新闻集合
 	 * @return
 	 */
-	public static HashMap<Integer, Float> getInterestDegree(List<UserAction> list,UserAction userAction) {
+	private static HashMap<Integer, Float> getInterestDegree(List<UserAction> list,UserAction userAction) {
 		//几个用户新闻的并集
 		List<String> union = getUserNews(userAction);
 		//交集
@@ -239,7 +239,7 @@ public class CFUtil {
 	 * @param N
 	 * @return
 	 */
-	public static List<Map.Entry<Integer, Float>> getTopNNews(HashMap<Integer, Float> source){
+	private static List<Map.Entry<Integer, Float>> getTopNNews(HashMap<Integer, Float> source){
 		List<Map.Entry<Integer, Float>> list = new ArrayList<Map.Entry<Integer,Float>>(source.entrySet());
 		Collections.sort(list,new Comparator<Map.Entry<Integer, Float>>() {
 			public int compare(Entry<Integer, Float> o1,Entry<Integer, Float> o2) {
@@ -251,7 +251,11 @@ public class CFUtil {
 		
 	}
 	
-	//接口函数  获取用户推荐的新闻ID列表
+	/**
+	 * 接口函数  获取用户推荐的新闻ID列表
+	 * @param userid
+	 * @return
+	 */
 	public static List<Integer> recommend(int userid){
 		List<Integer> result = new ArrayList<>();
 		UserActionDao actionDao = new UserActionDao();

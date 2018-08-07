@@ -9,11 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
-
+import dao.UserDao;
 import model.ResponseEntity;
 import model.User;
-import service.UserService;
 
 /**
  * Servlet implementation class RegisterServlet
@@ -51,13 +49,20 @@ public class RegisterServlet extends HttpServlet {
 		String password = request.getParameter("password");
 		String phone = request.getParameter("phone");
 		String nickname = request.getParameter("nickname");
-		User user = new User(email, password, phone,nickname);
-		UserService service = new UserService();
+		UserDao dao = new UserDao();
 		ResponseEntity entity = new ResponseEntity();
-		if(service.register(user)==0) {
+		if(dao.getUserByPhone(phone)!=null) {
 			entity.setStatus(0);
-			entity.setMessage("用户已存在");
+			entity.setMessage("手机号已被注册");
+		}else if(dao.getUserByEmail(email)!=null) {
+			entity.setStatus(-1);
+			entity.setMessage("邮箱已被注册");
+		}else if(dao.getUserByNickname(nickname)!=null) {
+			entity.setStatus(-2);
+			entity.setMessage("昵称已被注册");
 		}else {
+			User user = new User(email, password, phone,nickname);
+			dao.register(user);
 			entity.setStatus(1);
 			entity.setMessage("注册成功");
 		}

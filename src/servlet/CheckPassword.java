@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dao.UserDao;
 import model.ResponseEntity;
-import service.UserService;
 
 /**
  * Servlet implementation class CheckPassword
@@ -42,9 +42,9 @@ public class CheckPassword extends HttpServlet {
 		response.setCharacterEncoding("utf-8");
 		String password = request.getParameter("password");
 		int userid = Integer.parseInt(request.getParameter("userid"));
-		UserService service = new UserService();
+		UserDao dao = new UserDao();
 		ResponseEntity entity = new ResponseEntity();
-		if(service.checkPsw(userid, password)) {
+		if(dao.checkPsw(userid, password)) {
 			entity.setStatus(1);
 			entity.setMessage("密码正确");
 			entity.setData("{\"isCorrect\": true}");
