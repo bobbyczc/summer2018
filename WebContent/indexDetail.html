@@ -273,7 +273,7 @@ html::-webkit-scrollbar {
 		
 		var userid = localStorage.getItem("userid");
 		if (contentType == "推荐") {
-			var url = "/POSystem/RecommentServlet?userid=" + userid;
+			var url = "/POSystem/RecommendServlet?userid=" + userid;
 			$.get(url,function(data){
 				var dataJson = JSON.parse(data);
 				$('#div_demo').tmpl(dataJson).appendTo('.card-containers');
