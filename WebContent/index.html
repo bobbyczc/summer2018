@@ -409,7 +409,6 @@
 			someCustom();
 			
 			var uid=localStorage.getItem("userid");
-			console.log("UID : "+uid);
            	if (uid == "" || uid == "null" || uid == undefined ) {
                 window.location.href = "./login.html?message=登录超时!请重新登陆!";
             }
@@ -447,7 +446,6 @@
                 if (content != undefined) {
                 	$(".sidebar li").removeClass("active");
                 	$(this).parent("li").addClass("active");
-                	console.log($(this).parent("li"));
                     contentType = content;
 
                     $("#iframepage").attr("src", "./indexDetail.html");
@@ -490,7 +488,6 @@
                         next.css("display", "none");
                     }
                     else {
-                        console.log(0);
                         temp.find("p").wrap("<ul style='position:absolute'><li></li></ul>");
                     }
                 }

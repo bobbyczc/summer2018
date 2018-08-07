@@ -298,7 +298,7 @@ html::-webkit-scrollbar {
                                 </div>
                 
                                 <div class="footer" style="padding-top:10px">
-                                    <p class="description" style="display: inline">#${news.source}</p>
+                                    <p class="description newsSource" style="display: inline">#${news.source}</p>
                                     <div class="action">
                                         <button type="button" button-type="book" class="btn btn-primary btn-xs" onclick="collect(this)">
                                             <span class="glyphicon glyphicon-star-empty"></span> 收藏
@@ -707,12 +707,16 @@ html::-webkit-scrollbar {
         }
     }
     
-	var changeTitleSize = function () {
-        var tempWidth = $(".active-container").find(".content").eq(0).width();
-        $("h5").css("width", tempWidth);
-        $(".card .footer .description").css("width", 0.75 * tempWidth);
-        return tempWidth;
-    }
+	var changeTitleSize = function() {
+		var firstContent=$(".active-container").find(".content").eq(0);
+		var firstFooter=firstContent.next();
+		
+		var tempWidth = firstContent.width();
+		$("h5").css("width", tempWidth);
+		
+		var actionWidth=firstFooter.find(".action").eq(0).width()+5;
+		$(".newsSource").css("width",tempWidth-actionWidth);
+	}
 
 	var changeBoxHeight=function(){
 		var tempHeight=$(".active-container").find(".card-box").eq(0).height();
@@ -872,10 +876,9 @@ html::-webkit-scrollbar {
 						curPage = $(".active-container").eq(0);
 						curPage.attr("id", "page" + p);
 
-						$(".card .footer .description").css("width", 0.75 * titleSize);
-						$("h5").css("width", titleSize);
-						changeBoxHeight();
 						curPage.slideDown(500);
+						changeTitleSize();
+						changeBoxHeight();
 					});
 				} else {
 					var curPage = $(".active-container").eq(0);
@@ -886,10 +889,9 @@ html::-webkit-scrollbar {
 						var tarPage = $("#page" + p);
 						tarPage.addClass("active-container");
 
-						$(".card .footer .description").css("width", 0.75 * titleSize);
-						$("h5").css("width", titleSize);
-						changeBoxHeight();
 						tarPage.slideDown(500);
+						changeTitleSize();
+						changeBoxHeight();
 					}
 				}
 

@@ -146,7 +146,7 @@ html::-webkit-scrollbar {
                                 </div>
                 
                                 <div class="footer" style="padding:10px 15px 0">
-                                    <p class="description" style="display: inline-block" title="${news.source}">#${news.source}</p>
+                                    <p class="description source" style="display: inline-block" title="${news.source}">#${news.source}</p>
                                     <div class="action">
                                         <button type="button" button-type="book" class="btn btn-primary btn-xs" onclick="collect(this)">
                                             <span class="glyphicon glyphicon-star-empty"></span> 收藏
@@ -226,10 +226,14 @@ html::-webkit-scrollbar {
 
 <script>
 	var changeTitleSize = function() {
-		var tempWidth = $(".active-container").find(".content").eq(0).width();
+		var firstContent=$(".active-container").find(".content").eq(0);
+		var firstFooter=firstContent.next();
+		
+		var tempWidth = firstContent.width();
 		$("h5").css("width", tempWidth);
-		$(".card .footer .description").css("width", 0.75 * tempWidth);
-		return tempWidth;
+		
+		var actionWidth=firstFooter.find(".action").eq(0).width()+5;
+		$(".source").css("width",tempWidth-actionWidth);
 	}
 
 	var changeBoxHeight=function(){
@@ -292,7 +296,7 @@ html::-webkit-scrollbar {
 				$(".active-container").attr("id", "page1");
 				
 				//单个新闻标题自适应
-				var titleSize = changeTitleSize();
+				changeTitleSize();
 				changeBoxHeight();
 				var totalPage = Math.ceil(dataJson.count / 8);
 
@@ -315,10 +319,9 @@ html::-webkit-scrollbar {
 								curPage = $(".active-container").eq(0);
 								curPage.attr("id", "page" + p);
 
-								$("h5").css("width", titleSize);
-								$(".card .footer .description").css("width", 0.75 * titleSize);
-								changeBoxHeight();
 								curPage.slideDown(500);
+								changeTitleSize();
+								changeBoxHeight();
 							});
 						} else {
 							var curPage = $(".active-container").eq(0);
@@ -329,10 +332,9 @@ html::-webkit-scrollbar {
 								var tarPage = $("#page" + p);
 								tarPage.addClass("active-container");
 
-								$("h5").css("width", titleSize);
-								$(".card .footer .description").css("width", 0.75 * titleSize);
-								changeBoxHeight();
 								tarPage.slideDown(500);
+								changeTitleSize();
+								changeBoxHeight();
 							}
 						}
 
