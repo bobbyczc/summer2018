@@ -37,8 +37,9 @@ public class WordFrenquencyServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String relativePath=request.getSession().getServletContext().getRealPath("");
-		String path= relativePath+"WEB-INF\\classes\\data\\stopwords.txt";
+		//Linux下路径
+		String path=request.getSession().getServletContext().getRealPath("")+"WEB-INF/classes/data/stopWords.txt";
+		
 		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("UTF-8");
 		String keyword = request.getParameter("keyword");
