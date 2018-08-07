@@ -232,6 +232,16 @@ html::-webkit-scrollbar {
 		return tempWidth;
 	}
 
+	var changeBoxHeight=function(){
+		var tempHeight=$(".active-container").find(".card-box").eq(0).height();
+		$(".active-container .card-box").each(function(){
+			if($(this).height()<tempHeight){
+				$(this).height(tempHeight+1);
+			}
+		});
+		
+	}
+	
 	var collect = function(button) {
 		var thisButton = $(button);
 		var cardbox = thisButton.parents(".card-box");
@@ -260,67 +270,77 @@ html::-webkit-scrollbar {
 		//获得父页面定义的iframe类型
 		var contentType = window.parent.contentType;
 		$("#header").html(contentType);
-
-		/*待定,个性化推荐*/
-		if (contentType == "推荐" || contentType == undefined) {
-			contentType = "财经";
-		}
-
-		var url = "/POSystem/TypeNewsServlet?type=" + contentType;
-		var originUrl = url + "&page=" + "1";
-
-		$.get(originUrl, function(data) {
-			var dataJson = JSON.parse(data);
-			$('#div_demo').tmpl(dataJson).appendTo('.card-containers');
-			$(".active-container").attr("id", "page1");
-			var totalPage = Math.ceil(dataJson.count / 8);
-
-			$(".pagination").createPage({
-				totalPage : totalPage,
-				currPage : 1,
-				//点击反馈函数
-				backFn : function(p) {
-					var target = document.getElementById("page" + p);
-					if (target == null) {
-						var targetPage = p;
-						var targetUrl = url + "&page=" + p;
-
-						$.get(targetUrl, function(data) {
-							var dataJson = JSON.parse(data);
-							var curPage = $(".active-container").eq(0);
-							curPage.removeClass("active-container");
-							$('#div_demo').tmpl(dataJson).appendTo('.card-containers');
-							curPage.slideUp(500);
-							curPage = $(".active-container").eq(0);
-							curPage.attr("id", "page" + p);
-
-							$("h5").css("width", titleSize);
-							$(".card .footer .description").css("width", 0.75 * titleSize);
-							curPage.slideDown(500);
-						});
-					} else {
-						var curPage = $(".active-container").eq(0);
-						if (curPage.attr("id") != ("page" + p)) {
-							curPage.removeClass("active-container");
-							curPage.slideUp(500);
-
-							var tarPage = $("#page" + p);
-							tarPage.addClass("active-container");
-
-							$("h5").css("width", titleSize);
-							$(".card .footer .description").css("width", 0.75 * titleSize);
-							tarPage.slideDown(500);
-						}
-					}
-
-				}
+		
+		var userid = localStorage.getItem("userid");
+		if (contentType == "推荐") {
+			var url = "/POSystem/RecommentServlet?userid=" + userid;
+			$.get(url,function(data){
+				var dataJson = JSON.parse(data);
+				$('#div_demo').tmpl(dataJson).appendTo('.card-containers');
+				
+				//单个新闻标题自适应
+				var titleSize = changeTitleSize();
+				changeBoxHeight();
 			});
+		} else {
+			var url = "/POSystem/TypeNewsServlet?type=" + contentType;
+			var originUrl = url + "&page=" + "1";
 
-		});
+			$.get(originUrl, function(data) {
+				var dataJson = JSON.parse(data);
+				$('#div_demo').tmpl(dataJson).appendTo('.card-containers');
+				$(".active-container").attr("id", "page1");
+				
+				//单个新闻标题自适应
+				var titleSize = changeTitleSize();
+				changeBoxHeight();
+				var totalPage = Math.ceil(dataJson.count / 8);
 
-		//单个新闻标题自适应
-		var titleSize = changeTitleSize();
+				$(".pagination").createPage({
+					totalPage : totalPage,
+					currPage : 1,
+					//点击反馈函数
+					backFn : function(p) {
+						var target = document.getElementById("page" + p);
+						if (target == null) {
+							var targetPage = p;
+							var targetUrl = url + "&page=" + p;
 
+							$.get(targetUrl, function(data) {
+								var dataJson = JSON.parse(data);
+								var curPage = $(".active-container").eq(0);
+								curPage.removeClass("active-container");
+								$('#div_demo').tmpl(dataJson).appendTo('.card-containers');
+								curPage.slideUp(500);
+								curPage = $(".active-container").eq(0);
+								curPage.attr("id", "page" + p);
+
+								$("h5").css("width", titleSize);
+								$(".card .footer .description").css("width", 0.75 * titleSize);
+								changeBoxHeight();
+								curPage.slideDown(500);
+							});
+						} else {
+							var curPage = $(".active-container").eq(0);
+							if (curPage.attr("id") != ("page" + p)) {
+								curPage.removeClass("active-container");
+								curPage.slideUp(500);
+
+								var tarPage = $("#page" + p);
+								tarPage.addClass("active-container");
+
+								$("h5").css("width", titleSize);
+								$(".card .footer .description").css("width", 0.75 * titleSize);
+								changeBoxHeight();
+								tarPage.slideDown(500);
+							}
+						}
+
+					}
+				});
+
+			});
+		}
 		//新闻标题大小随页面大小变化而变化
 		$(window).resize(changeTitleSize);
 	});

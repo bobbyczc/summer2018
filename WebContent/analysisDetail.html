@@ -714,7 +714,16 @@ html::-webkit-scrollbar {
         return tempWidth;
     }
 
-
+	var changeBoxHeight=function(){
+		var tempHeight=$(".active-container").find(".card-box").eq(0).height();
+		$(".active-container .card-box").each(function(){
+			if($(this).height()<tempHeight){
+				$(this).height(tempHeight+1);
+			}
+		});
+		
+	}
+	
 	var changeIconType = function(button) {
 		var thisButton = $(button);
 		var cardbox = thisButton.parents(".card-box");
@@ -838,13 +847,14 @@ html::-webkit-scrollbar {
 			console.log(dataJson);
 			$('#div_demo').tmpl(dataJson).appendTo('.card-containers');
 			$(".active-container").attr("id", "page1");
-		});
-
-		//单个新闻标题自适应
-		var titleSize = changeTitleSize();
-
-		$(".pagination").createPage({
-			totalPage : 30,
+			//单个新闻标题自适应
+			var titleSize = changeTitleSize();
+			changeBoxHeight();
+			
+			var totalPage = Math.ceil(dataJson.count / 8);
+			
+			$(".pagination").createPage({
+			totalPage : totalPage,
 			currPage : 1,
 			//点击反馈函数
 			backFn : function(p) {
@@ -864,6 +874,7 @@ html::-webkit-scrollbar {
 
 						$(".card .footer .description").css("width", 0.75 * titleSize);
 						$("h5").css("width", titleSize);
+						changeBoxHeight();
 						curPage.slideDown(500);
 					});
 				} else {
@@ -877,13 +888,14 @@ html::-webkit-scrollbar {
 
 						$(".card .footer .description").css("width", 0.75 * titleSize);
 						$("h5").css("width", titleSize);
+						changeBoxHeight();
 						tarPage.slideDown(500);
 					}
 				}
 
 			}
 		});
-
+		});
 		getHeatValue(keyword);
 		getSourcePie(keyword);
 		getWordCloud(keyword);
