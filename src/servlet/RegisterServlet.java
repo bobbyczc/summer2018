@@ -63,8 +63,10 @@ public class RegisterServlet extends HttpServlet {
 		}else {
 			User user = new User(email, password, phone,nickname);
 			dao.register(user);
+			user = dao.getUserByPhone(phone);
 			entity.setStatus(1);
 			entity.setMessage("注册成功");
+			entity.setData(String.valueOf(user.getId()));
 		}
 		writer.write(entity.toString());
 		writer.flush();

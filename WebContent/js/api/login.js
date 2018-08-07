@@ -89,7 +89,9 @@ function postUserInfo(){
 					}else if(response.status==-2){
 						$("#register-errmsg h5").text("该昵称已被注册，请重新输入");
 					}else{
-						window.location.href = "./index.html"
+						var userid = response.data;
+						localStorage.setItem("userid",userid);
+						window.location.href = "./index.html";
 					}
 				}
 			});
