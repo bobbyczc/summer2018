@@ -56,6 +56,7 @@ function postUserInfo(){
 	function register(){
 		var email_re = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
 		var phone_re = /^1[3,5,8]\d{9}$/;
+		var nickname = $("#nickname").val();
 		var newphone = $("#new-phone").val();
 		var newemail = $("#new-email").val();
 		var newpass = $("#new-password").val();
@@ -76,12 +77,17 @@ function postUserInfo(){
 				data:{
 					"phone":newphone,
 					"email":newemail,
-					"password":newpass
+					"password":newpass,
+					"nickname":nickname
 				},
 				success:function(data){
 					var response = JSON.parse(data);
 					if(response.status==0){
-						$("#register-errmsg h5").text("该手机号或邮箱已被注册，请确认");
+						$("#register-errmsg h5").text("该手机号已被注册，请确认");
+					}else if(response.status==-1){
+						$("#register-errmsg h5").text("该邮箱已被注册，请确认");
+					}else if(response.status==-2){
+						$("#register-errmsg h5").text("该昵称已被注册，请重新输入");
 					}else{
 						window.location.href = "./index.html"
 					}

@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dao.UserDao;
 import model.ResponseEntity;
-import service.UserService;
 
 /**
  * Servlet implementation class ChangePsw
@@ -44,9 +44,9 @@ public class ChangePsw extends HttpServlet {
 		int userid = Integer.parseInt(request.getParameter("userid"));
 		String newpass = request.getParameter("newpsw");
 		System.out.println(userid+ " "+ newpass);
-		UserService service = new UserService();
+		UserDao dao = new UserDao();
 		ResponseEntity entity = new ResponseEntity();
-		if(service.changePsw(userid, newpass)==1) {
+		if(dao.changePsw(userid, newpass)==1) {
 			entity.setStatus(1);
 			entity.setMessage("修改成功");
 			entity.setData("\"success\"");

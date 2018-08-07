@@ -9,9 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
+import dao.UserDao;
 import model.ResponseEntity;
-import service.UserService;
 
 /**
  * Servlet implementation class LoginServlet
@@ -48,10 +47,10 @@ public class LoginServlet extends HttpServlet {
 		String username = request.getParameter("username");
 		System.out.println(username);
 		String password =request.getParameter("password");
-		UserService service = new UserService();
+		UserDao dao = new UserDao();
 		PrintWriter out = response.getWriter();
 		ResponseEntity entity = new ResponseEntity();
-		int result = service.login(username, password);
+		int result = dao.login(username, password);	
 		if(result==-1) {
 			entity.setStatus(-1);
 			entity.setMessage("用户不存在");

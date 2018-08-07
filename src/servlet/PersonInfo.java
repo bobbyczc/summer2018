@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import dao.UserDao;
 import model.ResponseEntity;
 import model.User;
-import service.UserService;
 
 /**
  * Servlet implementation class PersonInfo
@@ -35,9 +34,9 @@ public class PersonInfo extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
 		response.setHeader("content-type","text/html;charset=UTF-8");
-		UserService service = new UserService();
+		UserDao dao = new UserDao();
 		int userid = Integer.parseInt(request.getParameter("userid"));
-		User user = service.getUserById(userid);
+		User user = dao.getUserById(userid);
 		ResponseEntity entity = new ResponseEntity();
 		if(user!=null) {
 			entity.setData(user.toString());
