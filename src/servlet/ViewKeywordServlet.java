@@ -44,7 +44,7 @@ public class ViewKeywordServlet extends HttpServlet {
 		 StringBuilder builder  = new StringBuilder();
 		 builder.append("[");
 		 for(String keyword:keList) {
-			 builder.append(keyword);
+			 builder.append("\""+keyword+"\"");
 			 builder.append(",");
 		 }
 		 builder.deleteCharAt(builder.lastIndexOf(","));

@@ -44,7 +44,8 @@ html::-webkit-scrollbar {
 	border-bottom: 1px solid rgb(231, 231, 231);
 }
 
-h5 {
+.card h5, 
+.card .footer .description{
 	overflow: hidden;
 	text-overflow: ellipsis;
 	word-break: keep-all;
@@ -288,7 +289,7 @@ h5 {
                                     </h5>
                                     <p class="description" style="word-wrap:break-word">
 										{{if news.content.replace(/\s/g,"").length>100}}
-											${news.content.replace(/\s/g,"").substring(0,100)}...
+											${news.content.replace(/\s/g,"").substring(0,60)}...
 										{{else}}
 											${news.content.replace(/\s/g,"")}...${Array(100-news.content.replace(/\s/g,"").length).join("&emsp;")}
 										{{/if}}
@@ -709,6 +710,7 @@ h5 {
 	var changeTitleSize = function () {
         var tempWidth = $(".active-container").find(".content").eq(0).width();
         $("h5").css("width", tempWidth);
+        $(".card .footer .description").css("width", 0.75 * tempWidth);
         return tempWidth;
     }
 
@@ -860,6 +862,7 @@ h5 {
 						curPage = $(".active-container").eq(0);
 						curPage.attr("id", "page" + p);
 
+						$(".card .footer .description").css("width", 0.75 * titleSize);
 						$("h5").css("width", titleSize);
 						curPage.slideDown(500);
 					});
@@ -872,6 +875,7 @@ h5 {
 						var tarPage = $("#page" + p);
 						tarPage.addClass("active-container");
 
+						$(".card .footer .description").css("width", 0.75 * titleSize);
 						$("h5").css("width", titleSize);
 						tarPage.slideDown(500);
 					}
