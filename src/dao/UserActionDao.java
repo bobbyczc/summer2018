@@ -17,7 +17,7 @@ import utils.TransUtil.UpdateMode;
 public class UserActionDao extends BaseDao{
 	private Connection conn;
 	private PreparedStatement pstm;
-	
+
 	/**
 	 * 根据用户ID获取用户行为
 	 * @param userid
@@ -38,6 +38,7 @@ public class UserActionDao extends BaseDao{
 				action.setTopics(TransUtil.strToList(resultSet.getString("topics")));
 				action.setViewList(TransUtil.strToList(resultSet.getString("news_viewed")));
 				action.setCollectionList(TransUtil.strToList(resultSet.getString("news_collected")));
+				action.setWarnOn(resultSet.getInt("warn_on"));
 			}
 			conn.close();
 			pstm.close();
@@ -67,6 +68,7 @@ public class UserActionDao extends BaseDao{
 				action.setTopics(TransUtil.strToList(resultSet.getString("topics")));
 				action.setViewList(TransUtil.strToList(resultSet.getString("news_viewed")));
 				action.setCollectionList(TransUtil.strToList(resultSet.getString("news_collected")));
+				action.setWarnOn(resultSet.getInt("warn_on"));
 				actions.add(action);
 			}
 			conn.close();
@@ -354,6 +356,31 @@ public class UserActionDao extends BaseDao{
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * 获取开启了预警提示的用户id
+	 * @return
+	 */
+	public List<Integer> getWarnedUid(){
+		ResultSet resultSet;
+		List<Integer> result = new ArrayList<>();
+		try {
+			String sql = "select user_id from user_action where warn_on = 1";
+			conn = this.getConn();		
+			pstm = conn.prepareStatement(sql);
+			resultSet = pstm.executeQuery();
+			while(resultSet.next()) {
+				result.add(resultSet.getInt("user_id"));
+			}
+			conn.close();
+			pstm.close();
+			resultSet.close();
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
 	/**
 	 * 获取所有用户ID
 	 * @return
@@ -377,6 +404,54 @@ public class UserActionDao extends BaseDao{
 			e.printStackTrace();
 		}
 		return result;
+	}
+	
+	/**
+	 * 判断用户是否开启了预警提示
+	 * @param userid
+	 * @return
+	 */
+	public int isWarnOn(int userid) {
+		ResultSet resultSet;
+		int result = 0;
+		try {
+			String sql = "select warn_on from user_action where user_id = ?";
+			conn = this.getConn();		
+			pstm = conn.prepareStatement(sql);
+			resultSet = pstm.executeQuery();
+			if(resultSet.next()) {
+				result = resultSet.getInt("warn_on");
+			}
+			conn.close();
+			pstm.close();
+			resultSet.close();
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	/**
+	 * 更新用户预警开启状态
+	 * @param userid
+	 * @param state
+	 */
+	public void changeWarnState(int userid,int state) {
+		
+		try {
+			String sql = "update user_action set warn_on = ? where user_id = ?";
+			conn = this.getConn();
+			pstm = conn.prepareStatement(sql);
+			pstm.setInt(1, state);
+			pstm.setInt(2, userid); 
+			pstm.executeUpdate();
+			pstm.close();
+			conn.close();
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 		

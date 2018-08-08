@@ -16,7 +16,6 @@ import com.google.gson.Gson;
 import dao.NewsDao;
 import model.News;
 import model.ResponseEntity;
-import utils.SearchUtil;
 
 /**
  * Servlet implementation class KeywordNewsServlet

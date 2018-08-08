@@ -206,15 +206,10 @@ public class CFUtil {
 	private static HashMap<Integer, Float> getInterestDegree(List<UserAction> list,UserAction userAction) {
 		//几个用户新闻的并集
 		List<String> union = getUserNews(userAction);
-		//交集
-//		List<Integer> con = new ArrayList<>();
-//		con.addAll(UserAction.getViewList());
-		//差集
 		List<String> temp = null;
 		List<String> diff = new ArrayList<>();
 		for(UserAction u:list ) {
 			temp = new ArrayList<String>(getUserNews(u));
-//			con.retainAll(temp);
 			temp.removeAll(union);
 			union.addAll(temp);
 			

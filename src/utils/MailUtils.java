@@ -81,7 +81,7 @@ public class MailUtils {
 			@Override
 			public void run() {
 //				sendEmail();
-				List<Integer> userids = actionDao.getUserIds();
+				List<Integer> userids = actionDao.getWarnedUid();
 				System.out.println(userids);
 				for(int id:userids) {
 					List<String> topics = TransUtil.strToList(actionDao.getKeyWordsStr(id));
@@ -104,7 +104,7 @@ public class MailUtils {
 	 * 获取当前日期的前一天日期
 	 * @return
 	 */
-	public static Date getPreDate() {
+	private static Date getPreDate() {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(new Date());
 		calendar.add(Calendar.DAY_OF_YEAR, -1);

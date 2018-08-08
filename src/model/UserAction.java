@@ -3,11 +3,12 @@ package model;
 import java.util.List;
 
 public class UserAction {
-	int id;
-	int userid;
-	List<String> topics;
-	List<String> viewList;
-	List<String> collectionList;
+	private int id;
+	private int userid;
+	private List<String> topics;
+	private List<String> viewList;
+	private List<String> collectionList;
+	private int warnOn;
 	
 	public int getId() {
 		return id;
@@ -38,6 +39,12 @@ public class UserAction {
 	}
 	public void setCollectionList(List<String> collectionList) {
 		this.collectionList = collectionList;
+	}
+	public int getWarnOn() {
+		return warnOn;
+	}
+	public void setWarnOn(int warnOn) {
+		this.warnOn = warnOn;
 	}
 	
 }
