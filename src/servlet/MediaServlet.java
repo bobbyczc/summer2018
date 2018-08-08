@@ -51,16 +51,23 @@ public class MediaServlet extends HttpServlet {
 				newscount.put(source, 1);
 			}
 		}
-		HashMap<String, Float> result = new HashMap<>();
+		StringBuilder builder = new StringBuilder();
+		builder.append("[");
 		for(String key:newscount.keySet()) {
-			float value = (float)newscount.get(key)/total;
-			result.put(key, Float.parseFloat(String.format("%.4f",value )));
+			builder.append("{");
+			builder.append("\"source\":\""+key+"\",");
+			int count = newscount.get(key);
+			builder.append("\"count\":"+count+",");
+			float value = Float.parseFloat(String.format("%.4f",(float)count/total ));
+			builder.append("\"ratio\":"+value);
+			builder.append("},");
 		}
-		Gson gson = new Gson();
+		builder.deleteCharAt(builder.lastIndexOf(","));
+		builder.append("]");
 		ResponseEntity entity = new ResponseEntity();
 		entity.setStatus(1);
 		entity.setMessage("获取成功");
-		entity.setData(gson.toJson(result));
+		entity.setData(builder.toString());
 		response.getWriter().write(entity.toString());
 	}
 
