@@ -286,11 +286,7 @@
                                 <a href="user.html">账户信息</a>
                             </li>
                             <li class="dropdown-item">
-                                <a href="#">设置</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li class="dropdown-item">
-                                <a href="#">登出</a>
+                                <a href="#" onclick="logout()">登出</a>
                             </li>
                         </ul>
                     </li>
@@ -340,6 +336,13 @@
     		someCustom();
         });
 
+		function logout(){
+            localStorage.removeItem("userid");
+            localStorage.removeItem("username");
+
+            window.location.href="login.html";
+        }
+        
         //自定义样式
         function someCustom() {
             $(".dataTables_wrapper .dataTables_paginate .paginate_button:hover").css("background", "rgb(249,249,249)");

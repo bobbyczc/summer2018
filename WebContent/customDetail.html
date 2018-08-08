@@ -165,16 +165,16 @@ html::-webkit-scrollbar {
                                 <div class="content">
                                 	<div class="card-header" style="margin-bottom:10px">
                                 		<h5 class="title" style="margin-bottom:5px">
-                                        	<a href="#" onclick="javascript:top.location.href='${news.url}'" title="${news.title}">${news.title}</a>
+                                        	<a href="#" data-target="${news.url}" onclick="view(this)" title="${news.title}">${news.title}</a>
                                     	</h5>
                                     	<p class="description" style="text-align:center;margin-bottom:5px;">2018-08-01</p>
                                 	</div>
                                     
                                     <p class="description" style="word-wrap:break-word">
 										{{if news.content.replace(/\s/g,"").length>100}}
-											${news.content.replace(/\s/g,"").substring(0,60)}...
+											${news.content.replace(/\s/g,"").substring(0,100)}...
 										{{else}}
-											${news.content.replace(/\s/g,"")}...}
+											${news.content.replace(/\s/g,"")}...
 										{{/if}}
 									</p>
                 
@@ -280,13 +280,12 @@ html::-webkit-scrollbar {
 	}
 
 	var changeBoxHeight=function(){
-		var tempHeight=$(".active-container").find(".card-box").eq(0).height();
+		var tempHeight=$(".active-container .card-box")[0].getBoundingClientRect().height;
 		$(".active-container .card-box").each(function(){
-			if($(this).height()<tempHeight){
-				$(this).height(tempHeight+1);
+			if($(this).height()!=tempHeight){
+				$(this).height(tempHeight);
 			}
 		});
-		
 	}
 	
 	var collect = function(button) {
@@ -311,6 +310,17 @@ html::-webkit-scrollbar {
 
 			$.get(url);
 		}
+	}
+	
+	var view = function(url) {
+		var thisURL = $(url);
+		var cardbox = thisURL.parents(".card-box");
+		var id = cardbox.attr("id");
+		var url = "/POSystem/UpdateViewServlet?userid=" + localStorage.getItem("userid") + "&newsid=" + id + "&mode=add";
+		$.get(url);
+		
+		var target=thisURL.attr("data-target");
+		top.location.href= target;
 	}
 	//新闻标题大小随页面大小变化而变化
 	$(window).resize(changeTitleSize);

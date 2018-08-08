@@ -270,11 +270,11 @@ html::-webkit-scrollbar {
 
 <script src="js/jquery.js " type="text/javascript "></script>
 <script src="js/bootstrap.min.js " type="text/javascript "></script>
-<script src="js/hipster-cards.js "></script>
-<script src="js/index.js"></script>
-<script src="js/echarts.min.js"></script>
-<script src="js/echarts-wordcloud.min.js"></script>
-<script src="js/jquery.tmpl.min.js"></script>
+<script src="js/hipster-cards.js " type="text/javascript" ></script>
+<script src="js/index.js" type="text/javascript"></script>
+<script src="js/echarts.min.js" type="text/javascript"></script>
+<script src="js/echarts-wordcloud.min.js" type="text/javascript"></script>
+<script src="js/jquery.tmpl.min.js" type="text/javascript"></script>
 
 <!-- div模块模板 -->
 <script id="div_demo" type="text/x-jquery-tmpl">
@@ -284,13 +284,13 @@ html::-webkit-scrollbar {
                             <div class="card">
                                 <div class="content">
                                     <h5 class="title">
-                                        <a href="#" onclick="javascript:top.location.href='${news.url}'" title="${news.title}">${news.title.replace(/\s/g,"").replace("：",":")}</a>
+                                        <a href="#" data-target="${news.url}" onclick="view(this)" title="${news.title}">${news.title}</a>
                                     </h5>
                                     <p class="description" style="word-wrap:break-word">
 										{{if news.content.replace(/\s/g,"").length>100}}
-											${news.content.replace(/\s/g,"").substring(0,60)}...
+											${news.content.replace(/\s/g,"").substring(0,100)}...
 										{{else}}
-											${news.content.replace(/\s/g,"")}...}
+											${news.content.replace(/\s/g,"")}...
 										{{/if}}
 									</p>
                                     <p class="description">${news.date}</p>
@@ -706,6 +706,17 @@ html::-webkit-scrollbar {
         }
     }
     
+    var view = function(url) {
+		var thisURL = $(url);
+		var cardbox = thisURL.parents(".card-box");
+		var id = cardbox.attr("id");
+		var url = "/POSystem/UpdateViewServlet?userid=" + localStorage.getItem("userid") + "&newsid=" + id + "&mode=add";
+		$.get(url);
+		
+		var target=thisURL.attr("data-target");
+		top.location.href= target;
+	}
+	
 	var changeTitleSize = function() {
 		var firstContent=$(".active-container").find(".content").eq(0);
 		var firstFooter=firstContent.next();
@@ -718,13 +729,12 @@ html::-webkit-scrollbar {
 	}
 
 	var changeBoxHeight=function(){
-		var tempHeight=$(".active-container").find(".card-box").eq(0).height();
+		var tempHeight=$(".active-container .card-box")[0].getBoundingClientRect().height;
 		$(".active-container .card-box").each(function(){
-			if($(this).height()<tempHeight){
-				$(this).height(tempHeight+1);
+			if($(this).height()!=tempHeight){
+				$(this).height(tempHeight);
 			}
 		});
-		
 	}
 	
 	var changeIconType = function(button) {

@@ -418,6 +418,7 @@ public class UserActionDao extends BaseDao{
 			String sql = "select warn_on from user_action where user_id = ?";
 			conn = this.getConn();		
 			pstm = conn.prepareStatement(sql);
+			pstm.setInt(1, userid);
 			resultSet = pstm.executeQuery();
 			if(resultSet.next()) {
 				result = resultSet.getInt("warn_on");
