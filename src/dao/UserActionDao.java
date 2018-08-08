@@ -454,6 +454,27 @@ public class UserActionDao extends BaseDao{
 		}
 	}
 	
+	/**
+	 * 判断用户是不是已经关注了该关键词
+	 * @param userid
+	 * @param keyword
+	 * @return
+	 */
+	public boolean checkKeywordState(int userid,String keyword) {
+		String keyStr = getKeyWordsStr(userid);
+		return keyStr.contains(keyword);
+	}
+	/**
+	 * 判断用户是不是已经收藏了该新闻
+	 * @param userid
+	 * @param newsid
+	 * @return
+	 */
+	public boolean checkCollectionState(int userid,int newsid) {
+		String collectStr = getUserCollectionsStr(userid);
+		return collectStr.contains(String.valueOf(newsid));
+	}
+	
 		
 	
 }
