@@ -292,7 +292,7 @@ html::-webkit-scrollbar {
 		var thisButton = $(button);
 		var cardbox = thisButton.parents(".card-box");
 		var id = cardbox.attr("id");
-		var url = "/POSystem/ViewCollectionServlet?userid=" + localStorage.getItem("userid") + "&newsid=" + id + "&mode=";
+		var url = "/POSystem/UpdateCollectionServlet?userid=" + localStorage.getItem("userid") + "&newsid=" + id + "&mode=";
 
 		if (thisButton.attr("button-type") == "book") {
 			var icon = thisButton.find("span");
