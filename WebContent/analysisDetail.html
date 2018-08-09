@@ -242,7 +242,7 @@ html::-webkit-scrollbar {
 					</div>
 				</div>
 				<div class="panel" id="relation"
-					style="width:48%;display:inline-block;float:right;">
+					style="width:48%;display:none;float:right;">
 					<div class="panel-header" style="background:rgb(250,250,250)">
 						<h3 id="header"
 							style="padding-left:30px;font-size:20px;display: inline-block">关联词分析</h3>
@@ -570,21 +570,29 @@ html::-webkit-scrollbar {
 			drawTop5HeatTable(flows);
 		} else if (type == "media") {
 			var datas = new Array();
+			var speDatas=new Array();
 			var legends = new Array();
-
-			for (var item in resultJson.data) {
-				var source = item;
-				var percent = resultJson.data[source];
-
+			
+			var dataArray=resultJson.data;
+			for (var i=0;i<dataArray.length;i++) {
+				var temp=dataArray[i];
+				var source = temp.source;
+				var percent = temp.ratio;
+				var count=temp.count;
+				
 				legends.push(source);
+				
 				var tempData = new Object();
 				tempData['name'] = source;
 				tempData['value'] = percent;
 
 				datas.push(tempData);
+				
+				tempData['count']=count;
+				speDatas.push(tempData);
 			}
 			drawSourcePie(document.getElementById("sourcePie"), datas, legends);
-			drawSourcePieValue(datas);
+			drawSourcePieValue(speDatas);
 		} else if (type == "wordCloud") {
 			var datas = new Array();
 
@@ -673,8 +681,9 @@ html::-webkit-scrollbar {
 		for (var i = 0; i < (data.length); i++) {
 			var time = data[i].name;
 			var value = data[i].value;
-
-			var tableRow = "<tr><td>" + time + "</td><td></td><td>" + (value * 100).toFixed(2) + "%</td></tr>";
+			var count=data[i].count;
+			
+			var tableRow = "<tr><td>" + time + "</td><td>"+count+"</td><td>" + (value * 100).toFixed(2) + "%</td></tr>";
 			table += tableRow;
 		}
 		$(".side-info").eq(1).append($(table));
@@ -715,6 +724,40 @@ html::-webkit-scrollbar {
 		
 		var target=thisURL.attr("data-target");
 		top.location.href= target;
+	}
+	
+	var viewKeyword=function(keyword){
+		var userid = localStorage.getItem("userid");
+		var url="/POSystem/ViewKeywordServlet?userid=" + userid;
+		
+		$.get(url,function(data){
+			var dataJson=JSON.parse(data);
+			var dataArray=dataJson.data;
+			
+			var index = $.inArray(keyword,dataArray);
+			//存在于数组中
+    		if(index >= 0){
+    			$("#follow").find("span").removeClass("glyphicon-heart-empty");
+    			$("#follow").find("span").addClass("glyphicon-heart");
+    		}
+		});
+	}
+	
+	var viewCollection=function(){
+		var userid = localStorage.getItem("userid");
+		var url="/POSystem/ViewCollectionServlet?userid=" + userid;
+		
+		$.get(url,function(data){
+			var dataJson=JSON.parse(data);
+			var dataArray=dataJson.data;
+			for(var i=0;i<dataArray.length;i++){
+				var id=dataArray[i].id;
+				if($("#"+id).find(".action span").eq(0)!=undefined){
+					$("#"+id).find(".action span").eq(0).removeClass("glyphicon-star-empty");
+					$("#"+id).find(".action span").eq(0).addClass("glyphicon-star");
+				}
+			}
+		});
 	}
 	
 	var changeTitleSize = function() {
@@ -863,6 +906,7 @@ html::-webkit-scrollbar {
 			//单个新闻标题自适应
 			var titleSize = changeTitleSize();
 			changeBoxHeight();
+			viewCollection();
 			
 			var totalPage = Math.ceil(dataJson.count / 8);
 			
@@ -888,6 +932,7 @@ html::-webkit-scrollbar {
 						curPage.slideDown(500);
 						changeTitleSize();
 						changeBoxHeight();
+						viewCollection();
 					});
 				} else {
 					var curPage = $(".active-container").eq(0);
@@ -901,6 +946,7 @@ html::-webkit-scrollbar {
 						tarPage.slideDown(500);
 						changeTitleSize();
 						changeBoxHeight();
+						viewCollection();
 					}
 				}
 
@@ -928,18 +974,21 @@ html::-webkit-scrollbar {
 			searchByKeyword(keyword);
 		}
 		
-		getRelationPic(keyword);
+		viewKeyword(keyword);
+		
+		//getRelationPic(keyword);
 		
 		$("#search").click(function(){
 			var key=$("#searchBar").val();
 			searchByKeyword(key);
+			viewKeyword(key);
 		});
 		
 		$("#follow").click(function(){
 			var theKey=$("#searchBar").val();
         	var url="/POSystem/UpdateKeywordServlet?userid="+localStorage.getItem("userid")+"&keyword="+theKey+"&mode=";
         
-        	console.log($(this));
+        	
         	var icon=$(this).find("span");
         	if(icon.hasClass("glyphicon-heart-empty")){
         		icon.removeClass("glyphicon-heart-empty");
