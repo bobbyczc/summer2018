@@ -336,6 +336,7 @@ html::-webkit-scrollbar {
 				//单个新闻标题自适应
 				changeTitleSize();
 				changeBoxHeight();
+				viewCollection();
 				var totalPage = Math.ceil(dataJson.count / 8);
 
 				$(".pagination").createPage({
